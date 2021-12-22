@@ -4,7 +4,7 @@ import useAuth from 'hooks/useAuth';
 const Dashboard = () => {
   return (
     <div className='dashboard'>
-      <h3>Dashboard</h3>
+      <h3>Dashboard Screen</h3>
     </div>
   );
 };
