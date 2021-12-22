@@ -2,7 +2,7 @@ import Link from 'components/link';
 import React, { useState } from 'react';
 import SVG from 'react-inlinesvg';
 import Button from 'reusable/Button';
-import Input from 'reusable/Input';
+
 
 export default function SignUp({ next }) {
   const [selected, setSelected] = useState(null);
