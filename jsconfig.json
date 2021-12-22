@@ -1,0 +1,18 @@
+{
+  "moduleResolution": "node",
+  "compilerOptions": {
+    "jsx": "preserve",
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["./src/*"],
+      "@/assets/*": ["/assets/*"],
+      "@/components/*": ["/components/*"],
+      "@/hooks/*": ["/hooks/*"],
+      "@/services/*": ["/services/*"],
+      "@/helpers/*": ["/helpers/*"],
+      "@/reusable/*": ["/reusable/*"],
+      "@/styles/*": ["/reusable/*"]
+    }
+  },
+  "exclude": ["node_modules", ".next"]
+}
