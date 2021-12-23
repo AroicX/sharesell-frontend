@@ -3,7 +3,7 @@ import React from 'react';
 import Layout from 'components/layout';
 import Link from 'components/link';
 import ProductDisplay from 'components/ProductDisplay';
-import Withdrawal from 'components/Withdrawal';
+import WithdrawalDisplay from 'components/WithdrawalDisplay';
 import AuthProvider from 'components/AuthProvider';
 
 export default function Dashboard() {
@@ -23,7 +23,7 @@ export default function Dashboard() {
           </Link>
         </div>
         <div className='mt-20'>
-          <Withdrawal />
+          <WithdrawalDisplay />
           <div className='flex justify-between'>
             <span className='text-app-text font-medium'>Recent Products</span>
             <Link to='/' className='text-app-color text-sm my-auto'>

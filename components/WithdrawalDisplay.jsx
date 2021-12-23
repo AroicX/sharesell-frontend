@@ -1,6 +1,6 @@
 import React from 'react';
 import SVG from 'react-inlinesvg';
-export default function Withdrawal() {
+export default function WithdrawalDisplay() {
   return (
     <div
       className='w-full relative bg-black flex flex-col text-center center items-center justify-center my-5 shadow  p-2 rounded'
