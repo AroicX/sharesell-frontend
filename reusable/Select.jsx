@@ -28,8 +28,9 @@ const Select = ({
       </div>
       {toggle && (
         <div className='select-options'>
-          {options?.map((option) => (
+          {options?.map((option, i) => (
             <button
+              key={i + 1}
               className={`${selected == option ? 'bg-black text-white' : ''}`}
               onClick={() => handleSelected(option)}
             >

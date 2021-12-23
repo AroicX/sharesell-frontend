@@ -1,5 +1,4 @@
 import React from 'react';
-import Infocard from './Infocard';
 
 export default function Input({
   id,

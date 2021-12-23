@@ -17,14 +17,14 @@ const Button = ({
     <>
       {to ? (
         <Link
+          {...rest}
           to={to}
-          className={`w-full bg-app-color p-4 flex  block text-white rounded my-1 ${styles} ${
+          className={` bg-app-color p-4 flex block text-white rounded my-1 ${styles} ${
             loading && !loadingText
               ? 'center text-center align-middle justify-center items-center'
               : 'justify-between'
           }`}
           onClick={click}
-          {...rest}
           disabled={loading}
         >
           {loading ? (

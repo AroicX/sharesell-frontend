@@ -7,10 +7,11 @@ import TextArea from 'reusable/TextArea';
 import Infocard from 'reusable/Infocard';
 import DropZone from 'reusable/DropZone';
 import Button from 'reusable/Button';
+import AuthProvider from 'components/AuthProvider';
 
-const AddProduct = ({}) => {
+export default function AddProduct({}) {
   return (
-    <div className='add-product'>
+    <AuthProvider className='add-product'>
       <AppHeader />
       <h2 className='text-3xl font-light my-10'>Add a New Product</h2>
 
@@ -115,8 +116,6 @@ const AddProduct = ({}) => {
       </div>
 
       <Button text='Save Product' iconRight={'/svg/arrow-right.svg'} />
-    </div>
+    </AuthProvider>
   );
-};
-
-export default useAuth(AddProduct);
+}

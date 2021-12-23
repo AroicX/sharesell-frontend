@@ -8,7 +8,7 @@ export default function useAuth(Component) {
 
       // if (!accessToken) {
       //   localStorage.setItem('be-authorized', window.location.pathname);
-      //   Router.replace('/');
+      //   Router.replace('/login');
       //   return null;
       // }
     }

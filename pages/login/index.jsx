@@ -32,7 +32,7 @@ export default function Login() {
   return (
     <div className='login'>
       <AppHeader />
-      <div className='login-content'>
+      <div className='login-content mt-20'>
         <h2 className='text-3xl font-light my-2'>Log into your account</h2>
         <span className='text-app-text'>Welcome back to ShareSell.</span>
 

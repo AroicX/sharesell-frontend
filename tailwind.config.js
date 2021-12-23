@@ -8,6 +8,7 @@ module.exports = {
       colors: {
         'app-color': '#A55954',
         'app-text': '#632121',
+        'app-text-light': '#DCA587',
         'app-cream': '#FFF6F0',
         'terms': '#E77435'
       },

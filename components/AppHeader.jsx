@@ -1,10 +1,21 @@
+import { useRouter } from 'next/router';
 import React from 'react';
 import SVG from 'react-inlinesvg';
 
-export default function AppHeader({click}) {
+export default function AppHeader({ click = null }) {
+  const router = useRouter();
   return (
-    <div className='app-header flex justify-between'>
-      <button className='flex my-auto' onClick={click}>
+    <div className='app-header w-full bg-white flex justify-between z-50'>
+      <button
+        className='flex my-auto'
+        onClick={
+          click
+            ? click
+            : () => {
+                router.back();
+              }
+        }
+      >
         <SVG src={'/svg/arrrow-left.svg'} />
         <span>Back</span>
       </button>
