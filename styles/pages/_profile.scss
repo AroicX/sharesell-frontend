@@ -1,0 +1,14 @@
+.profile {
+  &-image-container {
+    background: linear-gradient(90deg, #0d0d0d 0%, #502d2d 100%);
+  }
+
+  &-svg {
+      right: -4px;
+      bottom: -4px;
+  }
+  &-notification {
+    right: -4px;
+    top: -4px;
+  }
+}
