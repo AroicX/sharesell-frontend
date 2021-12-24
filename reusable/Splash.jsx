@@ -1,4 +1,4 @@
-import Link from 'components/link';
+import Link from '@/components/link';
 import React from 'react';
 import SVG from 'react-inlinesvg';
 

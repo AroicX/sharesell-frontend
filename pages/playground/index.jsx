@@ -6,7 +6,7 @@ import Select from '@/reusable/Select';
 import DropZone from '@/reusable/DropZone';
 import Swal from 'sweetalert2';
 import SVG from 'react-inlinesvg';
-import AppHeader from '@/components/AppHeader';
+import AppHeader from '@/components/appHeader';
 
 export default class App extends Component {
   render() {

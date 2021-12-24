@@ -3,7 +3,7 @@ import React from 'react';
 import Button from '@/reusable/Button';
 import SVG from 'react-inlinesvg';
 import Link from '@/components/link';
-import AuthProvider from '@/components/AuthProvider';
+import AuthProvider from '@/components/authProvider';
 import { _protectedRequest } from 'services';
 import useSWR from 'swr';
 import { slugify } from '@/helpers/index';

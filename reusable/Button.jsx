@@ -1,6 +1,6 @@
 import React from 'react';
 import SVG from 'react-inlinesvg';
-import Link from 'components/link';
+import Link from '@/components/link';
 
 const Button = ({
   to = false,

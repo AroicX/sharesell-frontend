@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import SignUp from '@/components/authentication/signup';
-import PhoneNumber from '@/components/authentication/signup/PhoneNumber';
-import OneTimePassword from '@/components/authentication/signup/OneTimePassword';
-import BusinessRegistration from '@/components/authentication/signup/BusinessRegistration';
-import CreateAccount from '@/components/authentication/signup/CreateAccount';
+import PhoneNumber from '@/components/authentication/signup/phoneNumber';
+import OneTimePassword from '@/components/authentication/signup/oneTimePassword';
+import BusinessRegistration from '@/components/authentication/signup/businessRegistration';
+import CreateAccount from '@/components/authentication/signup/createAccount';
 
 export default function SignUpPage() {
   const [selected, setSelected] = useState(null);
