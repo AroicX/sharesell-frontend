@@ -1,12 +1,12 @@
 import React from 'react';
 
-import Button from 'reusable/Button';
+import Button from '@/reusable/Button';
 import SVG from 'react-inlinesvg';
-import Link from 'components/link';
-import AuthProvider from 'components/AuthProvider';
-import { slugify } from 'helpers';
+import Link from '@/components/link';
+import AuthProvider from '@/components/AuthProvider';
 import { _protectedRequest } from 'services';
 import useSWR from 'swr';
+import { slugify } from '@/helpers/index';
 
 export default function Product({ productsCategories }) {
   const { data, error } = useSWR(`/products/categories`, _protectedRequest);

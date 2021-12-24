@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
-import Button from 'reusable/Button';
-import Infocard from 'reusable/Infocard';
-import Input from 'reusable/Input';
-import Select from 'reusable/Select';
-import DropZone from 'reusable/DropZone';
+import Button from '@/reusable/Button';
+import Infocard from '@/reusable/Infocard';
+import Input from '@/reusable/Input';
+import Select from '@/reusable/Select';
+import DropZone from '@/reusable/DropZone';
 import Swal from 'sweetalert2';
 import SVG from 'react-inlinesvg';
-import AppHeader from 'components/AppHeader';
+import AppHeader from '@/components/AppHeader';
 
 export default class App extends Component {
   render() {

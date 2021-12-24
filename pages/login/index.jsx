@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
-import AppHeader from 'components/AppHeader';
-import Button from 'reusable/Button';
-import Input from 'reusable/Input';
-import { LOGIN_ACCOUNT } from 'services/authentication';
+import AppHeader from '@/components/AppHeader';
+import Button from '@/reusable/Button';
+import Input from '@/reusable/Input';
+import { LOGIN_ACCOUNT } from '@/services/authentication';
 import { ResponseHandler } from 'helpers';
-import Link from 'components/link';
-import { setCookie } from 'services/cookies';
+import Link from '@/components/link';
+import { setCookie } from '@/services/cookies';
 import router from 'next/router';
 
 export default function Login() {
