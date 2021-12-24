@@ -10,7 +10,11 @@ module.exports = {
         'app-text': '#632121',
         'app-text-light': '#DCA587',
         'app-cream': '#FFF6F0',
-        'terms': '#E77435'
+        'terms': '#E77435',
+        'pry-black': '#0D0D0D',
+        'lightest-color': '#F1CFBB',
+        'green': "#219653",
+        'light-green': "#B7F3D0"
       },
       screens: {
         md: '800px',
