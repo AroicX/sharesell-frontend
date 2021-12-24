@@ -1,13 +1,11 @@
-import React, { useState } from 'react';
+import React from 'react';
 import AppHeader from 'components/AppHeader';
-import SVG from 'react-inlinesvg';
 import MoreContainer from 'components/more-container';
 
-export default function PickUpAddress() {
-    const [activeOption, setActiveOption] = useState(false)
+export default function PickUpAddress({ setCurrentState }) {
   const SavedAddress = [
     { address: 'No.3 Maha Close', city: 'Barnawa', state: 'Kaduna' },
-    { address: 'No.3 Maha Close', city: 'Barnawa', state: 'Kaduna' },
+    { address: 'No.3 Maha Closer', city: 'Barnawa', state: 'Kaduna' },
   ];
 
   return (
@@ -24,7 +22,10 @@ export default function PickUpAddress() {
                 className='flex justify-between min-h-fit bg-app-cream rounded border p-4 border-lightest-color mt-4 relative'
               >
                 <p className='w-48 text-sm'>{`${address.address}, ${address.city} ${address.state}, Nigeria`}</p>
-                <MoreContainer />
+                <MoreContainer
+                  savedAddress={SavedAddress[index]}
+                  setCurrentState={setCurrentState}
+                />
               </div>
             ))}
           </div>

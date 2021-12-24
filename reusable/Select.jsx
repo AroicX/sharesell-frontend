@@ -7,9 +7,10 @@ const Select = ({
   options = null,
   dispatch = null,
   rest,
+  initialValue
 }) => {
   const [toggle, setToggle] = useState(false);
-  const [selected, setSelected] = useState(placeholder || '');
+  const [selected, setSelected] = useState(placeholder || initialValue);
   const handleSelected = (value) => {
     dispatch(value);
     setSelected(value);

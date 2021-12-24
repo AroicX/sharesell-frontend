@@ -1,5 +1,6 @@
 import React from 'react';
 import SVG from 'react-inlinesvg';
+import { useRouter } from 'next/router';
 
 export default function Profile() {
   const ProfileOptions = [
@@ -7,33 +8,41 @@ export default function Profile() {
       icon: '/svg/home-profile.svg',
       title: 'Saved Pickup Address',
       detail: 'Add and edit pickup addresses',
+      to: '/profile/pickup-address',
     },
     {
       icon: '/svg/history.svg',
       title: 'History',
       detail: 'View transaction and order history',
+      to:'/profile/history'
     },
     {
       icon: '/svg/subscription.svg',
       title: 'Subscription',
       detail: 'Manage your sharesell subscription',
+      to: "profile/subscription"
     },
     {
       icon: '/svg/wallet.svg',
       title: 'Make a Withdrawal',
       detail: 'Withdraw cash to your account',
+      to: "/profile/wallet"
     },
     {
       icon: '/svg/lock.svg',
       title: 'Change Password',
       detail: 'Manage Password',
+      to: "/profile/change-password"
     },
     {
       icon: '/svg/logout.svg',
       title: 'Logout',
       detail: 'Exit account',
+      to: "/"
     },
   ];
+
+  const Router = useRouter()
   return (
     <div className='profile'>
       <h2 className='text-3xl font-light my-2'>Profile</h2>
@@ -55,7 +64,7 @@ export default function Profile() {
       </div>
       <div className='profile-options mt-8'>
         {ProfileOptions.map((option, index) => (
-          <div key={index} className='flex pt-5'>
+          <div key={index} className='flex pt-5 cursor-pointer' onClick={() => Router.push(option.to)}>
             <div className='w-30 mr-6'>
               <SVG src={option.icon} className='max-w-full' />
             </div>
