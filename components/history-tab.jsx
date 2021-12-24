@@ -4,7 +4,7 @@ import SVG from 'react-inlinesvg';
 export default function HistoryTab({ history, currentHistory }) {
   return (
     <div className='w-full flex history-tab rounded p-3 my-2 bg-white'>
-      <div className='h-10 w-10 flex rounded-full justify-center items-center history-icon-container mr-4'>
+      <div className='h-10 flex rounded-full justify-center items-center history-icon-container mr-4'>
         {currentHistory === 'orders' ? <SVG src={'/svg/cart.svg'} /> : ''}
         {currentHistory === 'transactions' ? (
           <SVG
