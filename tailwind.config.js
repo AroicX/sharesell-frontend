@@ -11,7 +11,8 @@ module.exports = {
         'app-text-light': '#DCA587',
         'app-cream': '#FFF6F0',
         'terms': '#E77435',
-        'pry-black': '#0D0D0D'
+        'pry-black': '#0D0D0D',
+        'lightest-color': '#F1CFBB'
       },
       screens: {
         md: '800px',
