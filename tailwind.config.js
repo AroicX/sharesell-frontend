@@ -12,7 +12,8 @@ module.exports = {
         'app-cream': '#FFF6F0',
         'terms': '#E77435',
         'pry-black': '#0D0D0D',
-        'lightest-color': '#F1CFBB'
+        'lightest-color': '#F1CFBB',
+        'green': "#219653"
       },
       screens: {
         md: '800px',

@@ -16,3 +16,24 @@
 .more-container {
   left: -6.5em;
 }
+
+.history{
+  // &-content {
+    // background: linear-gradient(360deg, #F9F4EF 0%, #FFFFFF 100%), #FFFFFF;
+    // background: #F1F1F1;
+  // }
+  &-tab {
+    border: 1px solid rgba(13, 13, 13, 0.05);
+  }
+  &-date{
+    color: rgba(13, 13, 13, 0.5);
+    font-size: 0.625rem;
+  }
+  &-title {
+    width: 8.125rem;
+  }
+  &-icon-container {
+    background: #F8F8F8;
+  }
+}
+
