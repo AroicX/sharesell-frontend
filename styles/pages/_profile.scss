@@ -1,0 +1,46 @@
+.profile {
+  &-image-container {
+    background: linear-gradient(90deg, #0d0d0d 0%, #502d2d 100%);
+  }
+
+  &-svg {
+    right: -4px;
+    bottom: -4px;
+  }
+  &-notification {
+    right: -4px;
+    top: -4px;
+  }
+}
+
+.more-container {
+  left: -6.5em;
+}
+
+.history {
+  // &-content {
+  // background: linear-gradient(360deg, #F9F4EF 0%, #FFFFFF 100%), #FFFFFF;
+  // background: #F1F1F1;
+  // }
+  &-tab {
+    border: 1px solid rgba(13, 13, 13, 0.05);
+  }
+  &-date {
+    color: rgba(13, 13, 13, 0.5);
+    font-size: 0.625rem;
+  }
+  &-title {
+    width: 8.125rem;
+  }
+  &-icon-container {
+    background: #f8f8f8;
+    min-width: 2.5em;
+  }
+}
+
+.subscription {
+  &-tab {
+    background: linear-gradient(360deg, #f9f4ef 0%, #ffffff 100%), #ffffff;
+    border: 1px solid rgba(67, 90, 111, 0.16);
+  }
+}
