@@ -5,26 +5,25 @@ import SVG from 'react-inlinesvg';
 import Link from 'components/link';
 import AuthProvider from 'components/AuthProvider';
 import { slugify } from 'helpers';
+import { _protectedRequest } from 'services';
+import useSWR from 'swr';
 
-export default function Product({}) {
-  const categories = [
-    'Plant Products',
-    'Women’s Fashion',
-    'Men’s Fashion',
-    'Electronics',
-    'Health & Welness',
-  ];
+export default function Product({ productsCategories }) {
+  const { data, error } = useSWR(`/products/categories`, _protectedRequest);
+  const categories = data?.payload?.data;
 
   return (
     <AuthProvider className='Product'>
       <h3 className='text-4xl mt-5'>Products</h3>
-      {categories.map((item, i) => (
+      {categories?.map((item, i) => (
         <Link
-          to={`/products/${slugify(item)}`}
+          to={`/products/${slugify(item.category_name)}`}
           className='w-full flex justify-between p-2 my-2'
           key={i + 1}
         >
-          <span className='text-app-color font-medium'>{item}</span>
+          <span className='text-app-color font-medium'>
+            {item.category_name}
+          </span>
           <SVG className='text-app-color' src='/svg/chevron-right.svg' />
         </Link>
       ))}
