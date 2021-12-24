@@ -1,13 +1,12 @@
 import React from 'react';
-import useAuth from 'hooks/useAuth';
-import AppHeader from 'components/AppHeader';
-import Input from 'reusable/Input';
-import Select from 'reusable/Select';
-import TextArea from 'reusable/TextArea';
-import Infocard from 'reusable/Infocard';
-import DropZone from 'reusable/DropZone';
-import Button from 'reusable/Button';
-import AuthProvider from 'components/AuthProvider';
+import AppHeader from '@/components/AppHeader';
+import Input from '@/reusable/Input';
+import Select from '@/reusable/Select';
+import TextArea from '@/reusable/TextArea';
+import Infocard from '@/reusable/Infocard';
+import DropZone from '@/reusable/DropZone';
+import Button from '@/reusable/Button';
+import AuthProvider from '@/components/AuthProvider';
 
 export default function AddProduct({}) {
   return (

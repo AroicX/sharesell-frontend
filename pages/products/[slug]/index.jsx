@@ -1,8 +1,8 @@
-import AppHeader from 'components/AppHeader';
-import ImageModal from 'components/ImageModal';
+import AppHeader from '@/components/AppHeader';
+import ImageModal from '@/components/ImageModal';
 import React from 'react';
 import SVG from 'react-inlinesvg';
-import Button from 'reusable/Button';
+import Button from '@/reusable/Button';
 
 export default function ProductSlug() {
   return (
