@@ -1,10 +1,12 @@
 import React, { useState } from 'react';
-import AppHeader from 'components/AppHeader';
-import Button from 'reusable/Button';
-import Input from 'reusable/Input';
-import { LOGIN_ACCOUNT } from 'services/authentication';
+import AppHeader from '@/components/appHeader';
+import Button from '@/reusable/Button';
+import Input from '@/reusable/Input';
+import { LOGIN_ACCOUNT } from '@/services/authentication';
 import { ResponseHandler } from 'helpers';
-import Link from 'components/link';
+import Link from '@/components/link';
+import { setCookie } from '@/services/cookies';
+import router from 'next/router';
 
 export default function Login() {
   const [data, setData] = useState({
@@ -18,7 +20,11 @@ export default function Login() {
 
     const callback = (response) => {
       ResponseHandler(response);
+
+      setCookie(response.token);
+      window.localStorage.setItem('user-data', JSON.stringify(response));
       setLoading(false);
+      router.push(window.localStorage.getItem('be-authorized'));
     };
     const onError = (response) => {
       console.log(response);

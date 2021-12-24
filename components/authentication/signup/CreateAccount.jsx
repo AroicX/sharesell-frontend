@@ -1,8 +1,8 @@
 import React from 'react';
 
-import Input from 'reusable/Input';
-import Button from 'reusable/Button';
-import AppHeader from 'components/AppHeader';
+import Input from '@/reusable/Input';
+import Button from '@/reusable/Button';
+import AppHeader from '@/components/appHeader';
 
 export default function CreateAccount({ back }) {
   return (
