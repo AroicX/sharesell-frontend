@@ -1,4 +1,4 @@
-import Link from '@/components/link';
+import Link from '@/components/Link';
 import React, { useState } from 'react';
 import SVG from 'react-inlinesvg';
 import Button from '@/reusable/Button';

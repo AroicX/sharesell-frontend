@@ -7,6 +7,7 @@ import DropZone from '@/reusable/DropZone';
 import Swal from 'sweetalert2';
 import SVG from 'react-inlinesvg';
 import AppHeader from '@/components/appHeader';
+import MoreMenu from '@/components/MoreMenu';
 
 export default class App extends Component {
   render() {
@@ -14,6 +15,7 @@ export default class App extends Component {
       <div>
         <div className='p-3 text-app-text'>
           <DropZone />
+          <MoreMenu />
           <AppHeader />
           <SVG width='200px' src={'/svg/logo.svg'} />
 

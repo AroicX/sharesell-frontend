@@ -1,7 +1,7 @@
 import React from 'react';
 
 import Layout from '@/components/layout';
-import Link from '@/components/link';
+import Link from '@/components/Link';
 import ProductDisplay from '@/components/productDisplay';
 import WithdrawalDisplay from '@/components/withdrawalDisplay';
 import AuthProvider from '@/components/authProvider';

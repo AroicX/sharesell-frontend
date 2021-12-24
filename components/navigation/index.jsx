@@ -1,8 +1,15 @@
-import Link from '@/components/link';
-import React from 'react';
+import Link from '@/components/Link';
+
+import React, { useEffect, useState } from 'react';
 import SVG from 'react-inlinesvg';
 
-export default function Navigation({}) {
+export default function Navigation({ dispatch }) {
+  const [menu, setMenu] = useState(false);
+
+  useEffect(() => {
+    dispatch(menu);
+  }, [menu]);
+
   const navigationOptions = [
     {
       title: 'Home',
@@ -22,7 +29,8 @@ export default function Navigation({}) {
     {
       title: 'More',
       icon: 'more',
-      link: '/settings',
+      link: '#more',
+      click: true,
     },
   ];
 
@@ -35,6 +43,9 @@ export default function Navigation({}) {
         {navigationOptions.map((item, i) => (
           <Link
             to={item.link}
+            onClick={() => {
+              item.click ? setMenu(!menu) : null;
+            }}
             className='flex p-2 flex-col center justify-center items-center text-center cursor-pointer mx-1 text-app-text-light'
             key={i + 1}
           >

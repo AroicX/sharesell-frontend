@@ -18,7 +18,7 @@ export default function WithdrawalDisplay() {
       <div className='flex flex-col text-center center items-center justify-center'>
         <p className='text-white mt-10'>Total Revenue</p>
         <p className='text-white text-4xl font-bold'>
-          <span className='text-white text-2xl'>₦</span>200,500
+          <span className='text-white text-2xl'>₦</span>200,500.00
         </p>
         <button className=' block text-white p-2 border border-white rounded mt-5'>
           Withdraw
