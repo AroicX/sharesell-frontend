@@ -27,6 +27,11 @@ export default function SubscriptionTab({ subscription, setSubscriptionStep }) {
             <p className='font-medium text-xs text-pry-black'>Active</p>
           </div>
         )}
+        {subscription.isComing && (
+          <div className='bg-lightest-color px-4 py-1 rounded-xl'>
+            <p className='font-medium text-xs text-pry-black'>Coming Soon</p>
+          </div>
+        )}
       </div>
       <p className='text-app-color font-medium text-xs mt-3'>
         {subscription.details}

@@ -3,7 +3,7 @@ import AppHeader from 'components/AppHeader';
 import Infocard from 'reusable/Infocard';
 import SubscriptionTab from 'components/subscription-tab';
 
-export default function Subscription({setSubscriptionStep}) {
+export default function Subscription({ setSubscriptionStep }) {
   const Plans = [
     {
       name: 'Free Plan',
@@ -42,14 +42,15 @@ export default function Subscription({setSubscriptionStep}) {
       isActive: false,
     },
     {
-        name: 'VIP',
-        price: '₦20,000',
-        duration: 'per month',
-        icon: '/svg/vip.svg',
-        details:
-          'Upload up to 5 products. You also pay a 2% commission on each product sold.',
-          isActive: false
-      },
+      name: 'VIP',
+      price: '₦20,000',
+      duration: 'per month',
+      icon: '/svg/vip.svg',
+      details:
+        'Upload up to 5 products. You also pay a 2% commission on each product sold.',
+      isActive: false,
+      isComing: true,
+    },
   ];
   return (
     <div className='mt-4'>
@@ -65,9 +66,13 @@ export default function Subscription({setSubscriptionStep}) {
             style={'bg-app-cream mb-10'}
           />
           <div>
-              {Plans.map((plan, index) => (
-                  <SubscriptionTab key={index} subscription={plan} setSubscriptionStep={setSubscriptionStep}/>
-              ))}
+            {Plans.map((plan, index) => (
+              <SubscriptionTab
+                key={index}
+                subscription={plan}
+                setSubscriptionStep={setSubscriptionStep}
+              />
+            ))}
           </div>
         </div>
       </div>
