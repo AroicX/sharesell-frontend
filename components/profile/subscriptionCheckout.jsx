@@ -27,7 +27,7 @@ export default function SubscriptionCheckout({
               type='text'
             />
           </div>
-          <div className='flex items-center justify-between max-w-full mb-6'>
+          <div className='flex items-center justify-between max-w-full mt-7 mb-4'>
             <div className='mr-3'>
               <Input label={'Exp Date'} placeholder={'12/25'} type='text' />
             </div>
@@ -38,7 +38,7 @@ export default function SubscriptionCheckout({
           <Button
             text={`Pay ${subscriptionStep.price}`}
             iconRight={'/svg/arrow-right.svg'}
-            click={() => setSubscriptionStep({ step: 3 })}
+            click={() => setSubscriptionStep((prev) => ({...prev, step: 3}))}
           />
         </div>
       </div>
