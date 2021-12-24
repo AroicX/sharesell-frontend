@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 
 import Input from '@/reusable/Input';
 import Button from '@/reusable/Button';
-import AppHeader from 'components/AppHeader';
+import AppHeader from '@/components/appHeader';
 
 export default function BusinessRegistration({ next, back }) {
   const [BusinessReg, setBusinessReg] = useState(false);
