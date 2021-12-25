@@ -6,6 +6,7 @@ import AddAccount from '@/components/profile/add-account';
 import Account from '@/components/profile/account';
 import CreatePin from '@/components/profile/create-pin';
 import EnterPin from '@/components/profile/enter-pin';
+import WidthdrawalSuccess from '@/components/profile/widthdrawal-success';
 
 export default function WalletPage() {
   const [walletStep, setWalletStep] = useState({ step: 1 });
@@ -29,6 +30,7 @@ export default function WalletPage() {
       {walletStep.step === 4 ? <Account back={back} next={next}/> : ""}
       {walletStep.step === 5 ? <CreatePin back={back} next={next}/> : ""}
       {walletStep.step === 6 ? <EnterPin back={back} next={next}/> : ""}
+      {walletStep.step === 7 ? <WidthdrawalSuccess /> : ""}
     </AuthProvider>
   );
 }
