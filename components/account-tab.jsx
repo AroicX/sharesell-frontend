@@ -32,7 +32,11 @@ export default function AccountTab({
           <p className='text-xs font-semibold text-app-color'>{account.bank}</p>
           <p className='text-sm text-pry-black'>{account.number}</p>
         </div>
-        <input type={'radio'} checked={isActive} readOnly/>
+        {isActive ? (
+          <SVG src='/svg/pick.svg' />
+        ) : (
+          <div className='account-tab-selected-radio rounded-full border border-app-text'></div>
+        )}
       </div>
     </div>
   );
