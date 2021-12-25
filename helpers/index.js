@@ -1,3 +1,4 @@
+import axios from 'axios';
 import Swal from 'sweetalert2';
 
 export const toAbsoluteUrl = (pathname) =>
@@ -123,12 +124,33 @@ export const slugify = (text) => {
     .replace(/-+$/, '');
 };
 
+export const selectFilter = (data, id, name) => {
+  let result = [];
+  data.map((item) => {
+    result.push({ id: item[id], name: item[name] });
+  });
+  return result;
+};
+
+export const selectValue = (data, id, name, value) => {
+  let request = data.filter((item) => item[id] === value)[0];
+  if (request) {
+    console.log(request[name]);
+    return request[name];
+  }
+};
+
 let counter = 0;
 let links = [];
-export const cloudinaryUpload = (file) => {
+export const uploadFiles = (files) => {
+  files.forEach((file) => {
+    cloudinaryUpload(file, files);
+  });
+};
+export const cloudinaryUpload = (file, files) => {
   const formData = new FormData();
   formData.append('file', file);
-  formData.append('upload_preset', 'realhub_listing');
+  formData.append('upload_preset', 'sharesell');
 
   try {
     axios
@@ -136,12 +158,11 @@ export const cloudinaryUpload = (file) => {
       .then((response) => {
         if (counter < files.length) {
           counter++;
-          links.push({
-            images: { image: response.data.url },
-          });
+          links.push(response.data.url);
         }
         if (counter === files.length) {
-          return { images: JSON.stringify(links) };
+          console.log(links);
+          return links;
         }
       })
       .catch((error) => {

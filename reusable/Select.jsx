@@ -7,7 +7,7 @@ const Select = ({
   options = null,
   dispatch = null,
   rest,
-  initialValue
+  initialValue,
 }) => {
   const [toggle, setToggle] = useState(false);
   const [selected, setSelected] = useState(placeholder || initialValue);
@@ -16,6 +16,7 @@ const Select = ({
     setSelected(value);
     setToggle(false);
   };
+
   return (
     <div className='select'>
       <label htmlFor=''>{label}</label>
@@ -32,10 +33,12 @@ const Select = ({
           {options?.map((option, i) => (
             <button
               key={i + 1}
-              className={`${selected == option ? 'bg-black text-white' : ''}`}
-              onClick={() => handleSelected(option)}
+              className={`${
+                selected == option.name ? 'bg-black text-white' : ''
+              }`}
+              onClick={() => handleSelected(option.name)}
             >
-              {option}
+              {option.name}
             </button>
           ))}
         </div>

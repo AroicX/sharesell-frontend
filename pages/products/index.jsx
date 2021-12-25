@@ -1,5 +1,4 @@
-import React from 'react';
-
+import React, { useEffect } from 'react';
 import Button from '@/reusable/Button';
 import SVG from 'react-inlinesvg';
 import Link from '@/components/Link';
@@ -7,10 +6,18 @@ import AuthProvider from '@/components/AuthProvider';
 import { _protectedRequest } from 'services';
 import useSWR from 'swr';
 import { slugify } from '@/helpers/index';
+import { useGlobalStore } from '@/hooks/useGlobalStore';
 
-export default function Product({ productsCategories }) {
+export default function Product({}) {
+  const { setProductCategories } = useGlobalStore();
   const { data, error } = useSWR(`/products/categories`, _protectedRequest);
-  const categories = data?.payload?.data;
+  const categories = data?.payload?.data || [];
+
+  useEffect(() => {
+    if (categories.length > 0) {
+      setProductCategories(categories);
+    }
+  }, [categories]);
 
   return (
     <AuthProvider className='Product'>

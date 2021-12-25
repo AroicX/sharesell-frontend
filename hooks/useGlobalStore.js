@@ -12,7 +12,7 @@ const GlobalStore = () => {
    */
 
   const [token, setToken] = useState(null);
-  // const [onBoarding, setOnBoarding] = useState(true);
+  const [productCategories, setProductCategories] = useState([]);
   // const [localStorage, setLocalStorage] = useState(null);
   // const [authenticated, setAuthenticated] = useState(false);
   // const [user, setUser] = useState(null);
@@ -21,6 +21,8 @@ const GlobalStore = () => {
 
   return {
     token,
+    productCategories,
+    setProductCategories,
   };
 };
 
