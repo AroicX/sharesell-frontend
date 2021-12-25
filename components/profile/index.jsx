@@ -14,35 +14,35 @@ export default function Profile() {
       icon: '/svg/history.svg',
       title: 'History',
       detail: 'View transaction and order history',
-      to:'/profile/history'
+      to: '/profile/history',
     },
     {
       icon: '/svg/subscription.svg',
       title: 'Subscription',
       detail: 'Manage your sharesell subscription',
-      to: "profile/subscription"
+      to: 'profile/subscription',
     },
     {
       icon: '/svg/wallet.svg',
       title: 'Make a Withdrawal',
       detail: 'Withdraw cash to your account',
-      to: "/profile/wallet"
+      to: '/profile/wallet',
     },
     {
       icon: '/svg/lock.svg',
       title: 'Change Password',
       detail: 'Manage Password',
-      to: "/profile/change-password"
+      to: '/profile/change-password',
     },
     {
       icon: '/svg/logout.svg',
       title: 'Logout',
       detail: 'Exit account',
-      to: "/"
+      to: '/',
     },
   ];
 
-  const Router = useRouter()
+  const Router = useRouter();
   return (
     <div className='profile'>
       <h2 className='text-3xl font-light my-2'>Profile</h2>
@@ -56,7 +56,10 @@ export default function Profile() {
         <div className='flex flex-col ml-4'>
           <p className='font-semibold text-base'>Chika Inc</p>
           <p className='text-xs text-app-text'>Sirmudiadavid@gmail.com</p>
-          <div className='flex justify-center items-center h-6 min-w-max relative mt-2 rounded-sm border border-pry-black'>
+          <div
+            className='flex justify-center items-center h-6 min-w-max relative mt-2 rounded-sm border border-pry-black cursor-pointer' 
+            onClick={() => Router.push('profile/update-account')}
+          >
             <p className='text-sm px-1'>Update & Activate Account</p>
             <div className='absolute w-2 h-2 rounded-full bg-terms profile-notification'></div>
           </div>
@@ -64,7 +67,11 @@ export default function Profile() {
       </div>
       <div className='profile-options mt-8'>
         {ProfileOptions.map((option, index) => (
-          <div key={index} className='flex pt-5 cursor-pointer' onClick={() => Router.push(option.to)}>
+          <div
+            key={index}
+            className='flex pt-5 cursor-pointer'
+            onClick={() => Router.push(option.to)}
+          >
             <div className='w-30 mr-6'>
               <SVG src={option.icon} className='max-w-full' />
             </div>
