@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import AuthProvider from '@/components/AuthProvider';
 import BVN from '@/components/profile/bvn';
+import VerifyBVN from '@/components/profile/verify-bvn';
 
 export default function BVNPage() {
   const [bvnStep, setBvnStep] = useState(1);
@@ -12,5 +13,10 @@ export default function BVNPage() {
       setBvnStep((prev) => prev - 1);
     }
   };
-  return <AuthProvider>{bvnStep === 1 ? <BVN next={next}/> : ''}</AuthProvider>;
+  return (
+    <AuthProvider>
+      {bvnStep === 1 ? <BVN next={next} /> : ''}{' '}
+      {bvnStep === 2 ? <VerifyBVN /> : ''}
+    </AuthProvider>
+  );
 }
