@@ -1,6 +1,6 @@
 import React from 'react';
 import AppHeader from '@/components/AppHeader';
-import UpdateTab from '@/components/update-tab';
+import UpdateTab from '@/components/UpdateTab';
 import { useRouter } from 'next/router';
 
 export default function UpdateAccount() {

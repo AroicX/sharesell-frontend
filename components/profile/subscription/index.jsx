@@ -1,7 +1,7 @@
 import React from 'react';
 import AppHeader from 'components/AppHeader';
 import Infocard from 'reusable/Infocard';
-import SubscriptionTab from 'components/subscription-tab';
+import SubscriptionTab from '@/components/SubscriptionTab';
 
 export default function Subscription({ setSubscriptionStep }) {
   const plans = [

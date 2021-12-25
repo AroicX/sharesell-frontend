@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import AppHeader from '@/components/AppHeader';
-import AccountTab from '@/components/account-tab';
+import AccountTab from '@/components/AccountTab';
 import Button from '@/reusable/Button';
 
 export default function Account({ next, back }) {

@@ -1,6 +1,6 @@
 import React from 'react';
 import AppHeader from 'components/AppHeader';
-import MoreContainer from 'components/more-container';
+import MoreContainer from '@/components/MoreContainer';
 
 export default function PickUpAddress({ setCurrentState }) {
   const SavedAddress = [
