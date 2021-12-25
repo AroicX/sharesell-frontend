@@ -44,3 +44,20 @@
     border: 1px solid rgba(67, 90, 111, 0.16);
   }
 }
+
+.account {
+  &-tab-logo {
+    min-width: 4em;
+  }
+
+  &-tab-selected-radio {
+    height: 0.83rem;
+    width: 0.83rem;
+  }
+}
+
+.update {
+  &-tab-icon {
+    min-width: 2.5rem;
+  }
+}
