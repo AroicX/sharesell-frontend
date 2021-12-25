@@ -6,7 +6,7 @@ import TextArea from '@/reusable/TextArea';
 import Infocard from '@/reusable/Infocard';
 import DropZone from '@/reusable/DropZone';
 import Button from '@/reusable/Button';
-import AuthProvider from '@/components/authProvider';
+import AuthProvider from '@/components/AuthProvider';
 
 export default function AddProduct({}) {
   return (
