@@ -21,7 +21,7 @@ export default function VerifyBVN({ next, back }) {
             iconRight={'/svg/arrow-right.svg'}
             click={next}
           />
-          <div className='flex items-center justify-center mt-10'>
+          <div className='flex items-center justify-center mt-9'>
             <p className='font-bold text-app-text text-base'>0:32</p>
           </div>
         </div>
