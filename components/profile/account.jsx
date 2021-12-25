@@ -13,7 +13,7 @@ export default function Account({ next, back }) {
       number: '0111555814',
     },
     {
-      logo: '/svg/access.svg',
+      logo: '/svg/my_bank.svg',
       name: 'Osamudiamen Imasuen',
       bank: 'Access Bank PLC',
       number: '0724463022',
