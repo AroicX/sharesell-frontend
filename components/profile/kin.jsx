@@ -14,9 +14,7 @@ export default function Kin() {
       <AppHeader noSVG />
       <div>
         <h2 className='text-3xl font-light my-2'>Next of Kin</h2>
-        <span className='text-app-text'>
-        Please provide accurate details.
-        </span>
+        <span className='text-app-text'>Please provide accurate details.</span>
         <div>
           <div className='mt-7'>
             <Input label={'First Name'} placeholder={'Chike'} />

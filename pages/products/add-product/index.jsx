@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import AppHeader from '@/components/appHeader';
 import Input from '@/reusable/Input';
 import Select from '@/reusable/Select';
@@ -7,8 +7,10 @@ import Infocard from '@/reusable/Infocard';
 import DropZone from '@/reusable/DropZone';
 import Button from '@/reusable/Button';
 import AuthProvider from '@/components/AuthProvider';
+import { inputFormatter } from '@/helpers/index';
 
 export default function AddProduct({}) {
+  const [price, setPrice] = useState('');
   return (
     <AuthProvider className='add-product'>
       <AppHeader />
@@ -43,12 +45,7 @@ export default function AddProduct({}) {
       </div>
 
       <div className='m-1'>
-        <Input
-          label='Product Price'
-          type='number'
-          placeholder='3,000'
-          price={true}
-        />
+        <Input label='Product Price' placeholder='3,000' price={true} />
       </div>
 
       <div className='m-1 my-5'>
@@ -87,9 +84,10 @@ export default function AddProduct({}) {
       <div className='m-1 my-5'>
         <Input
           label='Suggested Retail Price'
-          type='number'
           placeholder='3,000'
           price={true}
+          value={price}
+          dispatch={(data) => setPrice(inputFormatter(data, ',', 3))}
         />
       </div>
 
