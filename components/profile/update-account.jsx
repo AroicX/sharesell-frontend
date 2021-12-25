@@ -11,7 +11,7 @@ export default function UpdateAccount() {
       isComplete: true,
       completeIcon: '/svg/business-complete.svg',
       inCompleteIcon: '/svg/business-incomplete.svg',
-      to: "/update-account/business"
+      to: "/profile/update-account/business"
     },
     {
       title: 'Contact Person',
@@ -20,7 +20,7 @@ export default function UpdateAccount() {
       isComplete: false,
       completeIcon: '/svg/contact-complete.svg',
       inCompleteIcon: '/svg/contact-incomplete.svg',
-      to: "/update-account/contact"
+      to: "/profile/update-account/contact"
     },
     {
       title: 'BVN',
@@ -29,7 +29,7 @@ export default function UpdateAccount() {
       isComplete: true,
       completeIcon: '/svg/bvn-complete.svg',
       inCompleteIcon: '/svg/bvn-incomplete.svg',
-      to: "/update-account/bvn"
+      to: "/profile/update-account/bvn"
     },
     {
       title: 'Next Of Kin',
@@ -38,7 +38,7 @@ export default function UpdateAccount() {
       isComplete: false,
       completeIcon: '/svg/kin-complete.svg',
       inCompleteIcon: '/svg/kin-incomplete.svg',
-      to: "/update-account/kin"
+      to: "/profile/update-account/kin"
     },
   ];
   return (
