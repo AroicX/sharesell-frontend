@@ -122,3 +122,32 @@ export const slugify = (text) => {
     .replace(/^-+/, '')
     .replace(/-+$/, '');
 };
+
+let counter = 0;
+let links = [];
+export const cloudinaryUpload = (file) => {
+  const formData = new FormData();
+  formData.append('file', file);
+  formData.append('upload_preset', 'realhub_listing');
+
+  try {
+    axios
+      .post('https://api.cloudinary.com/v1_1/aroicx/image/upload', formData)
+      .then((response) => {
+        if (counter < files.length) {
+          counter++;
+          links.push({
+            images: { image: response.data.url },
+          });
+        }
+        if (counter === files.length) {
+          return { images: JSON.stringify(links) };
+        }
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  } catch (error) {
+    console.log(error);
+  }
+};
