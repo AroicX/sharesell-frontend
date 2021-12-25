@@ -4,7 +4,7 @@ import Infocard from 'reusable/Infocard';
 import SubscriptionTab from 'components/subscription-tab';
 
 export default function Subscription({ setSubscriptionStep }) {
-  const Plans = [
+  const plans = [
     {
       name: 'Free Plan',
       price: 'Free',
@@ -66,7 +66,7 @@ export default function Subscription({ setSubscriptionStep }) {
             style={'bg-app-cream mb-10'}
           />
           <div>
-            {Plans.map((plan, index) => (
+            {plans.map((plan, index) => (
               <SubscriptionTab
                 key={index}
                 subscription={plan}

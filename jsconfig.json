@@ -1,5 +1,7 @@
 {
+  "moduleResolution": "node",
   "compilerOptions": {
+    "jsx": "preserve",
     "baseUrl": ".",
     "paths": {
       "@/*": ["src/*"],
@@ -9,7 +11,8 @@
       "@/services/*": ["services/*"],
       "@/helpers/*": ["helpers/*"],
       "@/reusable/*": ["reusable/*"],
-      "@/styles/*": ["reusable/*"]
+      "@/styles/*": ["/styles/*"]
     }
   },
+  "exclude": ["node_modules", ".next"]
 }

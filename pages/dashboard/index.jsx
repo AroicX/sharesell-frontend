@@ -3,7 +3,7 @@ import React from 'react';
 import Layout from '@/components/layout';
 import Link from '@/components/Link';
 import ProductDisplay from '@/components/ProductDisplay';
-import WithdrawalDisplay from '@/components/withdrawalDisplay';
+import WithdrawalDisplay from '@/components/WithdrawalDisplay';
 import AuthProvider from '@/components/AuthProvider';
 
 export default function Dashboard() {

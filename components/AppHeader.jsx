@@ -1,6 +1,7 @@
 import { useRouter } from 'next/router';
 import React from 'react';
 import SVG from 'react-inlinesvg';
+import Link from './Link';
 
 export default function AppHeader({ click = null, noSVG }) {
   const router = useRouter();
@@ -22,7 +23,9 @@ export default function AppHeader({ click = null, noSVG }) {
       {noSVG ? (
         ''
       ) : (
-        <SVG className='my-auto' width='50px' src={'/svg/logo.svg'} />
+        <Link to='/dashboard'>
+          <SVG className='my-auto' width='50px' src={'/svg/logo.svg'} />
+        </Link>
       )}
     </div>
   );

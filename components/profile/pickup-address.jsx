@@ -19,7 +19,7 @@ export default function PickUpAddress({ setCurrentState }) {
             {SavedAddress.map((address, index) => (
               <div
                 key={index}
-                className='flex justify-between min-h-fit bg-app-cream rounded border p-4 border-lightest-color mt-4 relative'
+                className='flex justify-between min-h-fit bg-app-cream rounded border p-4 py-6 border-lightest-color mt-4 relative'
               >
                 <p className='w-48 text-sm'>{`${address.address}, ${address.city} ${address.state}, Nigeria`}</p>
                 <MoreContainer
