@@ -59,7 +59,7 @@ body {
   }
 }
 
-.navigation{
+.navigation {
   position: fixed;
 }
 
@@ -135,4 +135,14 @@ body {
     left: 0;
     transform: none !important;
   }
+}
+
+.more-menu-modal {
+  position: relative;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  background: #a5595452;
+  z-index: 100;
 }

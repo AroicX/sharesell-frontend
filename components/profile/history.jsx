@@ -4,7 +4,7 @@ import SVG from 'react-inlinesvg';
 import HistoryTab from 'components/history-tab';
 
 export default function History() {
-  const Transactions = [
+  const transactions = [
     {
       title: 'Withdrawal to Osamudiamen GTB',
       date: 'Aug 28th 2020',
@@ -120,24 +120,32 @@ export default function History() {
                     <SVG src='/svg/close.svg' />
                   </div>
                 </div>
-                {currentHistory === "transactions" ? <div>
-                  {Transactions.map((history, index) => (
-                    <HistoryTab
-                      key={index}
-                      history={history}
-                      currentHistory={currentHistory}
-                    />
-                  ))}
-                </div> : ""}
-                {currentHistory === "orders" ? <div>
-                  {Orders.map((history, index) => (
-                    <HistoryTab
-                      key={index}
-                      history={history}
-                      currentHistory={currentHistory}
-                    />
-                  ))}
-                </div> : ""}
+                {currentHistory === 'transactions' ? (
+                  <div>
+                    {transactions.map((history, index) => (
+                      <HistoryTab
+                        key={index}
+                        history={history}
+                        currentHistory={currentHistory}
+                      />
+                    ))}
+                  </div>
+                ) : (
+                  ''
+                )}
+                {currentHistory === 'orders' ? (
+                  <div>
+                    {Orders.map((history, index) => (
+                      <HistoryTab
+                        key={index}
+                        history={history}
+                        currentHistory={currentHistory}
+                      />
+                    ))}
+                  </div>
+                ) : (
+                  ''
+                )}
               </div>
               <div className='flex items-center justify-between py-2 mb-2 border-b border-app-text'>
                 <p className='font-medium text-sm text-app-text'>Week 2</p>

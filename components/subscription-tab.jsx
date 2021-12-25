@@ -6,7 +6,7 @@ export default function SubscriptionTab({ subscription, setSubscriptionStep }) {
     setSubscriptionStep({ step: 2, ...subscription });
   };
   return (
-    <div className='subscription-tab rounded-lg p-4 mt-6'>
+    <div className='subscription-tab rounded-lg p-4 mt-6 cursor-pointer'>
       <div className='flex justify-between items-center'>
         <SVG src={subscription.icon} />
         <div className='flex flex-col'>

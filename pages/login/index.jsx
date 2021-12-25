@@ -4,7 +4,7 @@ import Button from '@/reusable/Button';
 import Input from '@/reusable/Input';
 import { LOGIN_ACCOUNT } from '@/services/authentication';
 import { ResponseHandler } from 'helpers';
-import Link from '@/components/link';
+import Link from '@/components/Link';
 import { setCookie } from '@/services/cookies';
 import router from 'next/router';
 

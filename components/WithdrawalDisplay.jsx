@@ -3,7 +3,7 @@ import SVG from 'react-inlinesvg';
 export default function WithdrawalDisplay({ noButton }) {
   return (
     <div
-      className='w-full relative bg-black flex flex-col text-center center items-center justify-center my-5 shadow  p-2 rounded'
+      className='w-full relative bg-black flex flex-col text-center center items-center justify-center my-5 shadow  p-2 py-6 rounded cursor-pointer'
       style={{
         backgroundImage: `url('/images/bg-lines.png')`,
         backgroundPosition: 'center center',
@@ -20,9 +20,13 @@ export default function WithdrawalDisplay({ noButton }) {
       )}
 
       <div className='flex flex-col text-center center items-center justify-center'>
-        {noButton ? <p className='text-white mt-5'>Amount Avaliable</p> : <p className='text-white mt-10'>Total Revenue</p>}
+        {noButton ? (
+          <p className='text-white mt-5'>Amount Avaliable</p>
+        ) : (
+          <p className='text-white mt-10'>Total Revenue</p>
+        )}
         <p className='text-white text-4xl font-bold'>
-          <span className='text-white text-2xl'>₦</span>200,500
+          <span className='text-white text-2xl'>₦</span>200,500.00
         </p>
         {noButton ? (
           ''
