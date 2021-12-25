@@ -1,10 +1,10 @@
 import React from 'react';
 import AppHeader from '@/components/AppHeader';
 import PinContainer from '@/components/pin-container';
+import Infocard from '@/reusable/Infocard';
 import Button from '@/reusable/Button';
-import Link from '@/components/Link';
 
-export default function EnterPin({ next, back }) {
+export default function CreatePin({ next, back }) {
   return (
     <div className='mt-4'>
       <AppHeader noSVG click={back} />
@@ -29,17 +29,17 @@ export default function EnterPin({ next, back }) {
           </div>
           <div className='flex flex-col items-center justify-center mt-12'>
             <p className='text-pry-color font-semibold text-lg text-center'>
-              Enter Pin
+              Create Pin
             </p>
             <PinContainer />
-            <Link to={'/'} className='underline text-sm font-semibold text-app-text mb-10 mt-4'>
-              Forgot Pin?
-            </Link>
-            <Button
-              text={'Send'}
-              iconRight={'/svg/arrow-right.svg'}
-              click={next}
+            <Infocard
+              text={
+                'This will be the PIN you will use for all your transactions. Keep it safe and do not share it with anyone.'
+              }
+              icon={'/svg/info.svg'}
+              style={'bg-app-cream mt-6 mb-5'}
             />
+            <Button text={'Send'} iconRight={'/svg/arrow-right.svg'} click={next}/>
           </div>
         </div>
       </div>
