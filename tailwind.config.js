@@ -14,7 +14,8 @@ module.exports = {
         'pry-black': '#0D0D0D',
         'lightest-color': '#F1CFBB',
         'green': "#219653",
-        'light-green': "#B7F3D0"
+        'light-green': "#B7F3D0",
+        'lightest-green' : "#D7FCE6"
       },
       screens: {
         md: '800px',
