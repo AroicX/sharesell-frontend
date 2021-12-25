@@ -1,8 +1,7 @@
 import React, { useState } from 'react';
-import AppHeader from '../AppHeader';
-import AccountTab from '../account-tab';
+import AppHeader from '@/components/AppHeader';
+import AccountTab from '@/components/account-tab';
 import Button from '@/reusable/Button';
-import Select from '@/reusable/Select';
 
 export default function Account({ next, back }) {
   const Accounts = [

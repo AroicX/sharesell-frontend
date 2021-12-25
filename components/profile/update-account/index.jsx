@@ -1,8 +1,10 @@
 import React from 'react';
 import AppHeader from '@/components/AppHeader';
 import UpdateTab from '@/components/update-tab';
+import { useRouter } from 'next/router';
 
 export default function UpdateAccount() {
+  const Router = useRouter();
   const details = [
     {
       title: 'Busniess Details',
@@ -43,7 +45,7 @@ export default function UpdateAccount() {
   ];
   return (
     <div className='mt-4'>
-      <AppHeader noSVG />
+      <AppHeader noSVG click={() => Router.push("/profile")}/>
       <div className='mt-3'>
         <h2 className='text-2xl font-light my-2'>Update & Activate Account</h2>
         <div className='flex flex-col'>

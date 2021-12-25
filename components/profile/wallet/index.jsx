@@ -16,7 +16,7 @@ export default function Wallet({ next }) {
           <WithdrawalDisplay noButton />
           <div className='mt-12'>
             <Input
-              placeholder={'N20,000'}
+              placeholder={'20,000'}
               label={'Amount to Withdraw'}
               value={price}
               dispatch={(data) => setPrice(inputFormatter(data, ',', 3))}
