@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
-import AppHeader from 'components/AppHeader';
+import AppHeader from '@/components/AppHeader';
 import SVG from 'react-inlinesvg';
-import HistoryTab from 'components/history-tab';
+import HistoryTab from '@/components/HistoryTab';
 
 export default function History() {
   const transactions = [

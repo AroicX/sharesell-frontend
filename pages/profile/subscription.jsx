@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import AuthProvider from 'components/AuthProvider';
-import Subscription from 'components/profile/subscription';
-import SubscriptionCheckout from 'components/profile/subscriptionCheckout';
-import SubscriptionSuccess from 'components/profile/subscription-success';
+import Subscription from '@/components/profile/subscription';
+import SubscriptionCheckout from '@/components/profile/subscription/SubscriptionCheckout';
+import SubscriptionSuccess from '@/components/profile/subscription/SubscriptionSuccess';
 
 export default function SubscriptionPage() {
   const [subscriptionStep, setSubscriptionStep] = useState({ step: 1 });

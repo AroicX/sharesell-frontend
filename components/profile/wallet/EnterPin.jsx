@@ -1,6 +1,6 @@
 import React from 'react';
 import AppHeader from '@/components/AppHeader';
-import PinContainer from '@/components/pin-container';
+import PinContainer from '@/components/PinContainer';
 import Button from '@/reusable/Button';
 import Link from '@/components/Link';
 

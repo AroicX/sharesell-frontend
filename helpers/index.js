@@ -138,3 +138,69 @@ export const selectValue = (data, id, name, value) => {
     return request[name];
   }
 };
+
+export const inputFormatter = (amount, seperator, afterNumber) => {
+  
+  let allNumbers = {
+    0: true,
+    1: true,
+    2: true,
+    3: true,
+    4: true,
+    5: true,
+    6: true,
+    7: true,
+    8: true,
+    9: true,
+  };
+  let incomingAmount = amount.toString();
+  const amountInArray = [];
+  for (let i = 0; i < incomingAmount.length; i++) {
+    if (incomingAmount[i] !== seperator && allNumbers[incomingAmount[i]]) {
+      amountInArray.push(incomingAmount[i]);
+    }
+  }
+  let numOfDecimal = 0;
+  if (amountInArray.length % afterNumber == 0) {
+    numOfDecimal = (amountInArray.length / afterNumber) - 1;
+  } else {
+    numOfDecimal = Math.floor(amountInArray.length / afterNumber);
+  }
+
+  if (numOfDecimal < 1) {
+    let lessDecimal = "";
+    for (let i = 0; i < amountInArray.length; i++) {
+      lessDecimal = lessDecimal + amountInArray[i];
+    }
+    return lessDecimal;
+  }
+
+  const indexArray = indexDeterminer(amountInArray.length, numOfDecimal, afterNumber);
+  let formattedAmount = "";
+  let nextIndexPointer = 0;
+  for (let i = 0; i < amountInArray.length; i++) {
+    if (i === indexArray[nextIndexPointer]) {
+      formattedAmount = `${formattedAmount}${amountInArray[i]}${seperator}`;
+      nextIndexPointer = nextIndexPointer + 1;
+      if (nextIndexPointer >= indexArray.length) {
+        nextIndexPointer = nextIndexPointer - 1;
+      }
+    } else {
+      formattedAmount = `${formattedAmount}${amountInArray[i]}`;
+    }
+  }
+  return formattedAmount;
+};
+
+const indexDeterminer = (amountLength, numOfDecimal, afterNumber) => {
+  const indexesArray = [];
+  let nextComma = amountLength;
+  for (let i = 0; i < numOfDecimal; i++) {
+    indexesArray.push(nextComma - (afterNumber + 1));
+    nextComma = nextComma - afterNumber;
+  }
+  indexesArray.reverse();
+  return indexesArray;
+};
+
+

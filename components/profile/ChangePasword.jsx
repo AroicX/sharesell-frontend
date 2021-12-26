@@ -1,5 +1,5 @@
 import React from 'react';
-import AppHeader from 'components/AppHeader';
+import AppHeader from '@/components/AppHeader';
 import Input from 'reusable/Input';
 import Button from 'reusable/Button';
 import { useRouter} from "next/router"

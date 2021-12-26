@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
-import AuthProvider from 'components/AuthProvider';
-import PickUpAddress from 'components/profile/pickup-address';
-import PickUpAddressEdit from 'components/profile/pickup-edit';
+import AuthProvider from '@/components/AuthProvider';
+import PickUpAddress from '@/components/profile/pickup-address';
+import PickUpAddressEdit from '@/components/profile/pickup-address/PickupEdit';
 
 export default function PickupAddressPage() {
     const [currentState, setCurrentState] = useState({currentState: 1})
