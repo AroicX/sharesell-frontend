@@ -216,4 +216,28 @@ const indexDeterminer = (amountLength, numOfDecimal, afterNumber) => {
   return indexesArray;
 };
 
+export const cardDetailsFormatter = (value) => {
+  const valueArray = [];
+  let allNumbers = {
+    0: true,
+    1: true,
+    2: true,
+    3: true,
+    4: true,
+    5: true,
+    6: true,
+    7: true,
+    8: true,
+    9: true,
+  };
+
+  for(let i = 0; i < value.length; i++) {
+    if(valueArray[i] !== "-" && allNumbers[value[i]]) {
+      valueArray.push(value[i])
+    }
+  }
+
+
+}
+
 
