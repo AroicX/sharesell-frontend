@@ -9,14 +9,15 @@ import Button from '@/reusable/Button';
 import AuthProvider from '@/components/AuthProvider';
 import { useGlobalStore } from '@/hooks/useGlobalStore';
 import router from 'next/router';
-import { selectFilter, selectValue } from '@/helpers/index';
+import { selectFilter, selectValue, slugify } from '@/helpers/index';
 import axios from 'axios';
 import Swal from 'sweetalert2';
+import { CREATE_PRODUCT } from '@/services/products';
 
 let counter = 0;
 let links = [];
 export default function AddProduct({}) {
-  const { productCategories } = useGlobalStore();
+  const { productCategories, user } = useGlobalStore();
 
   useEffect(() => {
     if (productCategories.length < 1) {
@@ -27,7 +28,7 @@ export default function AddProduct({}) {
   const [images, setImages] = useState(null);
   const [loading, setLoading] = useState(false);
   const [data, setData] = useState({
-    user_id: '',
+    user_id: user ? user.user_id : '',
     product_name: 'Beanie',
     product_category: '',
     product_description: 'This is a head warmer.',
@@ -43,18 +44,32 @@ export default function AddProduct({}) {
     product_images: [],
   });
 
-  const handleUpload = (event) => {
-    event.preventDefault();
+  const handleSubmit = () => {
+    // event.preventDefault();
+    data.product_images = links;
+    const callback = (response) => {
+      if (response) {
+        setLoading(false);
+        const { product_name } = response.payload;
+        Swal.fire({
+          title: 'Completed',
+          text: response.message,
+          icon: 'success',
+          confirmButtonText: 'View Product',
+          confirmButtonColor: '#A55954',
+          allowOutsideClick: false,
+        }).then((result) => {
+          if (result.dismiss !== 'cancel') {
+            return router.push(`/products/${slugify(product_name)}`);
+          }
+        });
+      }
+    };
+    const onError = (error) => {
+      console.log(error);
+    };
 
-    console.log(uploadFiles(images));
-    // Swal.fire({
-    //   text: response.message,
-    //   icon: 'success',
-    //   timerProgressBar: true,
-    //   timer: 2000,
-    //   allowOutsideClick: true,
-    //   showConfirmButton: false,
-    // });
+    CREATE_PRODUCT(data, callback, onError);
   };
 
   const uploadFiles = (event) => {
@@ -82,10 +97,16 @@ export default function AddProduct({}) {
         .then((response) => {
           if (counter < images.length) {
             counter++;
-            links.push(response.data.url);
+            links.push({ image: response.data.url });
           }
           if (counter === images.length) {
-            setData((prevState) => ({ ...prevState, product_images: links }));
+            setData((prevState) => ({
+              ...prevState,
+              product_images: JSON.stringify(links),
+            }));
+            setTimeout(() => {
+              handleSubmit();
+            }, 2000);
           }
         })
         .catch((error) => {

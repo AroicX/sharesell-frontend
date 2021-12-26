@@ -6,8 +6,8 @@ const environment = process.env.NODE_ENV;
 
 const requests = axios.create({
   // baseURL: process.env.NEXT_PUBLIC_BASE_URL,
-  baseURL: 'https://shareshell.test/api/',
-  // baseURL: 'https://shareshell-api.herokuapp.com/api/',
+  // baseURL: 'https://shareshell.test/api/',
+  baseURL: 'https://shareshell-api.herokuapp.com/api/',
 });
 
 requests.interceptors.response.use(
@@ -19,7 +19,6 @@ requests.interceptors.response.use(
   },
   function (error) {
     if (401 === error.response.status) {
-
       window.localStorage.removeItem('user-data');
 
       Swal(
@@ -39,6 +38,25 @@ requests.interceptors.response.use(
     } else {
       return Promise.reject(error);
     }
+  }
+);
+
+requests.interceptors.request.use(
+  function (config) {
+    config.headers = {
+      ...config.headers,
+    };
+
+    const token = getToken();
+
+    if (token) {
+      config.headers['Authorization'] = `Bearer ${token}`;
+    }
+
+    return config;
+  },
+  function (error) {
+    return Promise.reject(error);
   }
 );
 
