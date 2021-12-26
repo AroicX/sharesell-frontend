@@ -8,7 +8,6 @@ import { useRouter } from 'next/router';
 import { useGlobalStore } from '@/hooks/useGlobalStore';
 import { BUSINESS_DETAILS } from '@/services/profile/update-account/index';
 import { getStates, getCity } from '@/helpers/index';
-import Swal from 'sweetalert2';
 import { ResponseHandler } from '@/helpers/index';
 
 export default function Business() {
@@ -51,6 +50,7 @@ export default function Business() {
   const setStateHandler = (data) => {
     setState(data);
   };
+
   return (
     <div className='mt-4 mb-10'>
       <AppHeader noSVG />
