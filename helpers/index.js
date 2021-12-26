@@ -1,4 +1,3 @@
-import axios from 'axios';
 import Swal from 'sweetalert2';
 
 export const toAbsoluteUrl = (pathname) =>
@@ -137,38 +136,5 @@ export const selectValue = (data, id, name, value) => {
   if (request) {
     console.log(request[name]);
     return request[name];
-  }
-};
-
-let counter = 0;
-let links = [];
-export const uploadFiles = (files) => {
-  files.forEach((file) => {
-    cloudinaryUpload(file, files);
-  });
-};
-export const cloudinaryUpload = (file, files) => {
-  const formData = new FormData();
-  formData.append('file', file);
-  formData.append('upload_preset', 'sharesell');
-
-  try {
-    axios
-      .post('https://api.cloudinary.com/v1_1/aroicx/image/upload', formData)
-      .then((response) => {
-        if (counter < files.length) {
-          counter++;
-          links.push(response.data.url);
-        }
-        if (counter === files.length) {
-          console.log(links);
-          return links;
-        }
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  } catch (error) {
-    console.log(error);
   }
 };

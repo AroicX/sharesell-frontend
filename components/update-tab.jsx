@@ -6,7 +6,7 @@ export default function UpdateTab({ detail }) {
   const Router = useRouter();
   return (
     <div
-      className={`flex p-4 rounded-lg cursor-pointer my-2 ${
+      className={`flex p-4 py-10 rounded cursor-pointer my-2 ${
         detail.isComplete ? 'bg-lightest-green' : 'bg-app-cream'
       }`}
       onClick={() => Router.push(detail.to)}

@@ -9,8 +9,12 @@ import Button from '@/reusable/Button';
 import AuthProvider from '@/components/AuthProvider';
 import { useGlobalStore } from '@/hooks/useGlobalStore';
 import router from 'next/router';
-import { uploadFiles, selectFilter, selectValue } from '@/helpers/index';
+import { selectFilter, selectValue } from '@/helpers/index';
+import axios from 'axios';
+import Swal from 'sweetalert2';
 
+let counter = 0;
+let links = [];
 export default function AddProduct({}) {
   const { productCategories } = useGlobalStore();
 
@@ -21,6 +25,7 @@ export default function AddProduct({}) {
   }, [productCategories]);
 
   const [images, setImages] = useState(null);
+  const [loading, setLoading] = useState(false);
   const [data, setData] = useState({
     user_id: '',
     product_name: 'Beanie',
@@ -52,11 +57,50 @@ export default function AddProduct({}) {
     // });
   };
 
+  const uploadFiles = (event) => {
+    event.preventDefault();
+    setLoading(true);
+    Swal.fire({
+      text: 'Please Wait while image is uploading...',
+      icon: 'warning',
+      timerProgressBar: true,
+      timer: 5000,
+      allowOutsideClick: true,
+      showConfirmButton: false,
+    });
+    images.forEach((file) => {
+      cloudinaryUpload(file);
+    });
+  };
+  const cloudinaryUpload = (file) => {
+    const formData = new FormData();
+    formData.append('file', file);
+    formData.append('upload_preset', 'sharesell');
+    try {
+      axios
+        .post('https://api.cloudinary.com/v1_1/aroicx/image/upload', formData)
+        .then((response) => {
+          if (counter < images.length) {
+            counter++;
+            links.push(response.data.url);
+          }
+          if (counter === images.length) {
+            setData((prevState) => ({ ...prevState, product_images: links }));
+          }
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   return (
     <AuthProvider className='add-product'>
       <AppHeader />
       <h2 className='text-3xl font-light my-10'>Add a New Product</h2>
-      <form onSubmit={handleUpload}>
+      <form onSubmit={uploadFiles}>
         <div className='m-1'>
           <Input
             label='Product Name'
@@ -261,6 +305,7 @@ export default function AddProduct({}) {
           type='submit'
           text='Save Product'
           iconRight={'/svg/arrow-right.svg'}
+          loading={loading}
         />
       </form>
     </AuthProvider>

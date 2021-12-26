@@ -6,8 +6,8 @@ const environment = process.env.NODE_ENV;
 
 const requests = axios.create({
   // baseURL: process.env.NEXT_PUBLIC_BASE_URL,
-  // baseURL: 'https://shareshell.test/api/',
-  baseURL: 'https://shareshell-api.herokuapp.com/api/',
+  baseURL: 'https://shareshell.test/api/',
+  // baseURL: 'https://shareshell-api.herokuapp.com/api/',
 });
 
 requests.interceptors.response.use(
@@ -19,6 +19,7 @@ requests.interceptors.response.use(
   },
   function (error) {
     if (401 === error.response.status) {
+
       window.localStorage.removeItem('user-data');
 
       Swal(
