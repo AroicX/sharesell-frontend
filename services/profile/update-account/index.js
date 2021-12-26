@@ -25,7 +25,21 @@ export async function CONTACT_PERSON(data, callback, onError) {
     } else {
       throw person;
     }
-    return person
+    return person;
+  } catch (err) {
+    onError && onError(err);
+  }
+}
+
+export async function UPDATE_BVN(data, callback, onError) {
+  try {
+    let bvn = await requests.post(`update-profile/update-bvn`, data);
+    if (bvn.data) {
+      callback && callback(bvn.data);
+    } else {
+      throw bvn;
+    }
+    return bvn;
   } catch (err) {
     onError && onError(err);
   }
