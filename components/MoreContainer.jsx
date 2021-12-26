@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import MoreDropdown from './more-dropdown';
+import MoreDropdown from './MoreDropdown';
 import SVG from 'react-inlinesvg';
 
 export default function MoreContainer({ savedAddress, setCurrentState }) {

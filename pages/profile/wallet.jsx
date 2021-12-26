@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
-import AuthProvider from 'components/AuthProvider';
-import Wallet from 'components/profile/wallet';
-import EmptyAccount from '@/components/profile/empty-account';
-import AddAccount from '@/components/profile/add-account';
-import Account from '@/components/profile/account';
-import CreatePin from '@/components/profile/create-pin';
-import EnterPin from '@/components/profile/enter-pin';
-import WidthdrawalSuccess from '@/components/profile/widthdrawal-success';
+import AuthProvider from '@/components/AuthProvider';
+import Wallet from '@/components/profile/wallet';
+import EmptyAccount from '@/components/profile/wallet/EmptyAccount';
+import AddAccount from '@/components/profile/wallet/AddAccount';
+import Account from '@/components/profile/wallet/Account';
+import CreatePin from '@/components/profile/wallet/CreatePin';
+import EnterPin from '@/components/profile/wallet/EnterPin';
+import WidthdrawalSuccess from '@/components/profile/wallet/WidthdrawalSuccess';
 
 export default function WalletPage() {
   const [walletStep, setWalletStep] = useState({ step: 1 });

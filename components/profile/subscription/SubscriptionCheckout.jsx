@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import AppHeader from 'components/AppHeader';
 import Input from 'reusable/Input';
 import Button from 'reusable/Button';
@@ -38,7 +38,7 @@ export default function SubscriptionCheckout({
           <Button
             text={`Pay ${subscriptionStep.price}`}
             iconRight={'/svg/arrow-right.svg'}
-            click={() => setSubscriptionStep((prev) => ({...prev, step: 3}))}
+            click={() => setSubscriptionStep((prev) => ({ ...prev, step: 3 }))}
           />
         </div>
       </div>

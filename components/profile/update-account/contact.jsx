@@ -10,7 +10,7 @@ export default function Contact() {
   const Router = useRouter();
   return (
     <div className='mt-4'>
-      <AppHeader noSVG/>
+      <AppHeader noSVG />
       <div>
         <h2 className='text-3xl font-light my-2'>Contact Person</h2>
         <span className='text-app-text'>
@@ -29,7 +29,7 @@ export default function Contact() {
             placeholder={'Select Gender'}
             dispatch={(data) => setGender(data)}
           />
-          <div className='mt-7'> 
+          <div className='mt-7'>
             <Input label={'Email'} placeholder={'Enter Email'} type='Email' />
           </div>
           <div className='my-7'>

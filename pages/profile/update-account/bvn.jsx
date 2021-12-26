@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import AuthProvider from '@/components/AuthProvider';
-import BVN from '@/components/profile/bvn';
-import VerifyBVN from '@/components/profile/verify-bvn';
-import BVNSuccess from '@/components/profile/bvn-success';
+import BVN from '@/components/profile/update-account/bvn';
+import VerifyBVN from '@/components/profile/update-account/bvn/VerifyBVN';
+import BVNSuccess from '@/components/profile/update-account/bvn/BVNSuccess';
 
 export default function BVNPage() {
   const [bvnStep, setBvnStep] = useState(1);
