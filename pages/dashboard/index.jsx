@@ -5,8 +5,10 @@ import Link from '@/components/Link';
 import ProductDisplay from '@/components/ProductDisplay';
 import WithdrawalDisplay from '@/components/WithdrawalDisplay';
 import AuthProvider from '@/components/AuthProvider';
+import { useGlobalStore } from '@/hooks/useGlobalStore';
 
 export default function Dashboard() {
+  const { products } = useGlobalStore();
   return (
     <AuthProvider>
       <Layout>
@@ -26,14 +28,23 @@ export default function Dashboard() {
           <WithdrawalDisplay />
           <div className='flex justify-between'>
             <span className='text-app-text font-medium'>Recent Products</span>
-            <Link to='/' className='text-app-color text-sm my-auto'>
+            <Link to='/products' className='text-app-color text-sm my-auto'>
               See All
             </Link>
           </div>
         </div>
-        {[...Array(20)].map((item, i) => (
+        {products.length > 0 ? (
+          products?.map((item, i) => (
+            <ProductDisplay key={i + 1} product={item} />
+          ))
+        ) : (
+          <div className='w-full bg-app-cream p-3 rounded mt-5 text-center shadow-sm'>
+            <span className='text-app-color'>No Product Found</span>
+          </div>
+        )}
+        {/* {[...Array(20)].map((item, i) => (
           <ProductDisplay key={i + 1} />
-        ))}
+        ))} */}
       </Layout>
     </AuthProvider>
   );

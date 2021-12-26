@@ -123,32 +123,19 @@ export const slugify = (text) => {
     .replace(/-+$/, '');
 };
 
-let counter = 0;
-let links = [];
-export const cloudinaryUpload = (file) => {
-  const formData = new FormData();
-  formData.append('file', file);
-  formData.append('upload_preset', 'realhub_listing');
+export const selectFilter = (data, id, name) => {
+  let result = [];
+  data.map((item) => {
+    result.push({ id: item[id], name: item[name] });
+  });
+  return result;
+};
 
-  try {
-    axios
-      .post('https://api.cloudinary.com/v1_1/aroicx/image/upload', formData)
-      .then((response) => {
-        if (counter < files.length) {
-          counter++;
-          links.push({
-            images: { image: response.data.url },
-          });
-        }
-        if (counter === files.length) {
-          return { images: JSON.stringify(links) };
-        }
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  } catch (error) {
-    console.log(error);
+export const selectValue = (data, id, name, value) => {
+  let request = data.filter((item) => item[id] === value)[0];
+  if (request) {
+    console.log(request[name]);
+    return request[name];
   }
 };
 

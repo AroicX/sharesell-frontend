@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import AppHeader from '@/components/appHeader';
+import AppHeader from '@/components/AppHeader';
 import Button from '@/reusable/Button';
 import Input from '@/reusable/Input';
 import { LOGIN_ACCOUNT } from '@/services/authentication';

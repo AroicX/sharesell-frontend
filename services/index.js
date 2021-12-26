@@ -41,6 +41,25 @@ requests.interceptors.response.use(
   }
 );
 
+requests.interceptors.request.use(
+  function (config) {
+    config.headers = {
+      ...config.headers,
+    };
+
+    const token = getToken();
+
+    if (token) {
+      config.headers['Authorization'] = `Bearer ${token}`;
+    }
+
+    return config;
+  },
+  function (error) {
+    return Promise.reject(error);
+  }
+);
+
 export default requests;
 
 export const useAxiosInterceptors = () => {
