@@ -1,4 +1,5 @@
 import Swal from 'sweetalert2';
+import States from '@/helpers/states.json';
 
 export const toAbsoluteUrl = (pathname) =>
   process.env.PUBLIC_URL + '/svg/' + pathname;
@@ -140,7 +141,6 @@ export const selectValue = (data, id, name, value) => {
 };
 
 export const inputFormatter = (amount, seperator, afterNumber) => {
-  
   let allNumbers = {
     0: true,
     1: true,
@@ -162,21 +162,25 @@ export const inputFormatter = (amount, seperator, afterNumber) => {
   }
   let numOfDecimal = 0;
   if (amountInArray.length % afterNumber == 0) {
-    numOfDecimal = (amountInArray.length / afterNumber) - 1;
+    numOfDecimal = amountInArray.length / afterNumber - 1;
   } else {
     numOfDecimal = Math.floor(amountInArray.length / afterNumber);
   }
 
   if (numOfDecimal < 1) {
-    let lessDecimal = "";
+    let lessDecimal = '';
     for (let i = 0; i < amountInArray.length; i++) {
       lessDecimal = lessDecimal + amountInArray[i];
     }
     return lessDecimal;
   }
 
-  const indexArray = indexDeterminer(amountInArray.length, numOfDecimal, afterNumber);
-  let formattedAmount = "";
+  const indexArray = indexDeterminer(
+    amountInArray.length,
+    numOfDecimal,
+    afterNumber
+  );
+  let formattedAmount = '';
   let nextIndexPointer = 0;
   for (let i = 0; i < amountInArray.length; i++) {
     if (i === indexArray[nextIndexPointer]) {
@@ -203,6 +207,26 @@ const indexDeterminer = (amountLength, numOfDecimal, afterNumber) => {
   return indexesArray;
 };
 
+export const getStates = () => {
+  return States.map((state, index) => {
+    return { name: state.state, id: index };
+  });
+};
+
+export const getCity = (state) => {
+  let cities = [];
+  for (let i = 0; i < States.length; i++) {
+    if (States[i].state === state) {
+      let lgas = States[i].lgas;
+      cities = lgas.map((lga, index) => {
+        return {id: index, name: lga}
+      })
+      break;
+    }
+  }
+  return cities;
+};
+
 export const cardDetailsFormatter = (value) => {
   const valueArray = [];
   let allNumbers = {
@@ -218,13 +242,9 @@ export const cardDetailsFormatter = (value) => {
     9: true,
   };
 
-  for(let i = 0; i < value.length; i++) {
-    if(valueArray[i] !== "-" && allNumbers[value[i]]) {
-      valueArray.push(value[i])
+  for (let i = 0; i < value.length; i++) {
+    if (valueArray[i] !== '-' && allNumbers[value[i]]) {
+      valueArray.push(value[i]);
     }
   }
-
-
-}
-
-
+};

@@ -5,12 +5,52 @@ import Button from '@/reusable/Button';
 import TextArea from '@/reusable/TextArea';
 import Select from '@/reusable/Select';
 import { useRouter } from 'next/router';
+import { useGlobalStore } from '@/hooks/useGlobalStore';
+import { BUSINESS_DETAILS } from '@/services/profile/update-account/index';
+import { getStates, getCity } from '@/helpers/index';
+import Swal from 'sweetalert2';
+import { ResponseHandler } from '@/helpers/index';
 
 export default function Business() {
-  const [BusinessReg, setBusinessReg] = useState(false);
+  const [businessReg, setBusinessReg] = useState(false);
   const [state, setState] = useState('');
   const [city, setCity] = useState('');
+  const [businessName, setBusinessName] = useState('');
+  const [currentAddress, setCurrentAddress] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
   const Router = useRouter();
+
+  const { user } = useGlobalStore();
+  const submitHandler = () => {
+    setIsLoading(true);
+    const data = {
+      user_id: user ? user.user_id : '',
+      business_name: businessName,
+      business_registered: false,
+      bvn_number: 23424242,
+      current_address: currentAddress,
+      state: state,
+      city: city,
+    };
+    const callback = (response) => {
+      if (response) {
+        setIsLoading(false);
+        ResponseHandler(response)
+        Router.back()
+      }
+    };
+
+    const onError = (error) => {
+      console.log(error);
+      setIsLoading(false)
+    };
+
+    BUSINESS_DETAILS(data, callback, onError);
+  };
+
+  const setStateHandler = (data) => {
+    setState(data);
+  };
   return (
     <div className='mt-4 mb-10'>
       <AppHeader noSVG />
@@ -24,6 +64,8 @@ export default function Business() {
             label={'Business Name'}
             type='text'
             placeholder={'Chika Inc'}
+            value={businessName}
+            dispatch={(data) => setBusinessName(data)}
           />
           <div className='flex flex-col mb-4'>
             <p className='text-app-text text-base mb-2'>
@@ -50,7 +92,7 @@ export default function Business() {
               </div>
             </div>
           </div>
-          {BusinessReg && (
+          {businessReg && (
             <Input
               label={'RC / BN Number'}
               type='text'
@@ -61,29 +103,35 @@ export default function Business() {
             <TextArea
               label={'Current Business Address'}
               placeholder={'No. 4, James st, Zuba, Abuja.'}
+              value={currentAddress}
+              dispatch={(data) => setCurrentAddress(data)}
             />
           </div>
           <div>
             <Select
               label={'State'}
               placeholder={'Lagos'}
-              dispatch={(data) => setState(data)}
-              options={['Lagos', 'Abuja', 'Kaduna']}
+              dispatch={(data) => setStateHandler(data)}
+              options={getStates()}
             />
           </div>
-          <div>
-            <Select
-              label={'City'}
-              placeholder={'Zuba'}
-              dispatch={(data) => setCity(data)}
-              options={['Ikeja', 'Zuba', 'BArnawa']}
-            />
-          </div>
+          {state && (
+            <div>
+              <Select
+                label={'City'}
+                placeholder={'Zuba'}
+                dispatch={(data) => setCity(data)}
+                options={getCity(state)}
+              />
+            </div>
+          )}
+
           <Button
             styles={'p-5 block '}
             text='Submit'
             iconRight={'/svg/arrow-right.svg'}
-            click={() => Router.back()}
+            click={() => submitHandler()}
+            loading={isLoading}
           />
         </div>
       </div>
