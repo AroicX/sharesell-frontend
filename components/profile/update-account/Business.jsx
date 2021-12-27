@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import AppHeader from '@/components/AppHeader';
 import Input from '@/reusable/Input';
 import Button from '@/reusable/Button';
@@ -9,22 +9,25 @@ import { useGlobalStore } from '@/hooks/useGlobalStore';
 import { BUSINESS_DETAILS } from '@/services/profile/update-account/index';
 import { getStates, getCity } from '@/helpers/index';
 import { ResponseHandler } from '@/helpers/index';
-import { __SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED } from 'react/cjs/react.production.min';
 
 export default function Business() {
+  const { user, supplier } = useGlobalStore();
   const [businessReg, setBusinessReg] = useState(false);
-  const [state, setState] = useState('');
+  const [state, setState] = useState(supplier ? supplier.state : '');
   const [stateError, setStateError] = useState('');
-  const [city, setCity] = useState('');
+  const [city, setCity] = useState(supplier ? supplier.city : '');
   const [cityError, setCityError] = useState('');
-  const [businessName, setBusinessName] = useState('');
+  const [businessName, setBusinessName] = useState(
+    supplier ? supplier.business_name : ''
+  );
   const [businessNameError, setBusinessnameError] = useState('');
-  const [currentAddress, setCurrentAddress] = useState('');
+  const [currentAddress, setCurrentAddress] = useState(
+    supplier ? supplier.current_address : ''
+  );
   const [currentAddressError, setCurrentAddressError] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const Router = useRouter();
 
-  const { user } = useGlobalStore();
   const submitHandler = () => {
     if (
       businessName === '' ||
@@ -93,6 +96,12 @@ export default function Business() {
     setCurrentAddressError('');
   };
 
+  useEffect(() => {
+    if (!supplier) {
+      Router.push('/profile/update-account');
+    }
+  }, [supplier]);
+  
   return (
     <div className='mt-4 mb-10'>
       <AppHeader noSVG />
@@ -106,7 +115,7 @@ export default function Business() {
             label={'Business Name'}
             type='text'
             placeholder={'Chika Inc'}
-            value={businessName.value}
+            value={businessName}
             dispatch={(data) => businessNameOnChangeHandler(data)}
             error={businessNameError}
           />
@@ -155,6 +164,7 @@ export default function Business() {
             <Select
               label={'State'}
               placeholder={'Lagos'}
+              initialValue={state}
               dispatch={(data) => setStateHandler(data)}
               options={getStates()}
               error={stateError}
@@ -168,6 +178,7 @@ export default function Business() {
                 dispatch={(data) => cityOnChangeHandler(data)}
                 options={getCity(state)}
                 error={cityError}
+                initialValue={city}
               />
             </div>
           )}
