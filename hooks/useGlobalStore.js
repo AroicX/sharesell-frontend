@@ -18,6 +18,7 @@ const GlobalStore = () => {
   const [productCategories, setProductCategories] = useState([]);
   const [currentCategory, setCurrentCategory] = useState([]);
   const [currentProduct, setCurrentProduct] = useState([]);
+  const [supplier, setSupplier] = useState(null);
 
   const getProducts = () => {
     const callback = (response) => {
@@ -54,6 +55,8 @@ const GlobalStore = () => {
     setCurrentCategory,
     currentProduct,
     setCurrentProduct,
+    supplier,
+    setSupplier,
   };
 };
 

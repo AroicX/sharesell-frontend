@@ -1,10 +1,16 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import AppHeader from '@/components/AppHeader';
 import UpdateTab from '@/components/UpdateTab';
 import { useRouter } from 'next/router';
+import { _protectedRequest } from 'services';
+import { useGlobalStore } from '@/hooks/useGlobalStore';
+import useSWR from 'swr';
 
 export default function UpdateAccount() {
   const Router = useRouter();
+  const { setSupplier } = useGlobalStore();
+  const { data, error } = useSWR(`/user/profile`, _protectedRequest);
+  const supplier = data ? data.payload.supplier : null;
   const details = [
     {
       title: 'Busniess Details',
@@ -13,7 +19,7 @@ export default function UpdateAccount() {
       isComplete: true,
       completeIcon: '/svg/business-complete.svg',
       inCompleteIcon: '/svg/business-incomplete.svg',
-      to: "/profile/update-account/business"
+      to: '/profile/update-account/business',
     },
     {
       title: 'Contact Person',
@@ -22,7 +28,7 @@ export default function UpdateAccount() {
       isComplete: false,
       completeIcon: '/svg/contact-complete.svg',
       inCompleteIcon: '/svg/contact-incomplete.svg',
-      to: "/profile/update-account/contact"
+      to: '/profile/update-account/contact',
     },
     {
       title: 'BVN',
@@ -31,7 +37,7 @@ export default function UpdateAccount() {
       isComplete: true,
       completeIcon: '/svg/bvn-complete.svg',
       inCompleteIcon: '/svg/bvn-incomplete.svg',
-      to: "/profile/update-account/bvn"
+      to: '/profile/update-account/bvn',
     },
     {
       title: 'Next Of Kin',
@@ -40,12 +46,18 @@ export default function UpdateAccount() {
       isComplete: false,
       completeIcon: '/svg/kin-complete.svg',
       inCompleteIcon: '/svg/kin-incomplete.svg',
-      to: "/profile/update-account/kin"
+      to: '/profile/update-account/kin',
     },
   ];
+
+  useEffect(() => {
+    if (supplier) {
+      setSupplier(supplier);
+    }
+  }, [supplier]);
   return (
     <div className='mt-4'>
-      <AppHeader noSVG click={() => Router.push("/profile")}/>
+      <AppHeader noSVG click={() => Router.push('/profile')} />
       <div className='mt-3'>
         <h2 className='text-2xl font-light my-2'>Update & Activate Account</h2>
         <div className='flex flex-col'>
