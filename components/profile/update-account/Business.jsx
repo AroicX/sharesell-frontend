@@ -11,18 +11,18 @@ import { getStates, getCity } from '@/helpers/index';
 import { ResponseHandler } from '@/helpers/index';
 
 export default function Business() {
-  const { user, supplier } = useGlobalStore();
+  const { user, userProfile } = useGlobalStore();
   const [businessReg, setBusinessReg] = useState(false);
-  const [state, setState] = useState(supplier ? supplier.state : '');
+  const [state, setState] = useState(userProfile ? userProfile.supplier.state : '');
   const [stateError, setStateError] = useState('');
-  const [city, setCity] = useState(supplier ? supplier.city : '');
+  const [city, setCity] = useState(userProfile ? userProfile.supplier.city : '');
   const [cityError, setCityError] = useState('');
   const [businessName, setBusinessName] = useState(
-    supplier ? supplier.business_name : ''
+    userProfile ? userProfile.supplier.business_name : ''
   );
   const [businessNameError, setBusinessnameError] = useState('');
   const [currentAddress, setCurrentAddress] = useState(
-    supplier ? supplier.current_address : ''
+    userProfile ? userProfile.supplier.current_address : ''
   );
   const [currentAddressError, setCurrentAddressError] = useState('');
   const [isLoading, setIsLoading] = useState(false);
@@ -97,10 +97,10 @@ export default function Business() {
   };
 
   useEffect(() => {
-    if (!supplier) {
+    if (!userProfile) {
       Router.push('/profile/update-account');
     }
-  }, [supplier]);
+  }, [userProfile]);
   
   return (
     <div className='mt-4 mb-10'>

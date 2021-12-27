@@ -8,9 +8,9 @@ import useSWR from 'swr';
 
 export default function UpdateAccount() {
   const Router = useRouter();
-  const { setSupplier } = useGlobalStore();
+  const { setUserProfile } = useGlobalStore();
   const { data, error } = useSWR(`/user/profile`, _protectedRequest);
-  const supplier = data ? data.payload.supplier : null;
+  const user_profile = data ? data.payload : null;
   const details = [
     {
       title: 'Busniess Details',
@@ -51,10 +51,10 @@ export default function UpdateAccount() {
   ];
 
   useEffect(() => {
-    if (supplier) {
-      setSupplier(supplier);
+    if (user_profile) {
+      setUserProfile(user_profile);
     }
-  }, [supplier]);
+  }, [user_profile]);
   return (
     <div className='mt-4'>
       <AppHeader noSVG click={() => Router.push('/profile')} />
