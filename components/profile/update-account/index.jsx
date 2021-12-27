@@ -11,7 +11,6 @@ export default function UpdateAccount() {
   const { setUserProfile } = useGlobalStore();
   const { data, error } = useSWR(`/user/profile`, _protectedRequest);
   const user_profile = data ? data.payload : null;
-  console.log(user_profile)
   const details = [
     {
       title: 'Busniess Details',

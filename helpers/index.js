@@ -236,6 +236,11 @@ export const validateEmail = (email) => {
   }
 };
 
+export const nameSplit = (name, index) => {
+  let splittedName = name.split(' ');
+  return splittedName[index];
+};
+
 export const cardDetailsFormatter = (value) => {
   const valueArray = [];
   let allNumbers = {
