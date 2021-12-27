@@ -8,9 +8,10 @@ const Select = ({
   dispatch = null,
   rest,
   initialValue,
+  error,
 }) => {
   const [toggle, setToggle] = useState(false);
-  const [selected, setSelected] = useState(initialValue  || placeholder|| "");
+  const [selected, setSelected] = useState(initialValue || placeholder || '');
   const handleSelected = (value) => {
     dispatch(value);
     setSelected(value);
@@ -28,6 +29,11 @@ const Select = ({
         <span className='select-display-default -mt-1'>{selected}</span>
         <SVG className='mr-1 -mt-1' src='/svg/caret-down.svg' />
       </div>
+      {error && (
+        <span className='text-red-500 text-sm bg-red-200 p-4 rounded my-1'>
+          {error}
+        </span>
+      )}
       {toggle && (
         <div className='select-options'>
           {options?.map((option, i) => (
