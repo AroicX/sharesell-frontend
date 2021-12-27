@@ -9,46 +9,88 @@ import { useGlobalStore } from '@/hooks/useGlobalStore';
 import { BUSINESS_DETAILS } from '@/services/profile/update-account/index';
 import { getStates, getCity } from '@/helpers/index';
 import { ResponseHandler } from '@/helpers/index';
+import { __SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED } from 'react/cjs/react.production.min';
 
 export default function Business() {
   const [businessReg, setBusinessReg] = useState(false);
   const [state, setState] = useState('');
+  const [stateError, setStateError] = useState('');
   const [city, setCity] = useState('');
+  const [cityError, setCityError] = useState('');
   const [businessName, setBusinessName] = useState('');
+  const [businessNameError, setBusinessnameError] = useState('');
   const [currentAddress, setCurrentAddress] = useState('');
+  const [currentAddressError, setCurrentAddressError] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const Router = useRouter();
 
   const { user } = useGlobalStore();
   const submitHandler = () => {
-    setIsLoading(true);
-    const data = {
-      user_id: user ? user.user_id : '',
-      business_name: businessName,
-      business_registered: false,
-      bvn_number: 23424242,
-      current_address: currentAddress,
-      state: state,
-      city: city,
-    };
-    const callback = (response) => {
-      if (response) {
-        setIsLoading(false);
-        ResponseHandler(response)
-        Router.back()
+    if (
+      businessName === '' ||
+      currentAddress === '' ||
+      city === '' ||
+      state === ''
+    ) {
+      if (businessName === '') {
+        setBusinessnameError('Business Name is Required');
       }
-    };
+      if (currentAddress === '') {
+        setCurrentAddressError('Current Address is Required');
+      }
+      if (city === '') {
+        setCityError('City is Required');
+      }
+      if (state === '') {
+        setStateError('State is Required');
+      }
+    } else {
+      setIsLoading(true);
+      const data = {
+        user_id: user ? user.user_id : '',
+        business_name: businessName,
+        business_registered: false,
+        bvn_number: 23424242,
+        current_address: currentAddress,
+        state: state,
+        city: city,
+      };
+      const callback = (response) => {
+        if (response) {
+          setIsLoading(false);
+          ResponseHandler(response);
+          Router.push('/profile/update-account');
+        }
+      };
 
-    const onError = (error) => {
-      console.log(error);
-      setIsLoading(false)
-    };
+      const onError = (error) => {
+        console.log(error);
+        setIsLoading(false);
+      };
 
-    BUSINESS_DETAILS(data, callback, onError);
+      BUSINESS_DETAILS(data, callback, onError);
+    }
   };
 
   const setStateHandler = (data) => {
     setState(data);
+    setStateError('');
+    setCity('');
+  };
+
+  const cityOnChangeHandler = (data) => {
+    setCity(data);
+    setCityError('');
+  };
+
+  const businessNameOnChangeHandler = (data) => {
+    setBusinessName(data);
+    setBusinessnameError('');
+  };
+
+  const currentAddressOnChangeHandler = (data) => {
+    setCurrentAddress(data);
+    setCurrentAddressError('');
   };
 
   return (
@@ -64,8 +106,9 @@ export default function Business() {
             label={'Business Name'}
             type='text'
             placeholder={'Chika Inc'}
-            value={businessName}
-            dispatch={(data) => setBusinessName(data)}
+            value={businessName.value}
+            dispatch={(data) => businessNameOnChangeHandler(data)}
+            error={businessNameError}
           />
           <div className='flex flex-col mb-4'>
             <p className='text-app-text text-base mb-2'>
@@ -104,7 +147,8 @@ export default function Business() {
               label={'Current Business Address'}
               placeholder={'No. 4, James st, Zuba, Abuja.'}
               value={currentAddress}
-              dispatch={(data) => setCurrentAddress(data)}
+              dispatch={(data) => currentAddressOnChangeHandler(data)}
+              error={currentAddressError}
             />
           </div>
           <div>
@@ -113,6 +157,7 @@ export default function Business() {
               placeholder={'Lagos'}
               dispatch={(data) => setStateHandler(data)}
               options={getStates()}
+              error={stateError}
             />
           </div>
           {state && (
@@ -120,8 +165,9 @@ export default function Business() {
               <Select
                 label={'City'}
                 placeholder={'Zuba'}
-                dispatch={(data) => setCity(data)}
+                dispatch={(data) => cityOnChangeHandler(data)}
                 options={getCity(state)}
+                error={cityError}
               />
             </div>
           )}
