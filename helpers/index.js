@@ -237,6 +237,20 @@ export const getCity = (state) => {
   return cities;
 };
 
+export const validateEmail = (email) => {
+  let mailFormatter = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+  if (email.match(mailFormatter)) {
+    return true;
+  } else {
+    return false;
+  }
+};
+
+export const nameSplit = (name, index) => {
+  let splittedName = name.split(' ');
+  return splittedName[index];
+};
+
 export const cardDetailsFormatter = (value) => {
   const valueArray = [];
   let allNumbers = {

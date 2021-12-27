@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import AppHeader from '@/components/AppHeader';
 import Infocard from '@/reusable/Infocard';
 import Input from '@/reusable/Input';
@@ -6,35 +6,56 @@ import Button from '@/reusable/Button';
 import { useGlobalStore } from '@/hooks/useGlobalStore';
 import { UPDATE_BVN } from '@/services/profile/update-account';
 import { ResponseHandler } from '@/helpers/index';
+import { useRouter } from 'next/router';
 
 export default function BVN({ next }) {
-  const [bvn, setBvn] = useState('');
+  const { user, userProfile } = useGlobalStore();
+  const [bvn, setBvn] = useState(userProfile ? userProfile.bvn : '');
+  const [bvnError, setBvnError] = useState('');
   const [isLoading, setIsLoading] = useState(false);
+  const Router = useRouter();
 
-  const { user } = useGlobalStore;
   const onSubmitHandler = () => {
-    setIsLoading(true);
-    const data = {
-      user_id: user ? user.user_id : '',
-      bvn: bvn,
-    };
-
-    const callBack = (response) => {
-      if (response) {
-        setIsLoading(false);
-        console.log(response)
-        ResponseHandler(response);
-        next();
+    if (bvn === '' || bvn.length !== 11) {
+      if (bvn === '') {
+        setBvnError('BVN is required');
+      } else {
+        setBvnError('BVN must be 11 digit');
       }
-    };
+    } else {
+      setIsLoading(true);
+      const data = {
+        user_id: user ? user.user_id : '',
+        bvn: bvn,
+      };
 
-    const onError = (err) => {
-      setIsLoading(false);
-      console.log(err);
-    };
+      const callBack = (response) => {
+        if (response) {
+          setIsLoading(false);
+          ResponseHandler(response);
+          next();
+        }
+      };
 
-    UPDATE_BVN(data, callBack, onError);
+      const onError = (err) => {
+        setIsLoading(false);
+        console.log(err);
+      };
+
+      UPDATE_BVN(data, callBack, onError);
+    }
   };
+
+  const bvnOnChangeHandler = (data) => {
+    setBvn(data);
+    setBvnError('');
+  };
+
+  useEffect(() => {
+    if (!userProfile) {
+      Router.push('/profile/update-account');
+    }
+  }, [userProfile]);
   return (
     <div className='mt-4'>
       <AppHeader noSVG />
@@ -54,7 +75,8 @@ export default function BVN({ next }) {
             label={'BVN'}
             placeholder={'Enter BVN'}
             value={bvn}
-            dispatch={(data) => setBvn(data)}
+            dispatch={(data) => bvnOnChangeHandler(data)}
+            error={bvnError}
           />
         </div>
         <Button

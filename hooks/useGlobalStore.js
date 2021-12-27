@@ -17,8 +17,12 @@ const GlobalStore = () => {
   const [products, setProducts] = useState([]);
   const [productCategories, setProductCategories] = useState([]);
   const [currentCategory, setCurrentCategory] = useState([]);
+<<<<<<< HEAD
   const [currentProduct, setCurrentProduct] = useState([]);
   const [supplier, setSupplier] = useState(null);
+=======
+  const [userProfile, setUserProfile] = useState(null);
+>>>>>>> bb39f207759a23906c2a74254337ea444ce346bc
 
   const getProducts = () => {
     const callback = (response) => {
@@ -53,10 +57,15 @@ const GlobalStore = () => {
     setProductCategories,
     currentCategory,
     setCurrentCategory,
+<<<<<<< HEAD
     currentProduct,
     setCurrentProduct,
     supplier,
     setSupplier,
+=======
+    userProfile,
+    setUserProfile,
+>>>>>>> bb39f207759a23906c2a74254337ea444ce346bc
   };
 };
 
