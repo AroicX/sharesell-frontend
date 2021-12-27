@@ -19,21 +19,21 @@ requests.interceptors.response.use(
   },
   function (error) {
     if (401 === error.response.status) {
-      Swal.fire(
-        {
-          title: 'Session Expired',
-          text: 'Your session has expired. Would you like to be redirected to the login page?',
-          type: 'warning',
-          // showCancelButton: true,
-          confirmButtonColor: '#A55954',
-          confirmButtonText: 'Login',
-          closeOnConfirm: false,
-        },
-        function () {
+      Swal.fire({
+        title: 'Session Expired',
+        text: 'Your session has expired. Would you like to be redirected to the login page?',
+        type: 'warning',
+        // showCancelButton: true,
+        confirmButtonColor: '#A55954',
+        confirmButtonText: 'Yes',
+        closeOnConfirm: false,
+      }).then((result) => {
+        if (result.dismiss !== 'cancel') {
           window.localStorage.removeItem('user-data');
-          window.location = '/login';
+
+          return window.location.replace('/login');
         }
-      );
+      });
     } else {
       return Promise.reject(error);
     }
