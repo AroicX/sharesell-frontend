@@ -17,6 +17,7 @@ const GlobalStore = () => {
   const [products, setProducts] = useState([]);
   const [productCategories, setProductCategories] = useState([]);
   const [currentCategory, setCurrentCategory] = useState([]);
+  const [currentProduct, setCurrentProduct] = useState([]);
 
   const getProducts = () => {
     const callback = (response) => {
@@ -39,9 +40,9 @@ const GlobalStore = () => {
     }
   }, []);
 
-  useEffect(() => {
-    console.log(currentCategory);
-  }, [currentCategory]);
+  // useEffect(() => {
+  //   console.log(currentCategory);
+  // }, [currentCategory]);
 
   return {
     user,
@@ -51,6 +52,8 @@ const GlobalStore = () => {
     setProductCategories,
     currentCategory,
     setCurrentCategory,
+    currentProduct,
+    setCurrentProduct,
   };
 };
 

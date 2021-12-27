@@ -28,6 +28,20 @@ export async function GET_PRODUCTS_IN_CATEGORIES(id, callback, onError) {
     onError && onError(err);
   }
 }
+export async function GET_SINGLE_PRODUCT(id, callback, onError) {
+  try {
+    let products = await requests.get(`/products/${id}`);
+    if (products.data) {
+      callback && callback(products.data);
+    } else {
+      throw products;
+    }
+
+    return products;
+  } catch (err) {
+    onError && onError(err);
+  }
+}
 
 export async function GET_PRODUCTS(callback, onError) {
   try {

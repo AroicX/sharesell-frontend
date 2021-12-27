@@ -71,6 +71,16 @@ export const exceptionToErrors = (error) => {
 
 export const ResponseHandler = (response) => {
   switch (response.status) {
+    case 'error':
+      return Swal.fire({
+        title: 'Error!',
+        text: response.message.toUpperCase(),
+        icon: 'error',
+        timerProgressBar: true,
+        timer: 2000,
+        showConfirmButton: false,
+      });
+      break;
     case 'info':
       return Swal.fire({
         title: 'Error!',
@@ -219,8 +229,8 @@ export const getCity = (state) => {
     if (States[i].state === state) {
       let lgas = States[i].lgas;
       cities = lgas.map((lga, index) => {
-        return {id: index, name: lga}
-      })
+        return { id: index, name: lga };
+      });
       break;
     }
   }

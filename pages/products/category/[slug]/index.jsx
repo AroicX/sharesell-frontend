@@ -24,6 +24,7 @@ export default function ProductCategory({}) {
   const getProducts = (id) => {
     const callback = (response) => {
       const { products } = response?.payload?.data[0];
+
       setProducts(products);
     };
     const onError = (error) => {

@@ -6,8 +6,8 @@ const environment = process.env.NODE_ENV;
 
 const requests = axios.create({
   // baseURL: process.env.NEXT_PUBLIC_BASE_URL,
-  // baseURL: 'https://shareshell.test/api/',
-  baseURL: 'https://shareshell-api.herokuapp.com/api/',
+  baseURL: 'https://shareshell.test/api/',
+  // baseURL: 'https://shareshell-api.herokuapp.com/api/',
 });
 
 requests.interceptors.response.use(
@@ -19,19 +19,18 @@ requests.interceptors.response.use(
   },
   function (error) {
     if (401 === error.response.status) {
-      window.localStorage.removeItem('user-data');
-
-      Swal(
+      Swal.fire(
         {
           title: 'Session Expired',
           text: 'Your session has expired. Would you like to be redirected to the login page?',
           type: 'warning',
-          showCancelButton: true,
-          confirmButtonColor: '#DD6B55',
-          confirmButtonText: 'Yes',
+          // showCancelButton: true,
+          confirmButtonColor: '#A55954',
+          confirmButtonText: 'Login',
           closeOnConfirm: false,
         },
         function () {
+          window.localStorage.removeItem('user-data');
           window.location = '/login';
         }
       );
