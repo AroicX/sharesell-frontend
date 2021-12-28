@@ -7,7 +7,7 @@ import Select from '@/reusable/Select';
 import { ResponseHandler } from '@/helpers/index';
 import { useGlobalStore } from '@/hooks/useGlobalStore';
 import { NEXT_OF_Kin } from '@/services/profile/update-account';
-import { validateEmail } from '@/helpers/index';
+import {  } from '@/helpers/index';
 import { nameSplit } from '@/helpers/index';
 
 export default function Kin() {

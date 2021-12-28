@@ -38,50 +38,6 @@ export default function Business() {
   const Router = useRouter();
 
   const submitHandler = () => {
-    // if (
-    //   businessName === '' ||
-    //   currentAddress === '' ||
-    //   city === '' ||
-    //   state === ''
-    // ) {
-    //   if (businessName === '') {
-    //     setBusinessnameError('Business Name is Required');
-    //   }
-    //   if (currentAddress === '') {
-    //     setCurrentAddressError('Current Address is Required');
-    //   }
-    //   if (city === '') {
-    //     setCityError('City is Required');
-    //   }
-    //   if (state === '') {
-    //     setStateError('State is Required');
-    //   }
-    // } else {
-    //   setIsLoading(true);
-    //   const data = {
-    //     user_id: user ? user.user_id : '',
-    //     business_name: businessName,
-    //     business_registered: false,
-    //     bvn_number: 23424242,
-    //     current_address: currentAddress,
-    //     state: state,
-    //     city: city,
-    //   };
-    //   const callback = (response) => {
-    //     if (response) {
-    //       setIsLoading(false);
-    //       ResponseHandler(response);
-    //       Router.push('/profile/update-account');
-    //     }
-    //   };
-
-    //   const onError = (error) => {
-    //     console.log(error);
-    //     setIsLoading(false);
-    //   };
-
-    //   BUSINESS_DETAILS(data, callback, onError);
-    // }
     if (
       inputValidatorChecker(businessName) &&
       inputValidatorChecker(currentAddress) &&
