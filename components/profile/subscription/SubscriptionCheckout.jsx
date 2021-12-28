@@ -1,12 +1,16 @@
 import React, { useState } from 'react';
-import AppHeader from 'components/AppHeader';
-import Input from 'reusable/Input';
-import Button from 'reusable/Button';
+import AppHeader from '@/components/AppHeader';
+import Input from '@/reusable/Input';
+import Button from '@/reusable/Button';
 
 export default function SubscriptionCheckout({
   subscriptionStep,
   setSubscriptionStep,
 }) {
+  const [cardNumber, setCardNumber] = useState('');
+  const cardNumberHandler = (data) => {
+    setCardNumber(data);
+  };
   return (
     <div className='mt-4'>
       <AppHeader noSVG click={() => setSubscriptionStep({ step: 1 })} />
@@ -25,6 +29,9 @@ export default function SubscriptionCheckout({
               label={'Card Number'}
               placeholder={'1292-3923-9492-3992'}
               type='text'
+              dispatch={(data) => cardNumberHandler(data)}
+              value={cardNumber}
+              rest={{"maxLength": "14"}}
             />
           </div>
           <div className='flex items-center justify-between max-w-full mt-7 mb-4'>

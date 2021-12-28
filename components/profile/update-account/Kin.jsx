@@ -7,8 +7,13 @@ import Select from '@/reusable/Select';
 import { ResponseHandler } from '@/helpers/index';
 import { useGlobalStore } from '@/hooks/useGlobalStore';
 import { NEXT_OF_Kin } from '@/services/profile/update-account';
-import { validateEmail } from '@/helpers/index';
-import { nameSplit } from '@/helpers/index';
+import {
+  nameSplit,
+  emailValidatorChecker,
+  emailValidatorError,
+  inputValidatorErrorState,
+  inputValidatorChecker,
+} from '@/helpers/index';
 
 export default function Kin() {
   const { user, userProfile } = useGlobalStore();
@@ -41,39 +46,13 @@ export default function Kin() {
 
   const onSubmitHandler = () => {
     if (
-      firstName === '' ||
-      lastName === '' ||
-      email === '' ||
-      phoneNumber === '' ||
-      relationship === '' ||
-      !validateEmail(email) ||
-      gender === ''
+      inputValidatorChecker(firstName) &&
+      inputValidatorChecker(lastName) &&
+      inputValidatorChecker(gender) &&
+      inputValidatorChecker(phoneNumber) &&
+      inputValidatorChecker(relationship) &&
+      emailValidatorChecker(email)
     ) {
-      if (firstName === '') {
-        setFirstNameError('First Name is required');
-      }
-
-      if (lastName === '') {
-        setLastNameError('Last Name is equired');
-      }
-
-      if (phoneNumber === '') {
-        setPhoneNumberError('Phone Number is required');
-      }
-      if (relationship === '') {
-        setRelationshipError('Relationship is required');
-      }
-      if (gender === '') {
-        setGenderError('Gender is required');
-      }
-      if (email === '' || !validateEmail(email)) {
-        if (email === '') {
-          setEmailError('Email is required');
-        } else {
-          setEmailError('Please Enter a Valid Email Address');
-        }
-      }
-    } else {
       setIsLoading(true);
       const data = {
         user_id: user ? user.user_id : '',
@@ -99,6 +78,29 @@ export default function Kin() {
       };
 
       NEXT_OF_Kin(data, callback, onError);
+    } else {
+      inputValidatorErrorState(
+        firstName,
+        setFirstNameError,
+        'First Name is Required'
+      );
+      inputValidatorErrorState(
+        lastName,
+        setLastNameError,
+        'Last Name is required'
+      );
+      inputValidatorErrorState(gender, setGenderError, 'Gender is required');
+      inputValidatorErrorState(
+        phoneNumber,
+        setPhoneNumberError,
+        'Phone Number is required'
+      );
+      inputValidatorErrorState(
+        relationship,
+        setRelationshipError,
+        'Relationship is required'
+      );
+      emailValidatorError(email, setEmailError);
     }
   };
 

@@ -227,7 +227,7 @@ export const getCity = (state) => {
   return cities;
 };
 
-export const validateEmail = (email) => {
+export const emailValidatorChecker = (email) => {
   let mailFormatter = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
   if (email.match(mailFormatter)) {
     return true;
@@ -236,9 +236,35 @@ export const validateEmail = (email) => {
   }
 };
 
+export const emailValidatorError = (email, setEmailError) => {
+  let mailFormatter = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+  if (email === '' || !email.match(mailFormatter)) {
+    if (email === '') {
+      setEmailError('Email is required');
+    } else {
+      setEmailError('Please Enter a valid Email Address');
+    }
+  }
+};
+
 export const nameSplit = (name, index) => {
   let splittedName = name.split(' ');
   return splittedName[index];
+};
+
+export const inputValidatorChecker = (value) => {
+  if (value === '') {
+    return false;
+  } else {
+    return true;
+  }
+};
+
+export const inputValidatorErrorState = (value, errorState, errMsg) => {
+  if (value === '') {
+    errorState(errMsg);
+    return;
+  }
 };
 
 export const cardDetailsFormatter = (value) => {
