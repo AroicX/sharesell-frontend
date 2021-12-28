@@ -7,15 +7,24 @@ import Select from '@/reusable/Select';
 import { useRouter } from 'next/router';
 import { useGlobalStore } from '@/hooks/useGlobalStore';
 import { BUSINESS_DETAILS } from '@/services/profile/update-account/index';
-import { getStates, getCity } from '@/helpers/index';
-import { ResponseHandler } from '@/helpers/index';
+import {
+  getStates,
+  getCity,
+  ResponseHandler,
+  inputValidatorChecker,
+  inputValidatorErrorState,
+} from '@/helpers/index';
 
 export default function Business() {
   const { user, userProfile } = useGlobalStore();
   const [businessReg, setBusinessReg] = useState(false);
-  const [state, setState] = useState(userProfile ? userProfile.supplier.state : '');
+  const [state, setState] = useState(
+    userProfile ? userProfile.supplier.state : ''
+  );
   const [stateError, setStateError] = useState('');
-  const [city, setCity] = useState(userProfile ? userProfile.supplier.city : '');
+  const [city, setCity] = useState(
+    userProfile ? userProfile.supplier.city : ''
+  );
   const [cityError, setCityError] = useState('');
   const [businessName, setBusinessName] = useState(
     userProfile ? userProfile.supplier.business_name : ''
@@ -30,24 +39,11 @@ export default function Business() {
 
   const submitHandler = () => {
     if (
-      businessName === '' ||
-      currentAddress === '' ||
-      city === '' ||
-      state === ''
+      inputValidatorChecker(businessName) &&
+      inputValidatorChecker(currentAddress) &&
+      inputValidatorChecker(state) &&
+      inputValidatorChecker(city)
     ) {
-      if (businessName === '') {
-        setBusinessnameError('Business Name is Required');
-      }
-      if (currentAddress === '') {
-        setCurrentAddressError('Current Address is Required');
-      }
-      if (city === '') {
-        setCityError('City is Required');
-      }
-      if (state === '') {
-        setStateError('State is Required');
-      }
-    } else {
       setIsLoading(true);
       const data = {
         user_id: user ? user.user_id : '',
@@ -72,6 +68,19 @@ export default function Business() {
       };
 
       BUSINESS_DETAILS(data, callback, onError);
+    } else {
+      inputValidatorErrorState(
+        businessName,
+        setBusinessnameError,
+        'First Name is required'
+      );
+      inputValidatorErrorState(
+        currentAddress,
+        setCurrentAddressError,
+        'Current Address is required'
+      );
+      inputValidatorErrorState(state, setStateError, 'State is required');
+      inputValidatorErrorState(city, setCityError, 'City is Required');
     }
   };
 
@@ -101,7 +110,7 @@ export default function Business() {
       Router.push('/profile/update-account');
     }
   }, [userProfile]);
-  
+
   return (
     <div className='mt-4 mb-10'>
       <AppHeader noSVG />

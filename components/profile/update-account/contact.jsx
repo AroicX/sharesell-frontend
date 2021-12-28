@@ -5,9 +5,14 @@ import Button from '@/reusable/Button';
 import Select from '@/reusable/Select';
 import { useRouter } from 'next/router';
 import { useGlobalStore } from '@/hooks/useGlobalStore';
-import { ResponseHandler } from '@/helpers/index';
+import {
+  ResponseHandler,
+  emailValidatorChecker,
+  emailValidatorError,
+  inputValidatorChecker,
+  inputValidatorErrorState,
+} from '@/helpers/index';
 import { CONTACT_PERSON } from '@/services/profile/update-account/index';
-import { validateEmail } from '@/helpers/index';
 
 export default function Contact() {
   const { user, userProfile } = useGlobalStore();
@@ -32,35 +37,12 @@ export default function Contact() {
 
   const onSubmitHandler = () => {
     if (
-      firstName === '' ||
-      lastName === '' ||
-      phoneNumber === '' ||
-      gender === '' ||
-      email === '' ||
-      !validateEmail(email)
+      inputValidatorChecker(firstName) &&
+      inputValidatorChecker(lastName) &&
+      inputValidatorChecker(gender) &&
+      inputValidatorChecker(phoneNumber) &&
+      emailValidatorChecker(email)
     ) {
-      if (firstName === '') {
-        setFirstNameError('First Name is required');
-      }
-      if (lastName === '') {
-        setLastNameError('Last Name is required');
-      }
-
-      if (phoneNumber === '') {
-        setPhoneNumberError('Phone Number is required');
-      }
-
-      if (gender === '') {
-        setGenderError('Gender is required');
-      }
-      if (email === '' || !validateEmail(email)) {
-        if (email === '') {
-          setEmailError('Email Address is required');
-        } else {
-          setEmailError('Please enter a Valid Email Address');
-        }
-      }
-    } else {
       setIsLoading(true);
       const data = {
         user_id: user ? user.user_id : '',
@@ -86,6 +68,24 @@ export default function Contact() {
       };
 
       CONTACT_PERSON(data, callback, onError);
+    } else {
+      inputValidatorErrorState(
+        firstName,
+        setFirstNameError,
+        'First Name is required'
+      );
+      inputValidatorErrorState(
+        lastName,
+        setLastNameError,
+        'Last Name is Required'
+      );
+      inputValidatorErrorState(gender, setGenderError, 'Gender is Required');
+      inputValidatorErrorState(
+        phoneNumber,
+        setPhoneNumberError,
+        'Phone Number is Required'
+      );
+      emailValidatorError(email, setEmailError)
     }
   };
   const firstNameOnchangeHandler = (data) => {
