@@ -1,5 +1,6 @@
 import { GET_PRODUCTS } from '@/services/products';
 import React, { useEffect, useContext, createContext, useState } from 'react';
+import { resolveRoles } from '../helpers';
 
 const GlobalStoreContext = createContext();
 
@@ -17,12 +18,10 @@ const GlobalStore = () => {
   const [products, setProducts] = useState([]);
   const [productCategories, setProductCategories] = useState([]);
   const [currentCategory, setCurrentCategory] = useState([]);
-<<<<<<< HEAD
   const [currentProduct, setCurrentProduct] = useState([]);
   const [supplier, setSupplier] = useState(null);
-=======
   const [userProfile, setUserProfile] = useState(null);
->>>>>>> bb39f207759a23906c2a74254337ea444ce346bc
+  const [role, setRole] = useState(false);
 
   const getProducts = () => {
     const callback = (response) => {
@@ -41,31 +40,31 @@ const GlobalStore = () => {
     if (data) {
       setToken(data.token);
       setUser(data.user);
+      setRole(resolveRoles(parseInt(data?.user?.primary_role)));
       getProducts();
     }
-  }, []);
+  }, [token]);
 
   // useEffect(() => {
   //   console.log(currentCategory);
   // }, [currentCategory]);
 
   return {
+    role,
     user,
     token,
+    setToken,
     products,
     productCategories,
     setProductCategories,
     currentCategory,
     setCurrentCategory,
-<<<<<<< HEAD
     currentProduct,
     setCurrentProduct,
     supplier,
     setSupplier,
-=======
     userProfile,
     setUserProfile,
->>>>>>> bb39f207759a23906c2a74254337ea444ce346bc
   };
 };
 

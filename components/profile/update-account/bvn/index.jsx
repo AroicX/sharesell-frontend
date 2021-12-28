@@ -16,7 +16,7 @@ export default function BVN({ next }) {
   const Router = useRouter();
 
   const onSubmitHandler = () => {
-    if (bvn === '' || bvn.length !== 11) {
+    if (bvn === '' || bvn?.length !== 11) {
       if (bvn === '') {
         setBvnError('BVN is required');
       } else {

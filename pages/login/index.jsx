@@ -7,10 +7,12 @@ import { ResponseHandler } from 'helpers';
 import Link from '@/components/Link';
 import { setCookie } from '@/services/cookies';
 import router from 'next/router';
+import { useGlobalStore } from '@/hooks/useGlobalStore';
 
 export default function Login() {
+  const { setToken } = useGlobalStore();
   const [data, setData] = useState({
-    email: 'supplier@sharesell.com',
+    email: 'reseller@sharesell.com',
     password: 'password',
   });
   const [loading, setLoading] = useState(false);
@@ -24,7 +26,9 @@ export default function Login() {
       setCookie(response.token);
       window.localStorage.setItem('user-data', JSON.stringify(response));
       setLoading(false);
-      router.push(window.localStorage.getItem('be-authorized'));
+      setToken(response.token);
+      let _redirect = window.localStorage.getItem('be-authorized');
+      _redirect ? router.push(_redirect) : router.push('/dashboard');
     };
     const onError = (response) => {
       console.log(response);

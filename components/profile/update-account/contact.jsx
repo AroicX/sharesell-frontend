@@ -75,7 +75,8 @@ export default function Contact() {
         if (response) {
           setIsLoading(false);
           ResponseHandler(response);
-          Router.back();
+          console.log(response);
+          // Router.back();
         }
       };
 

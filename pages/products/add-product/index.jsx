@@ -74,6 +74,15 @@ export default function AddProduct({}) {
 
   const uploadFiles = (event) => {
     event.preventDefault();
+    if (images === null) {
+      return Swal.fire({
+        text: 'Please add images to be uploaded',
+        icon: 'warning',
+        timerProgressBar: true,
+        timer: 2000,
+        showConfirmButton: false,
+      });
+    }
     setLoading(true);
     Swal.fire({
       text: 'Please Wait while image is uploading...',
