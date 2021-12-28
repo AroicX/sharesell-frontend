@@ -241,6 +241,21 @@ export const nameSplit = (name, index) => {
   return splittedName[index];
 };
 
+export const inputValidatorChecker = (value) => {
+  if (value === '') {
+    return false;
+  } else {
+    return true;
+  }
+};
+
+export const inputValidatorErrorState = (value,errorState, errMsg) => {
+  if(value === ""){
+    errorState(errMsg);
+    return ;
+  }
+};
+
 export const cardDetailsFormatter = (value) => {
   const valueArray = [];
   let allNumbers = {
