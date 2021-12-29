@@ -1,10 +1,60 @@
-import React from 'react';
-
+import React, { useState } from 'react';
 import Input from '@/reusable/Input';
 import Button from '@/reusable/Button';
 import AppHeader from '@/components/AppHeader';
+import {
+  inputValidatorChecker,
+  inputValidatorErrorState,
+  ResponseHandler,
+  numberFormatter,
+} from '@/helpers/index';
+import { PHONE_NUMBER } from '@/services/authentication/index';
 
-export default function PhoneNumber({ next, back }) {
+export default function PhoneNumber({ next, back, user, setUser }) {
+  const [phoneNumber, setPhoneNumber] = useState('');
+  const [phoneNumberError, setPhoneNumberError] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
+  const phoneOnChangeHandler = (data) => {
+    setPhoneNumber(numberFormatter(data));
+    setPhoneNumberError('');
+  };
+  console.log(user)
+  const onSubmit = () => {
+    if (inputValidatorChecker(phoneNumber)) {
+      setIsLoading(true);
+      const data = {
+        type: user.userType,
+        phone: phoneNumber,
+      };
+
+      const callback = (response) => {
+        setIsLoading(false);
+        ResponseHandler(response);
+        if (response.payload) {
+          setUser((prev) => {
+            return {
+              ...prev,
+              userId: response.payload.user_id,
+              otp: response.payload.one_time_password,
+            };
+          });
+        }
+        next();
+      };
+
+      const onError = (err) => {
+        console.log(err);
+        setIsLoading(false);
+      };
+      PHONE_NUMBER(data, callback, onError);
+    } else {
+      inputValidatorErrorState(
+        phoneNumber,
+        setPhoneNumberError,
+        'Phone Number is required'
+      );
+    }
+  };
   return (
     <div className='phone'>
       <AppHeader click={back} />
@@ -16,12 +66,16 @@ export default function PhoneNumber({ next, back }) {
             label={'Phone Number'}
             type='text'
             placeholder={'Phone Number'}
+            value={phoneNumber}
+            dispatch={(data) => phoneOnChangeHandler(data)}
+            error={phoneNumberError}
           />
           <Button
             styles={'p-5 block '}
             text='Submit'
             iconRight={'/svg/arrow-right.svg'}
-            click={next}
+            click={() => onSubmit()}
+            loading={isLoading}
           />
         </div>
       </div>

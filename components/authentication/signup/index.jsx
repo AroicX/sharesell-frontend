@@ -7,12 +7,12 @@ import {
   inputValidatorErrorState,
 } from '@/helpers/index';
 
-export default function SignUp({ next, setUserType, userType }) {
+export default function SignUp({ next, setUser, user }) {
   let accountSelected = '';
-  if (userType === 2) {
+  if (user.userType === 2) {
     accountSelected = 'seller';
   }
-  if (userType === 3) {
+  if (user.userType === 3) {
     accountSelected = 'supplier';
   }
   const [selected, setSelected] = useState(accountSelected);
@@ -22,11 +22,15 @@ export default function SignUp({ next, setUserType, userType }) {
     setSelectedError('');
     if (userType === 'seller') {
       setSelected('seller');
-      setUserType(2);
+      setUser((prev) => {
+        return {...prev, userType: 2}
+      });
     }
     if (userType === 'supplier') {
       setSelected('supplier');
-      setUserType(3);
+      setUser((prev) => {
+        return {...prev, userType: 3}
+      });
     }
   };
 

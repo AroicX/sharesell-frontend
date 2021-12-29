@@ -7,7 +7,7 @@ import CreateAccount from '@/components/authentication/signup/CreateAccount';
 
 export default function SignUpPage() {
   const [selected, setSelected] = useState(null);
-  const [userType, setUserType] = useState(null);
+  const [user, setUser] = useState({ userType: null, userId: null, otp: null });
 
   const next = () => {
     if (selected < 4 || selected === null) {
@@ -31,12 +31,12 @@ export default function SignUpPage() {
   return (
     <div>
       {selected === null ? (
-        <SignUp next={next} setUserType={setUserType} userType={userType} />
+        <SignUp next={next} setUser={setUser} user={user} />
       ) : (
         ''
       )}
       {selected === 1 ? (
-        <PhoneNumber next={next} back={back} userType={userType} />
+        <PhoneNumber next={next} back={back} user={user} setUser={setUser} />
       ) : (
         ''
       )}
