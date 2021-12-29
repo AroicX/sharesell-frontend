@@ -28,3 +28,18 @@ export async function PHONE_NUMBER(data, callback, onError) {
     onError && onError(err);
   }
 }
+
+export async function ONE_TIME_PASSWORD(data, callback, onError) {
+  try {
+    let otp = await requests.post(`/auth/verify_one_time_password`, data);
+    if (otp.data) {
+      callback && callback(otp.data);
+    } else {
+      throw otp;
+    }
+
+    return otp;
+  } catch (err) {
+    onError && onError(err);
+  }
+}

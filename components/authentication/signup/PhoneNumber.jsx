@@ -11,20 +11,22 @@ import {
 import { PHONE_NUMBER } from '@/services/authentication/index';
 
 export default function PhoneNumber({ next, back, user, setUser }) {
-  const [phoneNumber, setPhoneNumber] = useState('');
   const [phoneNumberError, setPhoneNumberError] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const phoneOnChangeHandler = (data) => {
-    setPhoneNumber(numberFormatter(data));
+    setUser((prev) => {
+      return { ...prev, phoneNumber: numberFormatter(data) };
+    });
+
     setPhoneNumberError('');
   };
-  console.log(user)
+  
   const onSubmit = () => {
-    if (inputValidatorChecker(phoneNumber)) {
+    if (inputValidatorChecker(user.phoneNumber)) {
       setIsLoading(true);
       const data = {
         type: user.userType,
-        phone: phoneNumber,
+        phone: user.phoneNumber,
       };
 
       const callback = (response) => {
@@ -49,7 +51,7 @@ export default function PhoneNumber({ next, back, user, setUser }) {
       PHONE_NUMBER(data, callback, onError);
     } else {
       inputValidatorErrorState(
-        phoneNumber,
+        user.phoneNumber,
         setPhoneNumberError,
         'Phone Number is required'
       );
@@ -66,7 +68,7 @@ export default function PhoneNumber({ next, back, user, setUser }) {
             label={'Phone Number'}
             type='text'
             placeholder={'Phone Number'}
-            value={phoneNumber}
+            value={user.phoneNumber}
             dispatch={(data) => phoneOnChangeHandler(data)}
             error={phoneNumberError}
           />
