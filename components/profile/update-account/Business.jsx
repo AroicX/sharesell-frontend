@@ -124,7 +124,7 @@ export default function Business() {
             label={'Business Name'}
             type='text'
             placeholder={'Chika Inc'}
-            value={businessName}
+            value={businessName ? businessName : ''}
             dispatch={(data) => businessNameOnChangeHandler(data)}
             error={businessNameError}
           />
@@ -164,7 +164,7 @@ export default function Business() {
             <TextArea
               label={'Current Business Address'}
               placeholder={'No. 4, James st, Zuba, Abuja.'}
-              value={currentAddress}
+              value={currentAddress ? currentAddress : ''}
               dispatch={(data) => currentAddressOnChangeHandler(data)}
               error={currentAddressError}
             />

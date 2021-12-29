@@ -149,7 +149,7 @@ export default function Kin() {
             <Input
               label={'First Name'}
               placeholder={'Chike'}
-              value={firstName}
+              value={firstName ? firstName : ''}
               dispatch={(data) => firstNameOnchangeHandler(data)}
               error={firstNameError}
             />
@@ -158,7 +158,7 @@ export default function Kin() {
             <Input
               label={'Last Name'}
               placeholder={'Pascal'}
-              value={lastName}
+              value={lastName ? lastName : ''}
               dispatch={(data) => lastNameOnchangeHandler(data)}
               error={lastNameError}
             />
@@ -193,7 +193,7 @@ export default function Kin() {
               label={'Email'}
               placeholder={'Enter Email'}
               type='Email'
-              value={email}
+              value={email ? email : ''}
               dispatch={(data) => emailOnChangeHandler(data)}
               error={emailError}
             />
@@ -202,7 +202,7 @@ export default function Kin() {
             <Input
               label={'Phone Number'}
               placeholder={'Enter Phone Number'}
-              value={phoneNumber}
+              value={phoneNumber ? phoneNumber : ''}
               dispatch={(data) => phoneNumberOnchangeHandler(data)}
               error={phoneNumberError}
             />

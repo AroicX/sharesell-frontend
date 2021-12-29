@@ -284,8 +284,11 @@ export const emailValidatorError = (email, setEmailError) => {
 };
 
 export const nameSplit = (name, index) => {
-  let splittedName = name.split(' ');
-  return splittedName[index];
+  if (name) {
+    let splittedName = name.split(' ');
+    return splittedName[index];
+  }
+  return '';
 };
 
 export const inputValidatorChecker = (value) => {
@@ -301,6 +304,28 @@ export const inputValidatorErrorState = (value, errorState, errMsg) => {
     errorState(errMsg);
     return;
   }
+};
+
+export const numberFormatter = (value) => {
+  let formattedNumber = '';
+  let allNumbers = {
+    0: true,
+    1: true,
+    2: true,
+    3: true,
+    4: true,
+    5: true,
+    6: true,
+    7: true,
+    8: true,
+    9: true,
+  };
+  for (let i = 0; i < value.length; i++) {
+    if (allNumbers[value[i]]) {
+      formattedNumber = `${formattedNumber}${value[i]}`;
+    }
+  }
+  return formattedNumber;
 };
 
 export const cardDetailsFormatter = (value) => {

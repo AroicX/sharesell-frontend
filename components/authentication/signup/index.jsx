@@ -2,10 +2,49 @@ import Link from '@/components/Link';
 import React, { useState } from 'react';
 import SVG from 'react-inlinesvg';
 import Button from '@/reusable/Button';
+import {
+  inputValidatorChecker,
+  inputValidatorErrorState,
+} from '@/helpers/index';
 
-export default function SignUp({ next }) {
-  const [selected, setSelected] = useState(null);
+export default function SignUp({ next, setUser, user }) {
+  let accountSelected = '';
+  if (user.userType === 2) {
+    accountSelected = 'seller';
+  }
+  if (user.userType === 3) {
+    accountSelected = 'supplier';
+  }
+  const [selected, setSelected] = useState(accountSelected);
+  const [selectedError, setSelectedError] = useState('');
 
+  const selectedHandler = (userType) => {
+    setSelectedError('');
+    if (userType === 'seller') {
+      setSelected('seller');
+      setUser((prev) => {
+        return {...prev, userType: 2}
+      });
+    }
+    if (userType === 'supplier') {
+      setSelected('supplier');
+      setUser((prev) => {
+        return {...prev, userType: 3}
+      });
+    }
+  };
+
+  const onProceedHandler = () => {
+    if (inputValidatorChecker(selected)) {
+      next();
+    } else {
+      inputValidatorErrorState(
+        selected,
+        setSelectedError,
+        'Please selected an Account Type'
+      );
+    }
+  };
   return (
     <div className='signup'>
       <SVG className='my-auto' width='50px' src={'/svg/logo.svg'} />
@@ -47,7 +86,7 @@ export default function SignUp({ next }) {
               className='my-auto'
               type='radio'
               name='account-type'
-              onClick={() => setSelected('seller')}
+              onClick={() => selectedHandler('seller')}
             />
           </div>
           <div
@@ -76,9 +115,14 @@ export default function SignUp({ next }) {
               className='my-auto'
               type='radio'
               name='account-type'
-              onClick={() => setSelected('supplier')}
+              onClick={() => selectedHandler('supplier')}
             />
           </div>
+          {selectedError && (
+            <span className='text-red-500 text-sm bg-red-200 p-4 rounded my-1'>
+              {selectedError}
+            </span>
+          )}
         </div>
         <br />
 
@@ -86,7 +130,7 @@ export default function SignUp({ next }) {
           styles={'p-5 block '}
           text='Proceed'
           iconRight={'/svg/arrow-right.svg'}
-          click={next}
+          click={() => onProceedHandler()}
         />
 
         <span className='w-full p-2 flex center justify-center text-center mt-24'>
