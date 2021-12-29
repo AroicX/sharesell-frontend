@@ -84,7 +84,7 @@ export default function Contact() {
         setPhoneNumberError,
         'Phone Number is Required'
       );
-      emailValidatorError(email, setEmailError)
+      emailValidatorError(email, setEmailError);
     }
   };
   const firstNameOnchangeHandler = (data) => {
@@ -129,7 +129,7 @@ export default function Contact() {
             <Input
               label={'First Name'}
               placeholder={'Chike'}
-              value={firstName}
+              value={firstName ? firstName : ''}
               dispatch={(data) => firstNameOnchangeHandler(data)}
               error={firstNameError}
             />
@@ -138,7 +138,7 @@ export default function Contact() {
             <Input
               label={'Last Name'}
               placeholder={'Pascal'}
-              value={lastName}
+              value={lastName ? lastName : ''}
               dispatch={(data) => lastNameOnchangeHandler(data)}
               error={lastNameError}
             />
@@ -156,7 +156,7 @@ export default function Contact() {
               label={'Email'}
               placeholder={'Enter Email'}
               type='Email'
-              value={email}
+              value={email ? email : ''}
               dispatch={(data) => emailOnchangeHandler(data)}
               error={emailError}
             />
@@ -165,7 +165,7 @@ export default function Contact() {
             <Input
               label={'Phone Number'}
               placeholder={'Enter Phone Number'}
-              value={phoneNumber}
+              value={phoneNumber ? phoneNumber : ''}
               dispatch={(data) => phoneNumberOnchangeHandler(data)}
               error={phoneNumberError}
             />
