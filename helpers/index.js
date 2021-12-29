@@ -248,8 +248,11 @@ export const emailValidatorError = (email, setEmailError) => {
 };
 
 export const nameSplit = (name, index) => {
-  let splittedName = name.split(' ');
-  return splittedName[index];
+  if (name) {
+    let splittedName = name.split(' ');
+    return splittedName[index];
+  }
+  return '';
 };
 
 export const inputValidatorChecker = (value) => {

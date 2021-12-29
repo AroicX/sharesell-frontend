@@ -43,3 +43,17 @@ export async function ONE_TIME_PASSWORD(data, callback, onError) {
     onError && onError(err);
   }
 }
+
+export async function QUICK_REGISTER(data, callback, onError) {
+  try {
+    let register = await requests.post(`/auth/quick-register`, data);
+    if (register.data) {
+      callback && callback(register.data);
+    } else {
+      throw register;
+    }
+    return register;
+  } catch (err) {
+    onError && onError(err);
+  }
+}
