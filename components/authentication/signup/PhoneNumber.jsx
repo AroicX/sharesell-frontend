@@ -20,7 +20,7 @@ export default function PhoneNumber({ next, back, user, setUser }) {
 
     setPhoneNumberError('');
   };
-  
+
   const onSubmit = () => {
     if (inputValidatorChecker(user.phoneNumber)) {
       setIsLoading(true);

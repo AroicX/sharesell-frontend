@@ -69,7 +69,7 @@ export default function BusinessRegistration({ next, back, user, setUser }) {
             label={'Business Name'}
             type='text'
             placeholder={'Chika Inc'}
-            value={user.businessName}
+            value={user.businessName ? user.businessName : ''}
             dispatch={(data) => businessNameOnChangeHandler(data)}
             error={businessNameError}
           />
@@ -107,7 +107,7 @@ export default function BusinessRegistration({ next, back, user, setUser }) {
               label={'RC / BN Number'}
               type='text'
               placeholder={'Enter RC / BN Number'}
-              value={user.bvn_number}
+              value={user.bvn_number ? user.bvn_number : ''}
               dispatch={(data) => rcNumberOnChangeHandler(data)}
               error={bvnError}
             />
