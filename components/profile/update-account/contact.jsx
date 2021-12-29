@@ -112,11 +112,13 @@ export default function Contact() {
     setPhoneNumber(data);
     setPhoneNumberError('');
   };
+
   useEffect(() => {
     if (!userProfile) {
       Router.push('/profile/update-account');
     }
   }, [userProfile]);
+  
   return (
     <div className='mt-4'>
       <AppHeader noSVG click={() => Router.push('/profile/update-account')} />
