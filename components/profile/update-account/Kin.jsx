@@ -17,51 +17,47 @@ import {
 
 export default function Kin() {
   const { user, userProfile } = useGlobalStore();
-  const [gender, setGender] = useState(
-    userProfile ? userProfile.supplier.next_of_kin_gender : ''
-  );
-  const [genderError, setGenderError] = useState('');
-  const [relationship, setRelationship] = useState(
-    userProfile ? userProfile.supplier.next_of_kin_relationship : ''
-  );
-  const [relationshipError, setRelationshipError] = useState('');
-  const [firstName, setFirstName] = useState(
-    userProfile ? nameSplit(userProfile.supplier.next_of_kin_name, 0) : ''
-  );
-  const [firstNameError, setFirstNameError] = useState('');
-  const [lastName, setLastName] = useState(
-    userProfile ? nameSplit(userProfile.supplier.next_of_kin_name, 1) : ''
-  );
-  const [lastNameError, setLastNameError] = useState('');
-  const [email, setEmail] = useState(
-    userProfile ? userProfile.supplier.next_of_kin_email : ''
-  );
-  const [emailError, setEmailError] = useState('');
-  const [phoneNumber, setPhoneNumber] = useState(
-    userProfile ? userProfile.supplier.next_of_kin_number : ''
-  );
-  const [phoneNumberError, setPhoneNumberError] = useState('');
+  const [form, setForm] = useState({
+    gender: userProfile ? userProfile.supplier.next_of_kin_gender : '',
+    genderError: '',
+    relationship: userProfile
+      ? userProfile.supplier.next_of_kin_relationship
+      : '',
+    relationshipError: '',
+    firstName: userProfile
+      ? nameSplit(userProfile.supplier.next_of_kin_name, 0)
+      : '',
+    firstNameError: '',
+    lastName: userProfile
+      ? nameSplit(userProfile.supplier.next_of_kin_name, 1)
+      : '',
+    lastNameError: '',
+    email: userProfile ? userProfile.supplier.next_of_kin_email : '',
+    emailError: '',
+    phoneNumber: userProfile ? userProfile.supplier.next_of_kin_number : '',
+    phoneNumberError: '',
+  });
   const [isLoading, setIsLoading] = useState(false);
   const Router = useRouter();
 
   const onSubmitHandler = () => {
     if (
-      inputValidatorChecker(firstName) &&
-      inputValidatorChecker(lastName) &&
-      inputValidatorChecker(gender) &&
-      inputValidatorChecker(phoneNumber) &&
-      inputValidatorChecker(relationship) &&
-      emailValidatorChecker(email)
+      inputValidatorChecker(form.firstName) &&
+      inputValidatorChecker(form.lastName) &&
+      inputValidatorChecker(form.gender) &&
+      inputValidatorChecker(form.phoneNumber) &&
+      inputValidatorChecker(form.relationship) &&
+      emailValidatorChecker(form.email)
     ) {
       setIsLoading(true);
       const data = {
         user_id: user ? user.user_id : '',
-        firstname: firstName,
-        lastname: lastName,
-        gender: gender,
-        email: email,
-        phone_number: phoneNumber,
-        relationship: relationship,
+        firstname: form.firstName,
+        lastname: form.lastName,
+        gender: form.gender,
+        email: form.email,
+        phone_number: form.phoneNumber,
+        relationship: form.relationship,
       };
 
       const callback = (response) => {
@@ -80,59 +76,44 @@ export default function Kin() {
       NEXT_OF_Kin(data, callback, onError);
     } else {
       inputValidatorErrorState(
-        firstName,
-        setFirstNameError,
+        form.firstName,
+        setForm,
+        'firstNameError',
         'First Name is Required'
       );
       inputValidatorErrorState(
-        lastName,
-        setLastNameError,
+        form.lastName,
+        setForm,
+        'lastNameError',
         'Last Name is required'
       );
-      inputValidatorErrorState(gender, setGenderError, 'Gender is required');
       inputValidatorErrorState(
-        phoneNumber,
-        setPhoneNumberError,
+        form.gender,
+        setForm,
+        'genderError',
+        'Gender is required'
+      );
+      inputValidatorErrorState(
+        form.phoneNumber,
+        setForm,
+        'phoneNumberError',
         'Phone Number is required'
       );
       inputValidatorErrorState(
-        relationship,
-        setRelationshipError,
+        form.relationship,
+        setForm,
+        'relationshipError',
         'Relationship is required'
       );
-      emailValidatorError(email, setEmailError);
+      emailValidatorError(form.email, setForm);
     }
   };
 
-  const firstNameOnchangeHandler = (data) => {
-    setFirstName(data);
-    setFirstNameError('');
+  const onChangeHandler = (data, field, fieldError) => {
+    setForm((prev) => {
+      return { ...prev, [field]: data, [fieldError]: '' };
+    });
   };
-
-  const lastNameOnchangeHandler = (data) => {
-    setLastName(data);
-    setLastNameError('');
-  };
-
-  const genderOnchangeHandler = (data) => {
-    setGender(data);
-    setGenderError('');
-  };
-
-  const relationshipOnChangeHandler = (data) => {
-    setRelationship(data);
-    setRelationshipError('');
-  };
-  const emailOnChangeHandler = (data) => {
-    setEmail(data);
-    setEmailError('');
-  };
-
-  const phoneNumberOnchangeHandler = (data) => {
-    setPhoneNumber(data);
-    setPhoneNumberError('');
-  };
-
   useEffect(() => {
     if (!userProfile) {
       Router.push('/profile/update-account');
@@ -149,27 +130,31 @@ export default function Kin() {
             <Input
               label={'First Name'}
               placeholder={'Chike'}
-              value={firstName ? firstName : ''}
-              dispatch={(data) => firstNameOnchangeHandler(data)}
-              error={firstNameError}
+              value={form.firstName ? form.firstName : ''}
+              dispatch={(data) =>
+                onChangeHandler(data, 'firstName', 'firstNameError')
+              }
+              error={form.firstNameError}
             />
           </div>
           <div className='mt-7'>
             <Input
               label={'Last Name'}
               placeholder={'Pascal'}
-              value={lastName ? lastName : ''}
-              dispatch={(data) => lastNameOnchangeHandler(data)}
-              error={lastNameError}
+              value={form.lastName ? form.lastName : ''}
+              dispatch={(data) =>
+                onChangeHandler(data, 'lastName', 'lastNameError')
+              }
+              error={form.lastNameError}
             />
           </div>
           <Select
             label={'Gender'}
             options={[{ name: 'Male' }, { name: 'Female' }]}
             placeholder={'Select Gender'}
-            dispatch={(data) => genderOnchangeHandler(data)}
-            error={genderError}
-            initialValue={gender}
+            dispatch={(data) => onChangeHandler(data, 'gender', 'genderError')}
+            error={form.genderError}
+            initialValue={form.gender}
           />
           <Select
             label={'Relationship'}
@@ -184,27 +169,31 @@ export default function Kin() {
               { name: 'Mother' },
             ]}
             placeholder={'Select Relationship'}
-            dispatch={(data) => relationshipOnChangeHandler(data)}
-            error={relationshipError}
-            initialValue={relationship}
+            dispatch={(data) =>
+              onChangeHandler(data, 'relationship', 'relationshipError')
+            }
+            error={form.relationshipError}
+            initialValue={form.relationship}
           />
           <div className='mt-7'>
             <Input
               label={'Email'}
               placeholder={'Enter Email'}
               type='Email'
-              value={email ? email : ''}
-              dispatch={(data) => emailOnChangeHandler(data)}
-              error={emailError}
+              value={form.email ? form.email : ''}
+              dispatch={(data) => onChangeHandler(data, 'email', 'emailError')}
+              error={form.emailError}
             />
           </div>
           <div className='my-7'>
             <Input
               label={'Phone Number'}
               placeholder={'Enter Phone Number'}
-              value={phoneNumber ? phoneNumber : ''}
-              dispatch={(data) => phoneNumberOnchangeHandler(data)}
-              error={phoneNumberError}
+              value={form.phoneNumber ? form.phoneNumber : ''}
+              dispatch={(data) =>
+                onChangeHandler(data, 'phoneNumber', 'phoneNumberError')
+              }
+              error={form.phoneNumberError}
             />
           </div>
           <Button
