@@ -23,12 +23,14 @@ export default function Login() {
     const callback = (response) => {
       ResponseHandler(response);
 
-      setCookie(response.token);
-      window.localStorage.setItem('user-data', JSON.stringify(response));
-      setLoading(false);
-      setToken(response.token);
-      let _redirect = window.localStorage.getItem('be-authorized');
-      _redirect ? router.push(_redirect) : router.push('/dashboard');
+      if (response.status) {
+        setCookie(response.token);
+        window.localStorage.setItem('user-data', JSON.stringify(response));
+        setLoading(false);
+        setToken(response.token);
+        let _redirect = window.localStorage.getItem('be-authorized');
+        _redirect ? router.push(_redirect) : router.push('/dashboard');
+      }
     };
     const onError = (response) => {
       console.log(response);

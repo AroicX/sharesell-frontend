@@ -72,3 +72,18 @@ export async function CREATE_PRODUCT(data, callback, onError) {
     onError && onError(err);
   }
 }
+
+export async function GET_QUOTE(data, callback, onError) {
+  try {
+    let quote = await requests.post(`/transaction/get-quote`, data);
+    if (quote.data) {
+      callback && callback(quote.data);
+    } else {
+      throw quote;
+    }
+
+    return quote;
+  } catch (err) {
+    onError && onError(err);
+  }
+}

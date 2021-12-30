@@ -5,7 +5,8 @@ import { useGlobalStore } from '@/hooks/useGlobalStore';
 import Button from '@/reusable/Button';
 import Modal from '@/reusable/Modal';
 import Select from '@/reusable/Select';
-import { GET_SINGLE_PRODUCT } from '@/services/products';
+import { GET_QUOTE, GET_SINGLE_PRODUCT } from '@/services/products';
+import axios from 'axios';
 import router from 'next/router';
 import React, { useEffect, useState } from 'react';
 import SVG from 'react-inlinesvg';
@@ -16,6 +17,7 @@ export default function ProductSlug() {
   const [product, setProduct] = useState([]);
   const [imageOptions, setImageOptions] = useState([]);
   const [data, setData] = useState({
+    product_id: null,
     state: null,
     city: null,
     stateError: null,
@@ -35,6 +37,7 @@ export default function ProductSlug() {
     const callback = (response) => {
       const { payload } = response;
       let images = JSON.parse(payload.product_images);
+      setData((prevState) => ({ ...prevState, product_id: payload.id }));
       var image_filtered = [];
       images.forEach((img, i) => {
         if (i === 0) {
@@ -77,6 +80,23 @@ export default function ProductSlug() {
       city: data,
       cityError: '',
     }));
+  };
+
+  const getQuote = async () => {
+    const form = {
+      product_id: data.product_id,
+      state: data.state,
+      city: data.city,
+    };
+
+    const callback = (response) => {
+      console.log(response);
+    };
+    const onError = (error) => {
+      console.log(error);
+    };
+
+    await GET_QUOTE(form, callback, onError);
   };
   return (
     <div className='product-slug '>
@@ -148,6 +168,7 @@ export default function ProductSlug() {
               <SVG className='mx-2 my-auto' src='/svg/truck.svg' />
             </button>
             <Button
+              color='green'
               styles='mt-5 bg-red-500'
               text='Generate Payment Link'
               iconRight='/svg/payment.svg'
@@ -189,7 +210,7 @@ export default function ProductSlug() {
             </div>
           )}
 
-          <Button text='Calculate' />
+          <Button text='Calculate' click={() => getQuote()} />
         </div>
       </Modal>
     </div>

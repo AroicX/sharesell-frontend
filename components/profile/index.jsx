@@ -42,11 +42,18 @@ export default function Profile() {
       icon: '/svg/logout.svg',
       title: 'Logout',
       detail: 'Exit account',
-      to: '/',
+      to: '#',
+      click: true,
     },
   ];
 
   const Router = useRouter();
+
+  const logOut = () => {
+    localStorage.removeItem('user-data');
+    Router.push('/login');
+  };
+
   return (
     <div className='profile'>
       <h2 className='text-3xl font-light my-2'>Profile</h2>
@@ -78,7 +85,7 @@ export default function Profile() {
           <div
             key={index}
             className='flex pt-5 cursor-pointer'
-            onClick={() => Router.push(option.to)}
+            onClick={() => (option.click ? logOut() : Router.push(option.to))}
           >
             <div className='w-30 mr-6'>
               <SVG src={option.icon} className='max-w-full' />
