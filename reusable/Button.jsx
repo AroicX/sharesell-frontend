@@ -12,6 +12,7 @@ const Button = ({
   loading,
   loadingText = null,
   rest,
+  color,
 }) => {
   return (
     <>
@@ -19,7 +20,7 @@ const Button = ({
         <Link
           {...rest}
           to={to}
-          className={` bg-app-color p-4 flex block text-white rounded my-1 ${styles} ${
+          className={` bg-app-color p-4 flex text-white rounded my-1 ${styles} ${
             loading && !loadingText
               ? 'center text-center align-middle justify-center items-center'
               : 'justify-between'
@@ -50,7 +51,9 @@ const Button = ({
         </Link>
       ) : (
         <button
-          className={`w-full bg-app-color p-4 flex  block text-white rounded my-1 ${styles} ${
+          className={`w-full ${
+            color === 'green' ? 'bg-green' : 'bg-app-color'
+          }  p-4 flex text-white rounded my-1 ${styles} ${
             loading && !loadingText
               ? 'center text-center align-middle justify-center items-center'
               : 'justify-between'
@@ -73,7 +76,9 @@ const Button = ({
           ) : (
             <>
               {iconLeft ? <SVG className='mr-4' src={iconLeft} /> : null}
-              <span> {text}</span>
+              <span className={`${!iconLeft && !iconRight ? 'w-full' : ''}`}>
+                {text}
+              </span>
               {iconRight ? (
                 <SVG className='ml-4 relative top-0 right' src={iconRight} />
               ) : null}

@@ -5,15 +5,14 @@
 @tailwind components;
 @tailwind utilities;
 
-
-@import "./mixins/breakpoints";
-@import "./mixins/helpers";
+@import './mixins/breakpoints';
+@import './mixins/helpers';
 //
-@import "./core/global";
-@import "./core/variables";
-@import "./elements/inputs";
+@import './core/global';
+@import './core/variables';
+@import './elements/inputs';
 
 //pages
-@import "./pages/authentication";
-@import "./pages/profile";
-
+@import './pages/authentication';
+@import './pages/profile';
+@import './pages/checkout';
