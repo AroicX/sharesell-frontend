@@ -50,7 +50,7 @@ const Button = ({
         </Link>
       ) : (
         <button
-          className={`w-full bg-app-color p-4 flex  block text-white rounded my-1 ${styles} ${
+          className={`w-full bg-app-color p-4 flex block text-white rounded my-1 ${styles} ${
             loading && !loadingText
               ? 'center text-center align-middle justify-center items-center'
               : 'justify-between'

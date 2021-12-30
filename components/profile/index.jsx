@@ -26,12 +26,12 @@ export default function Profile() {
       detail: 'Manage your sharesell subscription',
       to: 'profile/subscription',
     },
-    {
-      icon: '/svg/wallet.svg',
-      title: 'Make a Withdrawal',
-      detail: 'Withdraw cash to your account',
-      to: '/profile/wallet',
-    },
+    // {
+    //   icon: '/svg/wallet.svg',
+    //   title: 'Make a Withdrawal',
+    //   detail: 'Withdraw cash to your account',
+    //   to: '/profile/wallet',
+    // },
     {
       icon: '/svg/lock.svg',
       title: 'Change Password',

@@ -26,7 +26,7 @@ export default function WithdrawalDisplay({ noButton }) {
           <p className='text-white mt-10'>Total Revenue</p>
         )}
         <p className='text-white text-4xl font-bold'>
-          <span className='text-white text-2xl'>₦</span>200,500.00
+          <span className='text-white text-2xl'>₦</span>0
         </p>
         {noButton ? (
           ''

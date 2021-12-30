@@ -127,7 +127,7 @@ export default function AddProduct({}) {
   };
 
   return (
-    <AuthProvider className='add-product'>
+    <AuthProvider className='add-product mt-10'>
       <AppHeader />
       <h2 className='text-3xl font-light my-10'>Add a New Product</h2>
       <form onSubmit={uploadFiles}>

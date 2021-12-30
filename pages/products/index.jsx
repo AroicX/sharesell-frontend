@@ -32,7 +32,7 @@ export default function Product({}) {
 
   return (
     <AuthProvider className='Product'>
-      <h3 className='text-4xl mt-5'>Products</h3>
+      <h3 className='text-4xl mt-10'>Products</h3>
       {categories?.map((item, i) => (
         <div
           key={i + 1}

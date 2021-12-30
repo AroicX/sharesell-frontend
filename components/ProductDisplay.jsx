@@ -3,6 +3,7 @@ import router from 'next/router';
 import React from 'react';
 import { slugify } from '../helpers';
 import SVG from 'react-inlinesvg';
+import Modal from '@/reusable/Modal';
 
 export default function ProductDisplay({ product }) {
   const { role, setCurrentProduct } = useGlobalStore();
@@ -21,7 +22,7 @@ export default function ProductDisplay({ product }) {
       <div className='bg-black p-1 absolute top-5 right-5 rounded'>
         {role === 'Reseller' ? (
           <span className='text-white'>
-             {JSON.parse(product?.product_images).length} Images
+            {JSON.parse(product?.product_images).length} Images
           </span>
         ) : null}
       </div>
@@ -75,6 +76,7 @@ export default function ProductDisplay({ product }) {
           </div>
         </div>
       ) : null}
+      {/* <Modal /> */}
     </div>
   );
 }
