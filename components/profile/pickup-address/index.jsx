@@ -10,7 +10,7 @@ export default function PickUpAddress({ setCurrentState }) {
   const [savedAddress, setSavedAddress] = useState([]);
   const { data, error } = useSWR(`/user/address`, _protectedRequest);
   useEffect(() => {
-    if (data.payload) {
+    if (data) {
       setSavedAddress(data.payload);
     }
   }, [data]);

@@ -1,8 +1,22 @@
 import React, { useState } from 'react';
 import MoreDropdown from './MoreDropdown';
 import SVG from 'react-inlinesvg';
+import { ResponseHandler } from '../helpers';
+import { useRouter } from 'next/router';
+import { DELETE_ADDRESS } from '@/services/profile';
 
 export default function MoreContainer({ savedAddress, setCurrentState }) {
+  const Router = useRouter();
+  const onDeleteHandler = (id) => {
+    const callback = (response) => {
+      ResponseHandler(response);
+      Router.push('/profile');
+    };
+    const onError = (err) => {
+      console.log(err);
+    };
+    DELETE_ADDRESS(id, callback, onError);
+  };
   const Options = [
     {
       name: 'Edit',
@@ -15,6 +29,7 @@ export default function MoreContainer({ savedAddress, setCurrentState }) {
       name: 'Delete',
       method: () => {
         setIsActive(false);
+        onDeleteHandler(savedAddress.id);
       },
     },
   ];

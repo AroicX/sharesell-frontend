@@ -40,3 +40,17 @@ export async function EDIT_ADDRESS(data, id, callback, onError) {
     onError && onError(err);
   }
 }
+
+export async function DELETE_ADDRESS(id, callback, onError) {
+  try {
+    let address = await requests.delete(`/user/address/delete/${id}`);
+    if (address.data) {
+      callback && callback(address.data);
+    } else {
+      throw address;
+    }
+    return address;
+  } catch (err) {
+    onError && onError(err);
+  }
+}
