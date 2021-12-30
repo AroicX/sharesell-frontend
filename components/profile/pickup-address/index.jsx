@@ -1,6 +1,7 @@
 import React from 'react';
 import AppHeader from 'components/AppHeader';
 import MoreContainer from '@/components/MoreContainer';
+import Button from '@/reusable/Button';
 
 export default function PickUpAddress({ setCurrentState }) {
   const SavedAddress = [
@@ -11,7 +12,7 @@ export default function PickUpAddress({ setCurrentState }) {
   return (
     <div className='mt-3'>
       <AppHeader noSVG />
-      <div className=''>
+      <div className='relative'>
         <h2 className='text-3xl font-light my-4'>Saved Pickup Addresses</h2>
         <div className=''>
           <p className='text-sm'>Saved Pickup Addresses</p>
@@ -29,6 +30,15 @@ export default function PickUpAddress({ setCurrentState }) {
               </div>
             ))}
           </div>
+        </div>
+        <div className='w-54 fixed bottom-10 right-2 '>
+          <Button
+            iconLeft='/svg/plus-icon.svg'
+            text='Create Address'
+            styles='block bg-black rounded-full z-50'
+            style={{ background: '#000 !important' }}
+            click={() => setCurrentState({currentState: 3})}
+          />
         </div>
       </div>
     </div>

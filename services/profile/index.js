@@ -12,3 +12,17 @@ export async function CHANGE_PASSWORD(data, callback, onError) {
     onError(err);
   }
 }
+
+export async function CREATE_ADDRESS(data, callback, onError) {
+  try {
+    let address = await requests.post(`/user/address/create`, data);
+    if (address.data) {
+      callback && callback(address.data);
+    } else {
+      throw address;
+    }
+    return address;
+  } catch (err) {
+    onError && onError(err);
+  }
+}

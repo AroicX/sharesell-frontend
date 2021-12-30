@@ -263,9 +263,11 @@ export const inputValidatorChecker = (value) => {
   }
 };
 
-export const inputValidatorErrorState = (value, errorState, errMsg) => {
+export const inputValidatorErrorState = (value, setState, field, errMsg) => {
   if (value === '') {
-    errorState(errMsg);
+    setState((prev) => {
+      return { ...prev, [field]: errMsg };
+    });
     return;
   }
 };
