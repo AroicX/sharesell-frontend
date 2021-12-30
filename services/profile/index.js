@@ -26,3 +26,17 @@ export async function CREATE_ADDRESS(data, callback, onError) {
     onError && onError(err);
   }
 }
+
+export async function EDIT_ADDRESS(data, id, callback, onError) {
+  try {
+    let address = await requests.put(`/user/address/update/${id}`, data);
+    if (address.data) {
+      callback && callback(address.data);
+    } else {
+      throw address;
+    }
+    return address;
+  } catch (err) {
+    onError && onError(err);
+  }
+}
