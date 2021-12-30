@@ -16,48 +16,45 @@ import { CONTACT_PERSON } from '@/services/profile/update-account/index';
 
 export default function Contact() {
   const { user, userProfile } = useGlobalStore();
-  const [gender, setGender] = useState(userProfile ? userProfile.gender : '');
-  const [genderError, setGenderError] = useState('');
-  const [firstName, setFirstName] = useState(
-    userProfile ? userProfile.first_name : ''
-  );
-  const [firstNameError, setFirstNameError] = useState('');
-  const [lastName, setLastName] = useState(
-    userProfile ? userProfile.last_name : ''
-  );
-  const [lastNameError, setLastNameError] = useState('');
-  const [email, setEmail] = useState(userProfile ? userProfile.email : '');
-  const [emailError, setEmailError] = useState('');
-  const [phoneNumber, setPhoneNumber] = useState(
-    userProfile ? userProfile.phone : ''
-  );
-  const [phoneNumberError, setPhoneNumberError] = useState('');
+  const [form, setForm] = useState({
+    gender: userProfile ? userProfile.gender : '',
+    genderError: '',
+    firstName: userProfile ? userProfile.first_name : '',
+    firstNameError: '',
+    lastName: userProfile ? userProfile.last_name : '',
+    lastNameError: '',
+    email: userProfile ? userProfile.email : '',
+    emailError: '',
+    phoneNumber: userProfile ? userProfile.phone : '',
+    phoneNumberError: '',
+  });
+
   const [isLoading, setIsLoading] = useState(false);
   const Router = useRouter();
 
   const onSubmitHandler = () => {
     if (
-      inputValidatorChecker(firstName) &&
-      inputValidatorChecker(lastName) &&
-      inputValidatorChecker(gender) &&
-      inputValidatorChecker(phoneNumber) &&
-      emailValidatorChecker(email)
+      inputValidatorChecker(form.firstName) &&
+      inputValidatorChecker(form.lastName) &&
+      inputValidatorChecker(form.gender) &&
+      inputValidatorChecker(form.phoneNumber) &&
+      emailValidatorChecker(form.email)
     ) {
       setIsLoading(true);
       const data = {
         user_id: user ? user.user_id : '',
-        firstname: firstName,
-        lastname: lastName,
-        gender: gender,
-        email: email,
-        phone_number: phoneNumber,
+        firstname: form.firstName,
+        lastname: form.lastName,
+        gender: form.gender,
+        email: form.email,
+        phone_number: form.phoneNumber,
       };
 
       const callback = (response) => {
         if (response) {
           setIsLoading(false);
           ResponseHandler(response);
-          Router.back();
+          Router.push('/profile/update-account');
         }
       };
 
@@ -69,48 +66,39 @@ export default function Contact() {
       CONTACT_PERSON(data, callback, onError);
     } else {
       inputValidatorErrorState(
-        firstName,
-        setFirstNameError,
+        form.firstName,
+        setForm,
+        'firstNameError',
         'First Name is required'
       );
       inputValidatorErrorState(
-        lastName,
-        setLastNameError,
+        form.lastName,
+        setForm,
+        'lastNameError',
         'Last Name is Required'
       );
-      inputValidatorErrorState(gender, setGenderError, 'Gender is Required');
       inputValidatorErrorState(
-        phoneNumber,
-        setPhoneNumberError,
+        form.gender,
+        setForm,
+        'genderError',
+        'Gender is Required'
+      );
+      inputValidatorErrorState(
+        form.phoneNumber,
+        setForm,
+        'phoneNumberError',
         'Phone Number is Required'
       );
-      emailValidatorError(email, setEmailError);
+      emailValidatorError(form.email, setForm);
     }
   };
-  const firstNameOnchangeHandler = (data) => {
-    setFirstName(data);
-    setFirstNameError('');
+
+  const onChangeHandler = (data, field, fieldError) => {
+    setForm((prev) => {
+      return { ...prev, [field]: data, [fieldError]: '' };
+    });
   };
 
-  const lastNameOnchangeHandler = (data) => {
-    setLastName(data);
-    setLastNameError('');
-  };
-
-  const genderOnchangeHandler = (data) => {
-    setGender(data);
-    setGenderError('');
-  };
-
-  const emailOnchangeHandler = (data) => {
-    setEmail(data);
-    setEmailError('');
-  };
-
-  const phoneNumberOnchangeHandler = (data) => {
-    setPhoneNumber(data);
-    setPhoneNumberError('');
-  };
   useEffect(() => {
     if (!userProfile) {
       Router.push('/profile/update-account');
@@ -129,45 +117,51 @@ export default function Contact() {
             <Input
               label={'First Name'}
               placeholder={'Chike'}
-              value={firstName ? firstName : ''}
-              dispatch={(data) => firstNameOnchangeHandler(data)}
-              error={firstNameError}
+              value={form.firstName ? form.firstName : ''}
+              dispatch={(data) =>
+                onChangeHandler(data, 'firstName', 'firstNameError')
+              }
+              error={form.firstNameError}
             />
           </div>
           <div className='mt-7'>
             <Input
               label={'Last Name'}
               placeholder={'Pascal'}
-              value={lastName ? lastName : ''}
-              dispatch={(data) => lastNameOnchangeHandler(data)}
-              error={lastNameError}
+              value={form.lastName ? form.lastName : ''}
+              dispatch={(data) =>
+                onChangeHandler(data, 'lastName', 'lastNameError')
+              }
+              error={form.lastNameError}
             />
           </div>
           <Select
             label={'Gender'}
             options={[{ name: 'Female' }, { name: 'Male' }]}
             placeholder={'Select Gender'}
-            dispatch={(data) => genderOnchangeHandler(data)}
-            error={genderError}
-            initialValue={gender}
+            dispatch={(data) => onChangeHandler(data, 'gender', 'genderError')}
+            error={form.genderError}
+            initialValue={form.gender}
           />
           <div className='mt-7'>
             <Input
               label={'Email'}
               placeholder={'Enter Email'}
               type='Email'
-              value={email ? email : ''}
-              dispatch={(data) => emailOnchangeHandler(data)}
-              error={emailError}
+              value={form.email ? form.email : ''}
+              dispatch={(data) => onChangeHandler(data, 'email', 'emailError')}
+              error={form.emailError}
             />
           </div>
           <div className='my-7'>
             <Input
               label={'Phone Number'}
               placeholder={'Enter Phone Number'}
-              value={phoneNumber ? phoneNumber : ''}
-              dispatch={(data) => phoneNumberOnchangeHandler(data)}
-              error={phoneNumberError}
+              value={form.phoneNumber ? form.phoneNumber : ''}
+              dispatch={(data) =>
+                onChangeHandler(data, 'phoneNumber', 'phoneNumberError')
+              }
+              error={form.phoneNumberError}
             />
           </div>
           <Button

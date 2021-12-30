@@ -236,13 +236,17 @@ export const emailValidatorChecker = (email) => {
   }
 };
 
-export const emailValidatorError = (email, setEmailError) => {
+export const emailValidatorError = (email, setForm) => {
   let mailFormatter = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
   if (email === '' || !email.match(mailFormatter)) {
     if (email === '') {
-      setEmailError('Email is required');
+      setForm((prev) => {
+        return { ...prev, emailError: 'Email is required' };
+      });
     } else {
-      setEmailError('Please Enter a valid Email Address');
+      setForm((prev) => {
+        return { ...prev, emailError: 'Please Enter a valid Email Address' };
+      });
     }
   }
 };
