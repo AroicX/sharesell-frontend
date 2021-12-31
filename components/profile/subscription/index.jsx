@@ -14,43 +14,43 @@ export default function Subscription({ setSubscriptionStep }) {
         'Upload up to 5 products. You also pay a 7% commission on each product sold.',
       isActive: true,
     },
-    {
-      name: 'Basic',
-      price: '₦1,500',
-      duration: 'per month',
-      icon: '/svg/basic.svg',
-      details:
-        'Upload up to 5 products. You also pay a 5% commission on each product sold.',
-      isActive: false,
-    },
-    {
-      name: 'Standard',
-      price: '₦3,500',
-      duration: 'per month',
-      icon: '/svg/standard.svg',
-      details:
-        'Upload up to 5 products. You also pay a 4% commission on each product sold.',
-      isActive: false,
-    },
-    {
-      name: 'Premium',
-      price: '₦5,000',
-      duration: 'per month',
-      icon: '/svg/premium.svg',
-      details:
-        'Upload up to 5 products. You also pay a 3% commission on each product sold.',
-      isActive: false,
-    },
-    {
-      name: 'VIP',
-      price: '₦20,000',
-      duration: 'per month',
-      icon: '/svg/vip.svg',
-      details:
-        'Upload up to 5 products. You also pay a 2% commission on each product sold.',
-      isActive: false,
-      isComing: true,
-    },
+    // {
+    //   name: 'Basic',
+    //   price: '₦1,500',
+    //   duration: 'per month',
+    //   icon: '/svg/basic.svg',
+    //   details:
+    //     'Upload up to 5 products. You also pay a 5% commission on each product sold.',
+    //   isActive: false,
+    // },
+    // {
+    //   name: 'Standard',
+    //   price: '₦3,500',
+    //   duration: 'per month',
+    //   icon: '/svg/standard.svg',
+    //   details:
+    //     'Upload up to 5 products. You also pay a 4% commission on each product sold.',
+    //   isActive: false,
+    // },
+    // {
+    //   name: 'Premium',
+    //   price: '₦5,000',
+    //   duration: 'per month',
+    //   icon: '/svg/premium.svg',
+    //   details:
+    //     'Upload up to 5 products. You also pay a 3% commission on each product sold.',
+    //   isActive: false,
+    // },
+    // {
+    //   name: 'VIP',
+    //   price: '₦20,000',
+    //   duration: 'per month',
+    //   icon: '/svg/vip.svg',
+    //   details:
+    //     'Upload up to 5 products. You also pay a 2% commission on each product sold.',
+    //   isActive: false,
+    //   isComing: true,
+    // },
   ];
   return (
     <div className='mt-4'>

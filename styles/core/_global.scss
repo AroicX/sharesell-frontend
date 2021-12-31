@@ -20,7 +20,7 @@ html {
 body {
   @apply bg-gray-50;
   font-family: "Inter", sans-serif !important;
-  overflow-x: hidden;
+  overflow-x: hidden !important;
 
   &.no-scroll {
     position: fixed;
@@ -38,7 +38,7 @@ body {
   width: 32%;
   height: 100vh;
   transform: translate(27%, 0%);
-  overflow-y: scroll;
+  overflow-y: scroll !important;
   padding: 1rem;
   padding-top: 2rem;
   @include shadow();
@@ -59,9 +59,17 @@ body {
   }
 }
 
-.navigation {
-  position: fixed;
-}
+// .app-header {
+//   position: fixed;
+//   top: 0px;
+//   left: 0px;
+// }
+
+// .navigation {
+//   position: fixed;
+//   bottom: 0px;
+//   left: 0px;
+// }
 
 .pace {
   -webkit-pointer-events: none;
@@ -145,4 +153,21 @@ body {
   height: 100vh;
   background: #a5595452;
   z-index: 100;
+}
+
+.product-display {
+  &-image {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    vertical-align: middle;
+    width: 100%;
+    height: 200px;
+
+    overflow: hidden;
+    img {
+      width: auto;
+      height: auto;
+    }
+  }
 }

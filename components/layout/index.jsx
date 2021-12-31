@@ -10,7 +10,7 @@ export default function Layout({ children }) {
       <Head />
       {/* <p>layout</p> */}
 
-      <div className='p-2'>
+      <div className='p-2 '>
         {menu ? <MoreMenu /> : null}
         {children}
       </div>

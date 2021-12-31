@@ -1,6 +1,32 @@
 import Swal from 'sweetalert2';
 import States from '@/helpers/states.json';
 
+export const resolveRoles = (value) => {
+  switch (value) {
+    case 1:
+      return 'User';
+      break;
+
+    case 2:
+      return 'Reseller';
+      break;
+
+    case 3:
+      return 'Supplier';
+      break;
+
+    default:
+      return false;
+      break;
+  }
+};
+
+export const getInitials = (name) => {
+
+  let result = name?.split(' ')?.reduce((acc, subname) => acc + subname[0], '');
+  return result;
+};
+
 export const toAbsoluteUrl = (pathname) =>
   process.env.PUBLIC_URL + '/svg/' + pathname;
 
@@ -71,6 +97,16 @@ export const exceptionToErrors = (error) => {
 
 export const ResponseHandler = (response) => {
   switch (response.status) {
+    case 'error':
+      return Swal.fire({
+        title: 'Error!',
+        text: response.message.toUpperCase(),
+        icon: 'error',
+        timerProgressBar: true,
+        timer: 2000,
+        showConfirmButton: false,
+      });
+      break;
     case 'info':
       return Swal.fire({
         title: 'Error!',

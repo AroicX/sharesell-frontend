@@ -6,17 +6,19 @@ import Select from '@/reusable/Select';
 import DropZone from '@/reusable/DropZone';
 import Swal from 'sweetalert2';
 import SVG from 'react-inlinesvg';
-import AppHeader from '@/components/appHeader';
+import AppHeader from '@/components/AppHeader';
 import MoreMenu from '@/components/MoreMenu';
+import Modal from '@/reusable/Modal';
 
 export default class App extends Component {
   render() {
     return (
       <div>
         <div className='p-3 text-app-text'>
-          <DropZone />
-          <MoreMenu />
-          <AppHeader />
+          {/* <DropZone />
+          <MoreMenu /> */}
+          {/* <AppHeader /> */}
+          <Modal />
           <SVG width='200px' src={'/svg/logo.svg'} />
 
           <Button

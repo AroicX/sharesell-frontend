@@ -28,6 +28,20 @@ export async function GET_PRODUCTS_IN_CATEGORIES(id, callback, onError) {
     onError && onError(err);
   }
 }
+export async function GET_SINGLE_PRODUCT(id, callback, onError) {
+  try {
+    let products = await requests.get(`/products/${id}`);
+    if (products.data) {
+      callback && callback(products.data);
+    } else {
+      throw products;
+    }
+
+    return products;
+  } catch (err) {
+    onError && onError(err);
+  }
+}
 
 export async function GET_PRODUCTS(callback, onError) {
   try {
@@ -54,6 +68,21 @@ export async function CREATE_PRODUCT(data, callback, onError) {
     }
 
     return products;
+  } catch (err) {
+    onError && onError(err);
+  }
+}
+
+export async function GET_QUOTE(data, callback, onError) {
+  try {
+    let quote = await requests.post(`/transaction/get-quote`, data);
+    if (quote.data) {
+      callback && callback(quote.data);
+    } else {
+      throw quote;
+    }
+
+    return quote;
   } catch (err) {
     onError && onError(err);
   }

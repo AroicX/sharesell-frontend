@@ -11,7 +11,7 @@ import { useRouter } from 'next/router';
 
 export default function Product({}) {
   const router = useRouter();
-  const { setProductCategories, setCurrentCategory } = useGlobalStore();
+  const { role, setProductCategories, setCurrentCategory } = useGlobalStore();
   const { data, error } = useSWR(`/products/categories`, _protectedRequest);
   const categories = data?.payload?.data || [];
 
@@ -32,7 +32,7 @@ export default function Product({}) {
 
   return (
     <AuthProvider className='Product'>
-      <h3 className='text-4xl mt-5'>Products</h3>
+      <h3 className='text-4xl mt-10'>Products</h3>
       {categories?.map((item, i) => (
         <div
           key={i + 1}
@@ -45,13 +45,15 @@ export default function Product({}) {
           <SVG className='text-app-color' src='/svg/chevron-right.svg' />
         </div>
       ))}
-      <Button
-        iconLeft='/svg/plus-icon.svg'
-        text='Add Product'
-        styles='fixed bottom-10 right-2 block w-12 bg-black rounded-full w-44 z-50'
-        to='/products/add-product'
-        style={{ background: '#000 !important' }}
-      />
+      {role === 'Supplier' && (
+        <Button
+          iconLeft='/svg/plus-icon.svg'
+          text='Add Product'
+          styles='fixed bottom-10 right-2 block w-12 bg-black rounded-full w-44 z-50'
+          to='/products/add-product'
+          style={{ background: '#000 !important' }}
+        />
+      )}
     </AuthProvider>
   );
 }

@@ -56,6 +56,7 @@ export default function Contact() {
           setIsLoading(false);
           ResponseHandler(response);
           Router.push('/profile/update-account');
+      
         }
       };
 
@@ -99,12 +100,12 @@ export default function Contact() {
       return { ...prev, [field]: data, [fieldError]: '' };
     });
   };
-
   useEffect(() => {
     if (!userProfile) {
       Router.push('/profile/update-account');
     }
   }, [userProfile]);
+  
   return (
     <div className='mt-4'>
       <AppHeader noSVG click={() => Router.push('/profile/update-account')} />
