@@ -13,28 +13,30 @@ import { CHANGE_PASSWORD } from '@/services/profile';
 
 export default function ChangePassword() {
   const Router = useRouter();
-  const [oldPassword, setOldPassword] = useState('');
-  const [oldPasswordError, setOldPasswordError] = useState('');
-  const [newPassword, setNewPassword] = useState('');
-  const [newPasswordError, setNewPasswordError] = useState('');
-  const [confirmPassword, setConfirmPassword] = useState('');
-  const [confirmPasswordError, setConfirmPasswordError] = useState('');
+  const [form, setForm] = useState({
+    oldPassword: '',
+    oldPasswordError: '',
+    newPassword: '',
+    newPasswordError: '',
+    confirmPassword: '',
+    confirmPasswordError: '',
+  });
   const [isLoading, setIsLoading] = useState(false);
 
   const { user } = useGlobalStore();
 
   const onSubmitHandler = () => {
     if (
-      inputValidatorChecker(oldPassword) &&
-      inputValidatorChecker(newPassword) &&
-      inputValidatorChecker(confirmPassword) &&
-      newPassword === confirmPassword
+      inputValidatorChecker(form.oldPassword) &&
+      inputValidatorChecker(form.newPassword) &&
+      inputValidatorChecker(form.confirmPassword) &&
+      form.newPassword === form.confirmPassword
     ) {
       setIsLoading(true);
       const data = {
-        old_password: oldPassword,
-        new_password: newPassword,
-        confirm_password: confirmPassword,
+        old_password: form.oldPassword,
+        new_password: form.newPassword,
+        confirm_password: form.confirmPassword,
       };
       const callback = (response) => {
         if (response) {
@@ -52,41 +54,39 @@ export default function ChangePassword() {
       CHANGE_PASSWORD(data, callback, onError);
     } else {
       inputValidatorErrorState(
-        oldPassword,
-        setOldPasswordError,
+        form.oldPassword,
+        setForm,
+        'oldPasswordError',
         'Old Password is Required'
       );
       inputValidatorErrorState(
-        newPassword,
-        setNewPasswordError,
+        form.newPassword,
+        setForm,
+        'newPasswordError',
         'New Password is required'
       );
       inputValidatorErrorState(
-        confirmPassword,
-        setConfirmPasswordError,
+        form.confirmPassword,
+        setForm,
+        'confirmPasswordError',
         'Confirm Password is required'
       );
-      if (newPassword !== confirmPassword) {
-        setConfirmPasswordError(
-          'Confirm Password must match with the New Password Field'
-        );
+      if (form.newPassword !== form.confirmPassword) {
+        setForm((prev) => {
+          return {
+            ...prev,
+            confirmPasswordError:
+              'Confirm Password must match with the New Password Field',
+          };
+        });
       }
     }
   };
 
-  const oldPasswordOnChangeHandler = (data) => {
-    setOldPassword(data);
-    setOldPasswordError('');
-  };
-
-  const newPasswordOnChangeHandler = (data) => {
-    setNewPassword(data);
-    setNewPasswordError("");
-  };
-
-  const confirmPasswordOnChangeHandler = (data) => {
-    setConfirmPassword(data);
-    setConfirmPasswordError('');
+  const onChangeHandler = (data, fieldState, fieldErrorState) => {
+    setForm((prev) => {
+      return { ...prev, [fieldState]: data, [fieldErrorState]: '' };
+    });
   };
   return (
     <div className='mt-4'>
@@ -99,9 +99,11 @@ export default function ChangePassword() {
               type='password'
               label={'Current Password'}
               placeholder={'Current Password'}
-              value={oldPassword}
-              dispatch={(data) => oldPasswordOnChangeHandler(data)}
-              error={oldPasswordError}
+              value={form.oldPassword}
+              dispatch={(data) =>
+                onChangeHandler(data, 'oldPassword', 'oldPasswordError')
+              }
+              error={form.oldPasswordError}
             />
           </div>
           <div className='mb-8'>
@@ -109,9 +111,11 @@ export default function ChangePassword() {
               type='password'
               label={'New Password'}
               placeholder={'New Password'}
-              value={newPassword}
-              dispatch={(data) => newPasswordOnChangeHandler(data)}
-              error={newPasswordError}
+              value={form.newPassword}
+              dispatch={(data) =>
+                onChangeHandler(data, 'newPassword', 'newPasswordError')
+              }
+              error={form.newPasswordError}
             />
           </div>
           <div className='mb-8'>
@@ -119,9 +123,11 @@ export default function ChangePassword() {
               type='password'
               label={'Retype New Password'}
               placeholder={'Retype Password'}
-              value={confirmPassword}
-              dispatch={(data) => confirmPasswordOnChangeHandler(data)}
-              error={confirmPasswordError}
+              value={form.confirmPassword}
+              dispatch={(data) =>
+                onChangeHandler(data, 'confirmPassword', 'confirmPasswordError')
+              }
+              error={form.confirmPasswordError}
             />
           </div>
           <Button
