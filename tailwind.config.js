@@ -21,7 +21,9 @@ module.exports = {
         'app-brown': "#ECE6E4",
         'dark-brown': "#A78989",
         'nice-brown' : "#BD8C70",
-        'app-cream-light': "#FFF7F4"
+        'app-cream-light': "#FFF7F4",
+        'dark-grey': "#8F7D7B",
+        'border-color': '#E2EAEB'
       },
       screens: {
         md: '800px',
