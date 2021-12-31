@@ -16,43 +16,47 @@ import {
 } from '@/helpers/index';
 
 export default function Business() {
-  const { user, userProfile } = useGlobalStore();
-  const [businessReg, setBusinessReg] = useState(false);
-  const [state, setState] = useState(
-    userProfile ? userProfile.supplier.state : ''
-  );
-  const [stateError, setStateError] = useState('');
-  const [city, setCity] = useState(
-    userProfile ? userProfile.supplier.city : ''
-  );
-  const [cityError, setCityError] = useState('');
-  const [businessName, setBusinessName] = useState(
-    userProfile ? userProfile.supplier.business_name : ''
-  );
-  const [businessNameError, setBusinessnameError] = useState('');
-  const [currentAddress, setCurrentAddress] = useState(
-    userProfile ? userProfile.supplier.current_address : ''
-  );
-  const [currentAddressError, setCurrentAddressError] = useState('');
+  const { userProfile } = useGlobalStore();
+  const [form, setForm] = useState({
+    businessReg: false,
+    businessName:
+      userProfile && userProfile.supplier.business_name
+        ? userProfile.supplier.business_name
+        : '',
+    businesNameError: '',
+    state:
+      userProfile && userProfile.supplier.state
+        ? userProfile.supplier.state
+        : '',
+    stateError: '',
+    city:
+      userProfile && userProfile.supplier.city ? userProfile.supplier.city : '',
+    cityError: '',
+    currentAddress:
+      userProfile && userProfile.supplier.current_address
+        ? userProfile.supplier.current_address
+        : '',
+    currentAddressError: '',
+  });
   const [isLoading, setIsLoading] = useState(false);
   const Router = useRouter();
 
   const submitHandler = () => {
     if (
-      inputValidatorChecker(businessName) &&
-      inputValidatorChecker(currentAddress) &&
-      inputValidatorChecker(state) &&
-      inputValidatorChecker(city)
+      inputValidatorChecker(form.businessName) &&
+      inputValidatorChecker(form.currentAddress) &&
+      inputValidatorChecker(form.state) &&
+      inputValidatorChecker(form.city)
     ) {
       setIsLoading(true);
       const data = {
-        user_id: user ? user.user_id : '',
-        business_name: businessName,
+        user_id: userProfile ? userProfile.user_id : '',
+        business_name: form.businessName,
         business_registered: false,
         bvn_number: 23424242,
-        current_address: currentAddress,
-        state: state,
-        city: city,
+        current_address: form.currentAddress,
+        state: form.state,
+        city: form.city,
       };
       const callback = (response) => {
         if (response) {
@@ -70,39 +74,46 @@ export default function Business() {
       BUSINESS_DETAILS(data, callback, onError);
     } else {
       inputValidatorErrorState(
-        businessName,
-        setBusinessnameError,
-        'First Name is required'
+        form.businessName,
+        setForm,
+        'businessNameError',
+        'Business Name is required'
       );
       inputValidatorErrorState(
-        currentAddress,
-        setCurrentAddressError,
+        form.currentAddress,
+        setForm,
+        'currentAddressError',
         'Current Address is required'
       );
-      inputValidatorErrorState(state, setStateError, 'State is required');
-      inputValidatorErrorState(city, setCityError, 'City is Required');
+      inputValidatorErrorState(
+        form.state,
+        setForm,
+        'stateError',
+        'State is required'
+      );
+      inputValidatorErrorState(
+        form.city,
+        setForm,
+        'cityError',
+        'City is Required'
+      );
     }
   };
-
-  const setStateHandler = (data) => {
-    setState(data);
-    setStateError('');
-    setCity('');
+  const onChangeHandler = (data, field, fieldError) => {
+    if (field === 'state') {
+      setForm((prev) => {
+        return { ...prev, [field]: data, [fieldError]: '', city: '' };
+      });
+    } else {
+      setForm((prev) => {
+        return { ...prev, [field]: data, [fieldError]: '' };
+      });
+    }
   };
-
-  const cityOnChangeHandler = (data) => {
-    setCity(data);
-    setCityError('');
-  };
-
-  const businessNameOnChangeHandler = (data) => {
-    setBusinessName(data);
-    setBusinessnameError('');
-  };
-
-  const currentAddressOnChangeHandler = (data) => {
-    setCurrentAddress(data);
-    setCurrentAddressError('');
+  const setBusinessReg = (value) => {
+    setForm((prev) => {
+      return { ...prev, businessReg: value };
+    });
   };
 
   useEffect(() => {
@@ -124,9 +135,11 @@ export default function Business() {
             label={'Business Name'}
             type='text'
             placeholder={'Chika Inc'}
-            value={businessName ? businessName : ''}
-            dispatch={(data) => businessNameOnChangeHandler(data)}
-            error={businessNameError}
+            value={form.businessName ? form.businessName : ''}
+            dispatch={(data) =>
+              onChangeHandler(data, 'businessName', 'businessNameError')
+            }
+            error={form.businessNameError}
           />
           <div className='flex flex-col mb-4'>
             <p className='text-app-text text-base mb-2'>
@@ -153,7 +166,7 @@ export default function Business() {
               </div>
             </div>
           </div>
-          {businessReg && (
+          {form.businessReg && (
             <Input
               label={'RC / BN Number'}
               type='text'
@@ -164,30 +177,32 @@ export default function Business() {
             <TextArea
               label={'Current Business Address'}
               placeholder={'No. 4, James st, Zuba, Abuja.'}
-              value={currentAddress ? currentAddress : ''}
-              dispatch={(data) => currentAddressOnChangeHandler(data)}
-              error={currentAddressError}
+              value={form.currentAddress ? form.currentAddress : ''}
+              dispatch={(data) =>
+                onChangeHandler(data, 'currentAddress', 'currentAddressError')
+              }
+              error={form.currentAddressError}
             />
           </div>
           <div>
             <Select
               label={'State'}
               placeholder={'Lagos'}
-              initialValue={state}
-              dispatch={(data) => setStateHandler(data)}
+              initialValue={form.state}
+              dispatch={(data) => onChangeHandler(data, 'state', 'stateError')}
               options={getStates()}
-              error={stateError}
+              error={form.stateError}
             />
           </div>
-          {state && (
+          {form.state && (
             <div>
               <Select
                 label={'City'}
                 placeholder={'Zuba'}
-                dispatch={(data) => cityOnChangeHandler(data)}
-                options={getCity(state)}
-                error={cityError}
-                initialValue={city}
+                dispatch={(data) => onChangeHandler(data, 'city', 'cityError')}
+                options={getCity(form.state)}
+                error={form.cityError}
+                initialValue={form.city}
               />
             </div>
           )}

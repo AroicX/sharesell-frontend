@@ -8,29 +8,33 @@ import {
 } from '@/helpers/index';
 
 export default function BusinessRegistration({ next, back, user, setUser }) {
-  const [businessNameError, setBusinessNameError] = useState('');
-  const [isRegisteredError, setIsRegistedredError] = useState('');
-  const [bvnError, setBvnError] = useState('');
+  const [form, setForm] = useState({ businessNameError: '', bvnError: '' });
   const [isLoading, setIsLoading] = useState(false);
   const isRegisteredOnChangeHandler = (value) => {
     setUser((prev) => {
       return { ...prev, isRegistered: value };
     });
-    setBvnError('');
+    setForm((prev) => {
+      return { ...prev, bvnError: '' };
+    });
   };
 
   const businessNameOnChangeHandler = (data) => {
     setUser((prev) => {
       return { ...prev, businessName: data };
     });
-    setBusinessNameError('');
+    setForm((prev) => {
+      return { ...prev, businessNameError: '' };
+    });
   };
 
   const rcNumberOnChangeHandler = (data) => {
     setUser((prev) => {
       return { ...prev, bvn_number: data };
     });
-    setBvnError('');
+    setForm((prev) => {
+      return { ...prev, bvnError: '' };
+    });
   };
 
   const onSubmitHandler = () => {
@@ -43,7 +47,8 @@ export default function BusinessRegistration({ next, back, user, setUser }) {
     } else {
       inputValidatorErrorState(
         user.businessName,
-        setBusinessNameError,
+        setForm,
+        "businessNameError",
         'Business Name is Required'
       );
       if (
@@ -52,7 +57,8 @@ export default function BusinessRegistration({ next, back, user, setUser }) {
       ) {
         inputValidatorErrorState(
           user.bvn_number,
-          setBvnError,
+          setForm,
+          "bvnError",
           'Your RC/BN is required for a registered Business'
         );
       }
@@ -71,7 +77,7 @@ export default function BusinessRegistration({ next, back, user, setUser }) {
             placeholder={'Chika Inc'}
             value={user.businessName ? user.businessName : ''}
             dispatch={(data) => businessNameOnChangeHandler(data)}
-            error={businessNameError}
+            error={form.businessNameError}
           />
           <div className='flex flex-col mb-2'>
             <p className='text-app-text text-base mb-2'>
@@ -109,7 +115,7 @@ export default function BusinessRegistration({ next, back, user, setUser }) {
               placeholder={'Enter RC / BN Number'}
               value={user.bvn_number ? user.bvn_number : ''}
               dispatch={(data) => rcNumberOnChangeHandler(data)}
-              error={bvnError}
+              error={form.bvnError}
             />
           )}
           <Button

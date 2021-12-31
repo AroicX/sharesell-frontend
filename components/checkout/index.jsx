@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import Input from '@/reusable/Input';
 import Button from '@/reusable/Button';
-import Infocard from '@/reusable/Infocard';
 import Select from '@/reusable/Select';
 import SVG from 'react-inlinesvg';
 import {
@@ -14,82 +13,104 @@ import {
 } from '@/helpers/index';
 
 export default function Checkout() {
-  const [firstName, setFirstName] = useState('');
-  const [lastName, setLastName] = useState('');
-  const [email, setEmail] = useState('');
-  const [phoneNumber, setPhoneNumber] = useState('');
-  const [firstNameError, setFirstNameError] = useState('');
-  const [lastNameError, setLastNameError] = useState('');
-  const [emailError, setEmailError] = useState('');
-  const [phoneNumberError, setPhoneNumberError] = useState('');
-  const [country, setCountry] = useState('Nigeria');
-  const [countryError, setCountryError] = useState('');
-  const [state, setState] = useState('');
-  const [stateError, setStateError] = useState('');
-  const [city, setCity] = useState('');
-  const [cityError, setCityError] = useState('');
-  const [firstAddress, setFirstAddress] = useState('');
-  const [firstAddressError, setFirstAddressError] = useState('');
-  const [secondAddress, setSecondAddress] = useState('');
+  const [form, setForm] = useState({
+    firstName: '',
+    firstNameError: '',
+    lastName: '',
+    lastNameError: '',
+    phoneNumber: '',
+    phoneNumberError: '',
+    email: '',
+    emailError: '',
+    country: '',
+    countryError: '',
+    state: '',
+    stateError: '',
+    city: '',
+    cityError: '',
+    firstAddress: '',
+    firstAddressError: '',
+    secondAddress: '',
+  });
   const [currentStep, setCurrentStep] = useState(1);
-  const [quantity, setQauntity] = useState(2)
+  const [quantity, setQauntity] = useState(2);
 
-  const onChangeHandler = (data, setState, setErrorState) => {
-    setState(data);
-    setErrorState('');
+  const onChangeHandler = (data, field, fieldError) => {
+    setForm((prev) => {
+      return { ...prev, [field]: data, [fieldError]: '' };
+    });
   };
 
   const onPlaceOrder = () => {
     if (
-      inputValidatorChecker(firstName) &&
-      inputValidatorChecker(lastName) &&
-      inputValidatorChecker(phoneNumber) &&
-      emailValidatorChecker(email) &&
-      inputValidatorChecker(country) &&
-      inputValidatorChecker(state) &&
-      inputValidatorChecker(city) &&
-      inputValidatorChecker(firstAddress)
+      inputValidatorChecker(form.firstName) &&
+      inputValidatorChecker(form.lastName) &&
+      inputValidatorChecker(form.phoneNumber) &&
+      emailValidatorChecker(form.email) &&
+      inputValidatorChecker(form.country) &&
+      inputValidatorChecker(form.state) &&
+      inputValidatorChecker(form.city) &&
+      inputValidatorChecker(form.firstAddress)
     ) {
       setCurrentStep(2);
     } else {
       inputValidatorErrorState(
-        firstName,
-        setFirstNameError,
+        form.firstName,
+        setForm,
+        'firstNameError',
         'First name is required'
       );
       inputValidatorErrorState(
-        lastName,
-        setLastNameError,
+        form.lastName,
+        setForm,
+        'lastNameError',
         'Last Name is required'
       );
       inputValidatorErrorState(
-        phoneNumber,
-        setPhoneNumberError,
+        form.phoneNumber,
+        setForm,
+        'phoneNumberError',
         'Phone Number is required'
       );
-      emailValidatorError(email, setEmailError);
-      inputValidatorErrorState(country, setCountryError, 'Country is required');
-      inputValidatorErrorState(state, setStateError, 'State is required');
-      inputValidatorErrorState(city, setCityError, 'City is required');
+      emailValidatorError(form.email, setForm);
       inputValidatorErrorState(
-        firstAddress,
-        setFirstAddressError,
+        form.country,
+        setForm,
+        'countryError',
+        'Country is required'
+      );
+      inputValidatorErrorState(
+        form.state,
+        setForm,
+        'stateError',
+        'State is required'
+      );
+      inputValidatorErrorState(
+        form.city,
+        setForm,
+        'cityError',
+        'City is required'
+      );
+      inputValidatorErrorState(
+        form.firstAddress,
+        setForm,
+        'firstAddressError',
         'Address Line 1 is required'
       );
     }
   };
 
   const addQuantity = () => {
-    setQauntity(quantity + 1)
-  }
+    setQauntity(quantity + 1);
+  };
 
   const reduceQuantity = () => {
-      setQauntity(quantity - 1)
-  }
+    setQauntity(quantity - 1);
+  };
 
-  let displayQuantity = quantity
-  if(quantity < 10) {
-      displayQuantity = `0${quantity}`
+  let displayQuantity = quantity;
+  if (quantity < 10) {
+    displayQuantity = `0${quantity}`;
   }
   return (
     <div className='checkout'>
@@ -138,7 +159,9 @@ export default function Checkout() {
                 </button>
               </div>
               <div className='flex items-center justify-center w-full'>
-                <p className='text-app-color font-semibold text-sm'>{displayQuantity}</p>
+                <p className='text-app-color font-semibold text-sm'>
+                  {displayQuantity}
+                </p>
               </div>
               <div
                 className='flex items-center justify-center border-l border-app-text w-full cursor-pointer'
@@ -169,10 +192,10 @@ export default function Checkout() {
                 <Input
                   label={'First Name'}
                   placeholder={'Enter First Name'}
-                  value={firstName}
-                  error={firstNameError}
+                  value={form.firstName}
+                  error={form.firstNameError}
                   dispatch={(data) =>
-                    onChangeHandler(data, setFirstName, setFirstNameError)
+                    onChangeHandler(data, 'firstName', 'firstNameError')
                   }
                 />
               </div>
@@ -180,10 +203,10 @@ export default function Checkout() {
                 <Input
                   label={'Email'}
                   placeholder={'Enter Email Address'}
-                  value={email}
-                  error={emailError}
+                  value={form.email}
+                  error={form.emailError}
                   dispatch={(data) =>
-                    onChangeHandler(data, setEmail, setEmailError)
+                    onChangeHandler(data, 'email', 'emailError')
                   }
                 />
               </div>
@@ -191,10 +214,10 @@ export default function Checkout() {
                 <Input
                   label={'Last Name'}
                   placeholder={'Enter Last Name'}
-                  value={lastName}
-                  error={lastNameError}
+                  value={form.lastName}
+                  error={form.lastNameError}
                   dispatch={(data) =>
-                    onChangeHandler(data, setLastName, setLastNameError)
+                    onChangeHandler(data, 'lastName', 'lastNameError')
                   }
                 />
               </div>
@@ -202,10 +225,10 @@ export default function Checkout() {
                 <Input
                   label={'Phone Number'}
                   placeholder={'Enter Phone Number'}
-                  value={phoneNumber}
-                  error={phoneNumberError}
+                  value={form.phoneNumber}
+                  error={form.phoneNumberError}
                   dispatch={(data) =>
-                    onChangeHandler(data, setPhoneNumber, setPhoneNumberError)
+                    onChangeHandler(data, 'phoneNumber', 'phoneNumberError')
                   }
                 />
               </div>
@@ -213,9 +236,9 @@ export default function Checkout() {
           )}
           {currentStep === 2 && (
             <div className='bg-app-cream-light border border-dark-brown rounded p-4 mt-3'>
-              <p className='font-semibold text-sm text-app-text'>{`${firstName} ${lastName}`}</p>
-              <p className='text-app-text text-sm'>{`${email}`}</p>
-              <p className='text-app-text text-sm'>{`${phoneNumber}`}</p>
+              <p className='font-semibold text-sm text-app-text'>{`${form.firstName} ${form.lastName}`}</p>
+              <p className='text-app-text text-sm'>{`${form.email}`}</p>
+              <p className='text-app-text text-sm'>{`${form.phoneNumber}`}</p>
             </div>
           )}
         </div>
@@ -229,10 +252,10 @@ export default function Checkout() {
                 <Select
                   label={'Country'}
                   placeholder={'Selected Country'}
-                  initialValue={country}
-                  error={countryError}
+                  initialValue={form.country}
+                  error={form.countryError}
                   dispatch={(data) =>
-                    onChangeHandler(data, setCountry, setCountryError)
+                    onChangeHandler(data, 'country', 'countryError')
                   }
                   options={[{ name: 'Nigeria' }]}
                 />
@@ -241,10 +264,10 @@ export default function Checkout() {
                 <Select
                   label={'State'}
                   placeholder={'Select State'}
-                  value={state}
-                  error={stateError}
+                  value={form.state}
+                  error={form.stateError}
                   dispatch={(data) =>
-                    onChangeHandler(data, setState, setStateError)
+                    onChangeHandler(data, 'state', 'stateError')
                   }
                   options={getStates()}
                 />
@@ -253,22 +276,22 @@ export default function Checkout() {
                 <Select
                   label={'City'}
                   placeholder={'Select City'}
-                  value={city}
-                  error={cityError}
+                  value={form.city}
+                  error={form.cityError}
                   dispatch={(data) =>
-                    onChangeHandler(data, setCity, setCityError)
+                    onChangeHandler(data, 'city', 'cityError')
                   }
-                  options={getCity(state)}
+                  options={getCity(form.state)}
                 />
               </div>
               <div className='mt-6'>
                 <Input
                   label={'Address Line 1'}
                   placeholder={'Enter Address Line 1'}
-                  value={firstAddress}
-                  error={firstAddressError}
+                  value={form.firstAddress}
+                  error={form.firstAddressError}
                   dispatch={(data) =>
-                    onChangeHandler(data, setFirstAddress, setFirstAddressError)
+                    onChangeHandler(data, 'firstAddress', 'firstAddressError')
                   }
                 />
               </div>
@@ -276,17 +299,17 @@ export default function Checkout() {
                 <Input
                   label={'Address Line 2'}
                   placeholder={'Enter Address Line 2'}
-                  value={secondAddress}
-                  dispatch={(data) => setSecondAddress(data)}
+                  value={form.secondAddress}
+                  dispatch={(data) => onChangeHandler(data, 'secondAddress')}
                 />
               </div>
             </div>
           )}
           {currentStep === 2 && (
             <div className='bg-app-cream-light border border-dark-brown rounded p-4 pb-9 mt-3'>
-              <p className='font-semibold text-sm text-app-text'>{`${state}, ${country}`}</p>
-              <p className='text-app-text text-sm'>{`${city}`}</p>
-              <p className='text-app-text text-sm'>{`${firstAddress}. ${secondAddress}`}</p>
+              <p className='font-semibold text-sm text-app-text'>{`${form.state}, ${form.country}`}</p>
+              <p className='text-app-text text-sm'>{`${form.city}`}</p>
+              <p className='text-app-text text-sm'>{`${form.firstAddress}. ${form.secondAddress}`}</p>
             </div>
           )}
         </div>

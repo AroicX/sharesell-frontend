@@ -11,14 +11,16 @@ import {
 import { PHONE_NUMBER } from '@/services/authentication/index';
 
 export default function PhoneNumber({ next, back, user, setUser }) {
-  const [phoneNumberError, setPhoneNumberError] = useState('');
+  const [form, setForm] = useState({ phoneNumberError: '' });
   const [isLoading, setIsLoading] = useState(false);
   const phoneOnChangeHandler = (data) => {
     setUser((prev) => {
       return { ...prev, phoneNumber: numberFormatter(data) };
     });
 
-    setPhoneNumberError('');
+    setForm((prev) => {
+      return { ...prev, phoneNumberError: '' };
+    });
   };
 
   const onSubmit = () => {
@@ -52,7 +54,8 @@ export default function PhoneNumber({ next, back, user, setUser }) {
     } else {
       inputValidatorErrorState(
         user.phoneNumber,
-        setPhoneNumberError,
+        setForm,
+        'phoneNumberError',
         'Phone Number is required'
       );
     }
@@ -70,7 +73,7 @@ export default function PhoneNumber({ next, back, user, setUser }) {
             placeholder={'Phone Number'}
             value={user.phoneNumber}
             dispatch={(data) => phoneOnChangeHandler(data)}
-            error={phoneNumberError}
+            error={form.phoneNumberError}
           />
           <Button
             styles={'p-5 block '}

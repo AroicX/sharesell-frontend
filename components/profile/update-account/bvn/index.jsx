@@ -10,7 +10,9 @@ import { useRouter } from 'next/router';
 
 export default function BVN({ next }) {
   const { user, userProfile } = useGlobalStore();
-  const [bvn, setBvn] = useState(userProfile ? userProfile.bvn : '');
+  const [bvn, setBvn] = useState(
+    userProfile && userProfile.bvn ? userProfile.bvn : ''
+  );
   const [bvnError, setBvnError] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const Router = useRouter();
@@ -74,7 +76,7 @@ export default function BVN({ next }) {
           <Input
             label={'BVN'}
             placeholder={'Enter BVN'}
-            value={bvn}
+            value={bvn ? bvn : ""}
             dispatch={(data) => bvnOnChangeHandler(data)}
             error={bvnError}
           />

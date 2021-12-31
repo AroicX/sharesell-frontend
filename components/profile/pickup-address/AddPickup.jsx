@@ -5,24 +5,25 @@ import Select from 'reusable/Select';
 import Button from 'reusable/Button';
 import { useRouter } from 'next/router';
 import {
-  getStates,
   getCity,
-  inputValidatorErrorState,
+  getStates,
   inputValidatorChecker,
+  inputValidatorErrorState,
   ResponseHandler,
 } from '@/helpers/index';
-import { EDIT_ADDRESS } from '@/services/profile/index';
+import { CREATE_ADDRESS } from '@/services/profile';
 
-export default function PickUpAddressEdit({ currentState, setCurrentState }) {
+export default function AddPickupAddress({ currentState, setCurrentState }) {
   const [form, setForm] = useState({
-    address: currentState.address,
+    address: '',
     addressError: '',
-    state: currentState.state,
+    state: '',
     stateError: '',
-    city: currentState.city,
+    city: '',
     cityError: '',
   });
   const [isLoading, setIsLoading] = useState(false);
+
   const Router = useRouter();
   const onChangeHandler = (data, field, fieldError) => {
     if (field === 'state') {
@@ -35,7 +36,8 @@ export default function PickUpAddressEdit({ currentState, setCurrentState }) {
       });
     }
   };
-  const onSaveHandler = (id) => {
+
+  const onSubmitHandler = () => {
     if (
       inputValidatorChecker(form.address) &&
       inputValidatorChecker(form.state) &&
@@ -52,7 +54,7 @@ export default function PickUpAddressEdit({ currentState, setCurrentState }) {
       const callback = (response) => {
         setIsLoading(false);
         ResponseHandler(response);
-        Router.push('/profile');
+        Router.push('/profile')
       };
 
       const onError = (err) => {
@@ -60,7 +62,8 @@ export default function PickUpAddressEdit({ currentState, setCurrentState }) {
         console.log(err);
       };
 
-      EDIT_ADDRESS(data, id, callback, onError);
+      CREATE_ADDRESS(data, callback, onError);
+      //   setCurrentState({ currentState: 1 });
     } else {
       inputValidatorErrorState(
         form.address,
@@ -95,6 +98,7 @@ export default function PickUpAddressEdit({ currentState, setCurrentState }) {
               onChangeHandler(data, 'address', 'addressError')
             }
             error={form.addressError}
+            placeholder={'Enter Pickup Address'}
           />
           <div className='mb-8'>
             <Select
@@ -103,6 +107,7 @@ export default function PickUpAddressEdit({ currentState, setCurrentState }) {
               options={getStates()}
               dispatch={(data) => onChangeHandler(data, 'state', 'stateError')}
               error={form.stateError}
+              placeholder={'Select State'}
             />
           </div>
           <div className='mb-8'>
@@ -112,13 +117,14 @@ export default function PickUpAddressEdit({ currentState, setCurrentState }) {
               options={getCity(form.state)}
               dispatch={(data) => onChangeHandler(data, 'city', 'cityError')}
               error={form.cityError}
+              placeholder={'Select City'}
             />
           </div>
 
           <Button
-            text={'Save Changes'}
+            text={'Submit'}
             iconRight={'/svg/arrow-right.svg'}
-            click={() => onSaveHandler(currentState.id)}
+            click={() => onSubmitHandler()}
             loading={isLoading}
           />
         </div>
