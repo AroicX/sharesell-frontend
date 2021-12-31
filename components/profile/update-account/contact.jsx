@@ -15,17 +15,18 @@ import {
 import { CONTACT_PERSON } from '@/services/profile/update-account/index';
 
 export default function Contact() {
-  const { user, userProfile } = useGlobalStore();
+  const { userProfile } = useGlobalStore();
   const [form, setForm] = useState({
-    gender: userProfile ? userProfile.gender : '',
+    gender: userProfile && userProfile.gender ? userProfile.gender : '',
     genderError: '',
-    firstName: userProfile ? userProfile.first_name : '',
+    firstName:
+      userProfile && userProfile.first_name ? userProfile.first_name : '',
     firstNameError: '',
-    lastName: userProfile ? userProfile.last_name : '',
+    lastName: userProfile && userProfile.last_name ? userProfile.last_name : '',
     lastNameError: '',
-    email: userProfile ? userProfile.email : '',
+    email: userProfile && userProfile.email ? userProfile.email : '',
     emailError: '',
-    phoneNumber: userProfile ? userProfile.phone : '',
+    phoneNumber: userProfile && userProfile.phone ? userProfile.phone : '',
     phoneNumberError: '',
   });
 
@@ -42,7 +43,7 @@ export default function Contact() {
     ) {
       setIsLoading(true);
       const data = {
-        user_id: user ? user.user_id : '',
+        user_id: userProfile ? userProfile.user_id : '',
         firstname: form.firstName,
         lastname: form.lastName,
         gender: form.gender,

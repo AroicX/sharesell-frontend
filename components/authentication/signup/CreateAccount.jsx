@@ -13,30 +13,21 @@ import { useRouter } from 'next/router';
 import { QUICK_REGISTER } from '@/services/authentication';
 
 export default function CreateAccount({ back, user, setUser }) {
-  const [emailError, setEmailError] = useState('');
-  const [passwordError, setPasswordError] = useState('');
-  const [reEnterPasswordError, setReEnterpasswordError] = useState('');
+  const [form, setForm] = useState({
+    emailError: '',
+    passwordError: '',
+    reEnterPasswordError: '',
+  });
+
   const [isLoading, setIsLoading] = useState(false);
   const Router = useRouter();
-  const emailOnChangeHandler = (data) => {
+  const onChangeHandler = (data, field, fieldError) => {
     setUser((prev) => {
-      return { ...prev, email: data };
+      return { ...prev, [field]: data };
     });
-    setEmailError('');
-  };
-
-  const passwordOnChangeHandler = (data) => {
-    setUser((prev) => {
-      return { ...prev, password: data };
+    setForm((prev) => {
+      return { ...prev, [fieldError]: '' };
     });
-    setPasswordError('');
-  };
-
-  const reEnterPasswordHandler = (data) => {
-    setUser((prev) => {
-      return { ...prev, reEnterPassword: data };
-    });
-    setReEnterpasswordError('');
   };
 
   const onSubmitHandler = () => {
@@ -46,7 +37,7 @@ export default function CreateAccount({ back, user, setUser }) {
       emailValidatorChecker(user.email) &&
       user.password === user.reEnterPassword
     ) {
-      setIsLoading(false);
+      setIsLoading(true);
       const data = {
         user_id: user.userId,
         business_name: user.businessName,
@@ -73,19 +64,25 @@ export default function CreateAccount({ back, user, setUser }) {
     } else {
       inputValidatorErrorState(
         user.password,
-        setPasswordError,
+        setForm,
+        'passwordError',
         'Password is required'
       );
       inputValidatorErrorState(
         user.reEnterPassword,
-        setReEnterpasswordError,
+        setForm,
+        'reEnterPasswordError',
         'Retype Password is required'
       );
-      emailValidatorError(user.email, setEmailError);
+      emailValidatorError(user.email, setForm);
       if (user.password !== user.reEnterPassword) {
-        setReEnterpasswordError(
-          'Retype Password field must match password field'
-        );
+        setForm((prev) => {
+          return {
+            ...prev,
+            reEnterPasswordError:
+              "'Retype Password field must match password field'",
+          };
+        });
       }
     }
   };
@@ -105,8 +102,8 @@ export default function CreateAccount({ back, user, setUser }) {
               type='email'
               placeholder={'chikainc@gmail.com'}
               value={user.email}
-              error={emailError}
-              dispatch={(data) => emailOnChangeHandler(data)}
+              error={form.emailError}
+              dispatch={(data) => onChangeHandler(data, 'email', 'emailError')}
             />
           </div>
           <div className='my-8'>
@@ -115,8 +112,10 @@ export default function CreateAccount({ back, user, setUser }) {
               type='password'
               placeholder={'Enter Password'}
               value={user.password}
-              error={passwordError}
-              dispatch={(data) => passwordOnChangeHandler(data)}
+              error={form.passwordError}
+              dispatch={(data) =>
+                onChangeHandler(data, 'password', 'passwordError')
+              }
             />
           </div>
           <div className='my-8'>
@@ -125,8 +124,10 @@ export default function CreateAccount({ back, user, setUser }) {
               type='password'
               placeholder={'Retype Password'}
               value={user.reEnterPassword}
-              dispatch={(data) => reEnterPasswordHandler(data)}
-              error={reEnterPasswordError}
+              dispatch={(data) =>
+                onChangeHandler(data, 'reEnterPassword', 'reEnterPasswordError')
+              }
+              error={form.reEnterPasswordError}
             />
           </div>
           <div className='flex items-center w-full mb-6'>

@@ -11,24 +11,23 @@ import {
 import { ONE_TIME_PASSWORD } from '@/services/authentication/index';
 
 export default function OneTimePassword({ next, back, user }) {
-  const [otp, setOtp] = useState(user ? user.otp : '');
-  const [otpError, setOtpError] = useState('');
+  const [form, setForm] = useState({ otp: user ? user.otp : '', otpError: '' });
   const [isLoading, setIsLoading] = useState(false);
 
   const otpOnChangeHandler = (data) => {
-    setOtp(numberFormatter(data));
-    setOtpError('');
+    setForm((prev) => {
+      return { ...prev, otp: numberFormatter(data), otpError: '' };
+    });
   };
 
   const onSubmitHandler = () => {
-    if (inputValidatorChecker(otp)) {
+    if (inputValidatorChecker(form.otp)) {
       const data = {
-        otp: otp,
+        otp: form.otp,
       };
       setIsLoading(true);
       const callback = (response) => {
         setIsLoading(false);
-        console.log(response);
         ResponseHandler(response);
         next();
       };
@@ -41,8 +40,9 @@ export default function OneTimePassword({ next, back, user }) {
       ONE_TIME_PASSWORD(data, callback, onError);
     } else {
       inputValidatorErrorState(
-        otp,
-        setOtpError,
+        form.otp,
+        setForm,
+        "otpError",
         'One Time Password is Required'
       );
     }
@@ -60,9 +60,9 @@ export default function OneTimePassword({ next, back, user }) {
             label={'OTP'}
             type='text'
             placeholder={'Enter OTP'}
-            value={otp}
+            value={form.otp}
             dispatch={(data) => otpOnChangeHandler(data)}
-            error={otpError}
+            error={form.otpError}
           />
           <Button
             styles={'p-5 block '}

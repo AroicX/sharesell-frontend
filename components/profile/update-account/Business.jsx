@@ -16,19 +16,28 @@ import {
 } from '@/helpers/index';
 
 export default function Business() {
-  const { user, userProfile } = useGlobalStore();
+  const { userProfile } = useGlobalStore();
   const [form, setForm] = useState({
     businessReg: false,
-    businessName: userProfile ? userProfile.supplier.business_name : '',
+    businessName:
+      userProfile && userProfile.supplier.business_name
+        ? userProfile.supplier.business_name
+        : '',
     businesNameError: '',
-    state: userProfile ? userProfile.supplier.state : '',
+    state:
+      userProfile && userProfile.supplier.state
+        ? userProfile.supplier.state
+        : '',
     stateError: '',
-    city: userProfile ? userProfile.supplier.city : '',
+    city:
+      userProfile && userProfile.supplier.city ? userProfile.supplier.city : '',
     cityError: '',
-    currentAddress: userProfile ? userProfile.supplier.current_address : '',
+    currentAddress:
+      userProfile && userProfile.supplier.current_address
+        ? userProfile.supplier.current_address
+        : '',
     currentAddressError: '',
   });
-
   const [isLoading, setIsLoading] = useState(false);
   const Router = useRouter();
 
@@ -41,7 +50,7 @@ export default function Business() {
     ) {
       setIsLoading(true);
       const data = {
-        user_id: user ? user.user_id : '',
+        user_id: userProfile ? userProfile.user_id : '',
         business_name: form.businessName,
         business_registered: false,
         bvn_number: 23424242,
@@ -82,7 +91,12 @@ export default function Business() {
         'stateError',
         'State is required'
       );
-      inputValidatorErrorState(form.city, setForm, 'cityError', 'City is Required');
+      inputValidatorErrorState(
+        form.city,
+        setForm,
+        'cityError',
+        'City is Required'
+      );
     }
   };
   const onChangeHandler = (data, field, fieldError) => {

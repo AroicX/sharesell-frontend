@@ -16,30 +16,41 @@ import {
 } from '@/helpers/index';
 
 export default function Kin() {
-  const { user, userProfile } = useGlobalStore();
+  const { userProfile } = useGlobalStore();
   const [form, setForm] = useState({
-    gender: userProfile ? userProfile.supplier.next_of_kin_gender : '',
+    gender:
+      userProfile && userProfile.supplier.next_of_kin_gender
+        ? userProfile.supplier.next_of_kin_gender
+        : '',
     genderError: '',
-    relationship: userProfile
-      ? userProfile.supplier.next_of_kin_relationship
-      : '',
+    relationship:
+      userProfile && userProfile.supplier.next_of_kin_relationship
+        ? userProfile.supplier.next_of_kin_relationship
+        : '',
     relationshipError: '',
-    firstName: userProfile
-      ? nameSplit(userProfile.supplier.next_of_kin_name, 0)
-      : '',
+    firstName:
+      userProfile && userProfile.supplier.next_of_kin_name
+        ? nameSplit(userProfile.supplier.next_of_kin_name, 0)
+        : '',
     firstNameError: '',
-    lastName: userProfile
-      ? nameSplit(userProfile.supplier.next_of_kin_name, 1)
-      : '',
+    lastName:
+      userProfile && userProfile.supplier.next_of_kin_name
+        ? nameSplit(userProfile.supplier.next_of_kin_name, 1)
+        : '',
     lastNameError: '',
-    email: userProfile ? userProfile.supplier.next_of_kin_email : '',
+    email:
+      userProfile && userProfile.supplier.next_of_kin_email
+        ? userProfile.supplier.next_of_kin_email
+        : '',
     emailError: '',
-    phoneNumber: userProfile ? userProfile.supplier.next_of_kin_number : '',
+    phoneNumber:
+      userProfile && userProfile.supplier.next_of_kin_number
+        ? userProfile.supplier.next_of_kin_number
+        : '',
     phoneNumberError: '',
   });
   const [isLoading, setIsLoading] = useState(false);
   const Router = useRouter();
-
   const onSubmitHandler = () => {
     if (
       inputValidatorChecker(form.firstName) &&
@@ -50,8 +61,9 @@ export default function Kin() {
       emailValidatorChecker(form.email)
     ) {
       setIsLoading(true);
+
       const data = {
-        user_id: user ? user.user_id : '',
+        user_id: userProfile ? userProfile.user_id : '',
         firstname: form.firstName,
         lastname: form.lastName,
         gender: form.gender,
