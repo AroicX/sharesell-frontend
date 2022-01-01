@@ -46,7 +46,7 @@ export default function Dashboard() {
             width='50px'
             height='50px'
           />
-          <Link to='/profile' className='text-app-color m-auto'>
+          <Link to='/profile/update-account' className='text-app-color m-auto'>
             Hi, Tap here to update account
           </Link>
           <div className='relative my-auto'>
