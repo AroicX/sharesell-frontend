@@ -22,12 +22,12 @@ export default function PickUpAddress({ setCurrentState }) {
         <div className=''>
           <p className='text-sm'>Saved Pickup Addresses</p>
           <div>
-            {savedAddress.map((address, index) => (
+            {savedAddress?.map((address, index) => (
               <div
                 key={index}
                 className='flex justify-between min-h-fit bg-app-cream rounded border p-4 py-6 border-lightest-color mt-4 relative'
               >
-                <p className='w-48 text-sm'>{`${address.address}, ${address.city} ${address.state}, Nigeria`}</p>
+                <p className='w-48 text-sm'>{`${address?.address}, ${address?.city} ${address?.state}, Nigeria`}</p>
                 <MoreContainer
                   savedAddress={savedAddress[index]}
                   setCurrentState={setCurrentState}

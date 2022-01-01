@@ -8,8 +8,7 @@
       "@/services/*": ["services/*"],
       "@/helpers/*": ["helpers/*"],
       "@/reusable/*": ["reusable/*"],
-      "@/styles/*": ["/styles/*"]
+      "@/styles/*": ["/styles/*"],
     }
   }
-
 }
