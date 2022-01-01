@@ -17,7 +17,7 @@ export default function EmptyAccount({ back, next }) {
           <p className='font-semibold text-base text-app-text text-center w-64 mt-8 mb-5'>
             You have not added any account for us to send your money to
           </p>
-          <Button text={'Add a Bank Account'} iconRight={"/svg/plus-circle.svg"} click={next}/>
+          <Button style="bg-app-color" text={'Add a Bank Account'} iconRight={"/svg/plus-circle.svg"} click={next}/>
         </div>
       </div>
     </div>

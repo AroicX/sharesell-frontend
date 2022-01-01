@@ -43,6 +43,7 @@ export default function SubscriptionCheckout({
             </div>
           </div>
           <Button
+          style="bg-app-color"
             text={`Pay ${subscriptionStep.price}`}
             iconRight={'/svg/arrow-right.svg'}
             click={() => setSubscriptionStep((prev) => ({ ...prev, step: 3 }))}

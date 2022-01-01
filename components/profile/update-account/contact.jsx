@@ -167,6 +167,7 @@ export default function Contact() {
             />
           </div>
           <Button
+          style="bg-app-color"
             text={'Submit'}
             iconRight={'/svg/arrow-right.svg'}
             click={onSubmitHandler}

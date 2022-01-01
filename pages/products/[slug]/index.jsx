@@ -256,6 +256,7 @@ export default function ProductSlug() {
 
               <Button
                 text='Calculate'
+                styles="bg-app-color"
                 click={() => getQuote()}
                 loading={loading}
               />

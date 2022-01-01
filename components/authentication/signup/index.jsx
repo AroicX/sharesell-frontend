@@ -127,7 +127,7 @@ export default function SignUp({ next, setUser, user }) {
         <br />
 
         <Button
-          styles={'p-5 block '}
+          styles={'p-5 block bg-app-color '}
           text='Proceed'
           iconRight={'/svg/arrow-right.svg'}
           click={() => onProceedHandler()}

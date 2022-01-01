@@ -318,7 +318,7 @@ export default function Checkout() {
         <div className='ml-auto w-36 mt-6'>
           <Button
             text={'Place Order'}
-            styles={'justify-center items-center'}
+            styles={'justify-center items-center bg-app-color'}
             click={() => onPlaceOrder()}
           />
         </div>
@@ -358,6 +358,7 @@ export default function Checkout() {
               text={'Proceed to Secure Payment'}
               iconLeft={'/svg/payment.svg'}
               color={'green'}
+              
             />
           </div>
         </div>

@@ -208,7 +208,7 @@ export default function Business() {
           )}
 
           <Button
-            styles={'p-5 block '}
+            styles={'p-5 block bg-app-color'}
             text='Submit'
             iconRight={'/svg/arrow-right.svg'}
             click={() => submitHandler()}

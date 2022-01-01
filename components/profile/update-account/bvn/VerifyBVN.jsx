@@ -17,6 +17,7 @@ export default function VerifyBVN({ next, back }) {
             <Input label={'OTP'} placeholder={'Enter OTP'} />
           </div>
           <Button
+          style="bg-app-color"
             text={'Verify OTP'}
             iconRight={'/svg/arrow-right.svg'}
             click={next}

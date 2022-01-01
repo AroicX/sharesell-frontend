@@ -213,6 +213,7 @@ export default function Kin() {
             iconRight={'/svg/arrow-right.svg'}
             click={onSubmitHandler}
             loading={isLoading}
+            style="bg-app-color"
           />
         </div>
       </div>

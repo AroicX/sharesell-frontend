@@ -82,6 +82,7 @@ export default function BVN({ next }) {
           />
         </div>
         <Button
+        style="bg-app-color"
           text={'Verify BVN'}
           iconRight={'/svg/arrow-right.svg'}
           click={onSubmitHandler}

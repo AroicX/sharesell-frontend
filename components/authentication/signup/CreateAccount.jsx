@@ -140,7 +140,7 @@ export default function CreateAccount({ back, user, setUser }) {
             </span>
           </div>
           <Button
-            styles={'p-5 block '}
+            styles={'p-5 block bg-app-color'}
             text='Complete account creation'
             iconRight={'/svg/arrow-right.svg'}
             loading={isLoading}

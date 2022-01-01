@@ -135,6 +135,7 @@ export default function ChangePassword() {
             iconRight={'/svg/arrow-right.svg'}
             click={onSubmitHandler}
             loading={isLoading}
+            style="bg-app-color"
           />
         </div>
       </div>

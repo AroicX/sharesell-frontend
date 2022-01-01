@@ -27,6 +27,7 @@ export default function Wallet({ next }) {
             Transaction Charge: N100
           </p>
           <Button
+          style="bg-app-color"
             text={'Proceed'}
             iconRight='/svg/arrow-right.svg'
             click={next}

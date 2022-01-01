@@ -116,6 +116,7 @@ export default function PickUpAddressEdit({ currentState, setCurrentState }) {
           </div>
 
           <Button
+            style='bg-app-color'
             text={'Save Changes'}
             iconRight={'/svg/arrow-right.svg'}
             click={() => onSaveHandler(currentState.id)}

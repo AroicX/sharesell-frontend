@@ -122,6 +122,7 @@ export default function AddPickupAddress({ currentState, setCurrentState }) {
           </div>
 
           <Button
+          style="bg-app-color"
             text={'Submit'}
             iconRight={'/svg/arrow-right.svg'}
             click={() => onSubmitHandler()}
