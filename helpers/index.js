@@ -22,7 +22,6 @@ export const resolveRoles = (value) => {
 };
 
 export const getInitials = (name) => {
-
   let result = name?.split(' ')?.reduce((acc, subname) => acc + subname[0], '');
   return result;
 };
@@ -125,7 +124,7 @@ export const ResponseHandler = (response) => {
         text: response.message,
         icon: 'success',
         timerProgressBar: true,
-        timer: 2000,
+        timer: 1000,
         allowOutsideClick: true,
         showConfirmButton: false,
       });

@@ -12,7 +12,7 @@ export default function Dashboard() {
   return (
     <AuthProvider>
       <Layout>
-        <div className='w-full bg-white p-2 flex fixed top-0 left-0 z-50 shadow'>
+        <div className='w-full bg-white p-2 flex justify-between fixed top-0 left-0 z-50 shadow'>
           <img
             className='border-50  '
             src='/images/Image.png'
@@ -20,9 +20,15 @@ export default function Dashboard() {
             width='50px'
             height='50px'
           />
-          <Link to='/settings' className='text-app-color m-auto'>
+          <Link to='/profile' className='text-app-color m-auto'>
             Hi, Tap here to update account
           </Link>
+          <div className='relative my-auto'>
+            <div className=' absolute top-0 right-0 z-10 bg-terms p-1 rounded-full border border-2 border-white '></div>
+            <button className='relative px-2 block my-auto bg-terms text-white rounded'>
+              3
+            </button>
+          </div>
         </div>
         <div className='mt-20'>
           <WithdrawalDisplay />
