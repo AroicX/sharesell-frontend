@@ -36,7 +36,7 @@ export default function Input({
         type={type === 'password' ? passwordState : type}
         placeholder={placeholder}
         onChange={(event) => dispatch(event.target.value)}
-        required
+        // required
         {...rest}
       />
       {type === 'password' && (

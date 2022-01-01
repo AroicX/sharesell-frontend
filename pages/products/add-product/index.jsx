@@ -9,7 +9,17 @@ import Button from '@/reusable/Button';
 import AuthProvider from '@/components/AuthProvider';
 import { useGlobalStore } from '@/hooks/useGlobalStore';
 import router from 'next/router';
-import { selectFilter, selectValue, slugify } from '@/helpers/index';
+import {
+  selectFilter,
+  selectValue,
+  slugify,
+  getStates,
+  getCity,
+  inputValidatorChecker,
+  inputValidatorErrorState,
+  inputFormatter,
+  convertPricetoNumber,
+} from '@/helpers/index';
 import axios from 'axios';
 import Swal from 'sweetalert2';
 import { CREATE_PRODUCT } from '@/services/products';
@@ -29,24 +39,39 @@ export default function AddProduct({}) {
   const [loading, setLoading] = useState(false);
   const [data, setData] = useState({
     user_id: user ? user.user_id : '',
-    product_name: 'Beanie',
+    product_name: '',
+    product_name_error: '',
     product_category: '',
-    product_description: 'This is a head warmer.',
-    product_price: 3000,
-    product_weight: 0.5,
-    product_size: 'L',
-    product_quantity: 'Limited',
-    product_number: 20,
-    product_retail_price: 4000,
-    pickup_address: 'No 4 Maha close, Barnawa Kaduna',
-    state: 'Kaduna',
-    city: 'Kaduna',
+    product_category_error: '',
+    product_description: '',
+    product_description_error: '',
+    product_price: '',
+    product_price_error: '',
+    product_weight: '',
+    product_weight_error: '',
+    product_size: '',
+    product_size_error: '',
+    product_quantity: '',
+    product_quantity_error: '',
+    product_number: '',
+    product_number_error: '',
+    product_retail_price: '',
+    product_retail_price_error: '',
+    pickup_address: '',
+    pickup_address_error: '',
+    state: '',
+    state_error: '',
+    city: '',
+    city_error: '',
     product_images: [],
+    product_images_error: '',
   });
 
   const handleSubmit = () => {
     // event.preventDefault();
     data.product_images = links;
+    data.product_price = convertPricetoNumber(data.product_price);
+    data.product_retail_price = convertPricetoNumber(data.product_retail_price);
     const callback = (response) => {
       if (response) {
         setLoading(false);
@@ -70,31 +95,6 @@ export default function AddProduct({}) {
     };
 
     CREATE_PRODUCT(data, callback, onError);
-  };
-
-  const uploadFiles = (event) => {
-    event.preventDefault();
-    if (images === null) {
-      return Swal.fire({
-        text: 'Please add images to be uploaded',
-        icon: 'warning',
-        timerProgressBar: true,
-        timer: 2000,
-        showConfirmButton: false,
-      });
-    }
-    setLoading(true);
-    Swal.fire({
-      text: 'Please Wait while image is uploading...',
-      icon: 'warning',
-      timerProgressBar: true,
-      timer: 5000,
-      allowOutsideClick: true,
-      showConfirmButton: false,
-    });
-    images.forEach((file) => {
-      cloudinaryUpload(file);
-    });
   };
   const cloudinaryUpload = (file) => {
     const formData = new FormData();
@@ -126,6 +126,163 @@ export default function AddProduct({}) {
     }
   };
 
+  const uploadFiles = (event) => {
+    event.preventDefault();
+    // if (images === null) {
+    //   return Swal.fire({
+    //     text: 'Please add images to be uploaded',
+    //     icon: 'warning',
+    //     timerProgressBar: true,
+    //     timer: 2000,
+    //     showConfirmButton: false,
+    //   });
+    // }
+    if (
+      images !== null &&
+      images.length !== 0 &&
+      inputValidatorChecker(data.product_category) &&
+      inputValidatorChecker(data.product_name) &&
+      inputValidatorChecker(data.product_price) &&
+      inputValidatorChecker(data.product_weight) &&
+      inputValidatorChecker(data.product_size) &&
+      inputValidatorChecker(data.product_quantity) &&
+      inputValidatorChecker(data.product_number) &&
+      inputValidatorChecker(data.pickup_address) &&
+      inputValidatorChecker(data.state) &&
+      inputValidatorChecker(data.product_description) &&
+      inputValidatorChecker(data.product_retail_price) &&
+      inputValidatorChecker(data.city)
+    ) {
+      setLoading(true);
+      Swal.fire({
+        text: 'Please Wait while image is uploading...',
+        icon: 'warning',
+        timerProgressBar: true,
+        timer: 5000,
+        allowOutsideClick: true,
+        showConfirmButton: false,
+      });
+      images.forEach((file) => {
+        cloudinaryUpload(file);
+      });
+    } else {
+      if (images === null || images.length === 0) {
+        setData((prev) => {
+          return {
+            ...prev,
+            product_images_error: 'Please add images to the Upload',
+          };
+        });
+      }
+      inputValidatorErrorState(
+        data.product_category,
+        setData,
+        'product_category_error',
+        'Please Select a product category'
+      );
+      inputValidatorErrorState(
+        data.product_name,
+        setData,
+        'product_name_error',
+        'Product name is required'
+      );
+      inputValidatorErrorState(
+        data.product_description,
+        setData,
+        'product_description_error',
+        'Product Description is required'
+      );
+      inputValidatorErrorState(
+        data.product_price,
+        setData,
+        'product_price_error',
+        'Product Price is Required'
+      );
+      inputValidatorErrorState(
+        data.product_weight,
+        setData,
+        'product_weight_error',
+        'Product Weight is required'
+      );
+      inputValidatorErrorState(
+        data.product_size,
+        setData,
+        'product_size_error',
+        'Product Size is required'
+      );
+      inputValidatorErrorState(
+        data.product_quantity,
+        setData,
+        'product_quantity_error',
+        'Product Quantity is required'
+      );
+      inputValidatorErrorState(
+        data.product_number,
+        setData,
+        'product_number_error',
+        'Product Number is required'
+      );
+      inputValidatorErrorState(
+        data.product_retail_price,
+        setData,
+        'product_retail_price_error',
+        'Product retail price is required'
+      );
+      inputValidatorErrorState(
+        data.pickup_address,
+        setData,
+        'pickup_address_error',
+        'Pickup Address is required'
+      );
+      inputValidatorErrorState(
+        data.state,
+        setData,
+        'state_error',
+        'State is required'
+      );
+      inputValidatorErrorState(
+        data.city,
+        setData,
+        'city_error',
+        'City is required'
+      );
+    }
+  };
+
+  const onChangeHandler = (data, state, stateError) => {
+    if (state === 'product_category') {
+      setData((prevState) => ({
+        ...prevState,
+        product_category: selectValue(
+          productCategories,
+          'category_name',
+          'category_id',
+          data
+        ),
+        product_category_error: '',
+      }));
+    } else if (state === 'product_price' || state === 'product_retail_price') {
+      setData((prev) => {
+        return {
+          ...prev,
+          [state]: inputFormatter(data, ',', 3),
+          [stateError]: '',
+        };
+      });
+    } else {
+      setData((prev) => {
+        return { ...prev, [state]: data, [stateError]: '' };
+      });
+    }
+  };
+
+  const setImagesHandler = (files) => {
+    setImages(files);
+    setData((prev) => {
+      return { ...prev, product_images_error: '' };
+    });
+  };
+
   return (
     <AuthProvider className='add-product mt-10'>
       <AppHeader />
@@ -136,12 +293,10 @@ export default function AddProduct({}) {
             label='Product Name'
             placeholder='Beanie'
             value={data.product_name}
-            dispatch={(value) =>
-              setData((prevState) => ({
-                ...prevState,
-                product_name: value,
-              }))
-            }
+            dispatch={(value) => {
+              onChangeHandler(value, 'product_name', 'product_name_error');
+            }}
+            error={data.product_name_error}
           />
         </div>
 
@@ -155,16 +310,13 @@ export default function AddProduct({}) {
               'category_name'
             )}
             dispatch={(value) =>
-              setData((prevState) => ({
-                ...prevState,
-                product_category: selectValue(
-                  productCategories,
-                  'category_name',
-                  'category_id',
-                  value
-                ),
-              }))
+              onChangeHandler(
+                value,
+                'product_category',
+                'product_category_error'
+              )
             }
+            error={data.product_category_error}
           />
         </div>
 
@@ -173,36 +325,38 @@ export default function AddProduct({}) {
           <span className='text-app-color text-sm'>
             Please upload 5 different views of the product
           </span>
-          <DropZone dispatch={(files) => setImages(files)} />
+          <DropZone
+            dispatch={(files) => setImagesHandler(files)}
+            error={data.product_images_error}
+          />
         </div>
 
-        <div className='m-1'>
+        <div className='m-1 mt-8'>
           <TextArea
             label='Product Description'
             placeholder='This is like a head warmer'
             value={data.product_description}
-            dispatch={(value) =>
-              setData((prevState) => ({
-                ...prevState,
-                product_description: value,
-              }))
-            }
+            dispatch={(value) => {
+              onChangeHandler(
+                value,
+                'product_description',
+                'product_description_error'
+              );
+            }}
+            error={data.product_description_error}
           />
         </div>
 
         <div className='m-1'>
           <Input
             label='Product Price'
-            type='number'
             placeholder='3,000'
             price={true}
             value={data.product_price}
-            dispatch={(value) =>
-              setData((prevState) => ({
-                ...prevState,
-                product_price: value,
-              }))
-            }
+            dispatch={(value) => {
+              onChangeHandler(value, 'product_price', 'product_price_error');
+            }}
+            error={data.product_price_error}
           />
         </div>
 
@@ -219,11 +373,9 @@ export default function AddProduct({}) {
             placeholder='0.5'
             value={data.product_weight}
             dispatch={(value) =>
-              setData((prevState) => ({
-                ...prevState,
-                product_weight: value,
-              }))
+              onChangeHandler(value, 'product_weight', 'product_weight_error')
             }
+            error={data.product_weight_error}
           />
         </div>
 
@@ -231,14 +383,19 @@ export default function AddProduct({}) {
           <Select
             label='Product Size'
             placeholder='Select Size'
-            options={['All Sizes', 'S', 'M', 'L', 'XL', 'XXL', 'XXXL']}
-            placeholder={data.product_size}
-            dispatch={(value) =>
-              setData((prevState) => ({
-                ...prevState,
-                product_size: value,
-              }))
-            }
+            options={[
+              { id: 'all_sizes', name: 'All Sizes' },
+              { id: 's', name: 'S' },
+              { id: 'm', name: 'M' },
+              { id: 'l', name: 'L' },
+              { id: 'xl', name: 'XL' },
+              { id: 'xxl', name: 'XXL' },
+              { id: 'xxl', name: 'XXXL' },
+            ]}
+            dispatch={(value) => {
+              onChangeHandler(value, 'product_size', 'product_size_error');
+            }}
+            error={data.product_size_error}
           />
         </div>
 
@@ -246,14 +403,18 @@ export default function AddProduct({}) {
           <Select
             label='Product Quantity'
             placeholder='Select Quantity'
-            options={['Limited', 'Unlimited']}
-            placeholder={data.product_quantity}
-            dispatch={(value) =>
-              setData((prevState) => ({
-                ...prevState,
-                product_quantity: value,
-              }))
-            }
+            options={[
+              { id: 'limited', name: 'Limited' },
+              { id: 'unlimited', name: 'Unlimited' },
+            ]}
+            dispatch={(value) => {
+              onChangeHandler(
+                value,
+                'product_quantity',
+                'product_quantity_error'
+              );
+            }}
+            error={data.product_quantity_error}
           />
         </div>
 
@@ -263,28 +424,27 @@ export default function AddProduct({}) {
             type='number'
             placeholder='20'
             value={data.product_number}
-            dispatch={(value) =>
-              setData((prevState) => ({
-                ...prevState,
-                product_number: value,
-              }))
-            }
+            dispatch={(value) => {
+              onChangeHandler(value, 'product_number', 'product_number_error');
+            }}
+            error={data.product_number_error}
           />
         </div>
 
         <div className='m-1 my-5'>
           <Input
             label='Suggested Retail Price'
-            type='number'
             placeholder='3,000'
             price={true}
             value={data.product_retail_price}
             dispatch={(value) =>
-              setData((prevState) => ({
-                ...prevState,
-                product_retail_price: value,
-              }))
+              onChangeHandler(
+                value,
+                'product_retail_price',
+                'product_retail_price_error'
+              )
             }
+            error={data.product_retail_price_error}
           />
         </div>
 
@@ -294,11 +454,9 @@ export default function AddProduct({}) {
             placeholder='No.3 Maha Close'
             value={data.pickup_address}
             dispatch={(value) =>
-              setData((prevState) => ({
-                ...prevState,
-                pickup_address: value,
-              }))
+              onChangeHandler(value, 'pickup_address', 'pickup_address_error')
             }
+            error={data.pickup_address_error}
           />
         </div>
 
@@ -306,28 +464,20 @@ export default function AddProduct({}) {
           <Select
             label='State'
             placeholder='Select State'
-            options={['Shoes', 'Bags', 'Boys Clothes', 'Girls Clothes', 'Wigs']}
-            placeholder={data.state}
-            dispatch={(value) =>
-              setData((prevState) => ({
-                ...prevState,
-                state: value,
-              }))
-            }
+            options={getStates()}
+            placeholder={'Select State'}
+            dispatch={(value) => onChangeHandler(value, 'state', 'state_error')}
+            error={data.state_error}
           />
         </div>
         <div className='m-1'>
           <Select
             label='City'
             placeholder='Select City'
-            options={['Shoes', 'Bags', 'Boys Clothes', 'Girls Clothes', 'Wigs']}
-            placeholder={data.city}
-            dispatch={(value) =>
-              setData((prevState) => ({
-                ...prevState,
-                city: value,
-              }))
-            }
+            options={getCity(data.state)}
+            placeholder={'Select City'}
+            dispatch={(value) => onChangeHandler(value, 'city', 'city_error')}
+            error={data.city_error}
           />
         </div>
 
