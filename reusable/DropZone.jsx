@@ -2,7 +2,7 @@ import React, { useCallback, useState } from 'react';
 import { useDropzone } from 'react-dropzone';
 import SVG from 'react-inlinesvg';
 
-export default function Dropzone({ dispatch, styles, rest }) {
+export default function Dropzone({ dispatch, styles, rest, error }) {
   const [files, setFiles] = useState(null);
   const [imagePreview, setImagePreview] = useState(null);
 
@@ -75,7 +75,7 @@ export default function Dropzone({ dispatch, styles, rest }) {
       </div>
       {/* image-preview */}
       <div
-        className={`bg-app-cream  p-5 rounded border border-dashed my-2 mb-8 border-app-color ${styles}`}
+        className={`bg-app-cream  p-5 rounded border border-dashed my-2 border-app-color cursor-pointer ${styles}`}
         {...rest}
         {...getRootProps()}
       >
@@ -97,6 +97,13 @@ export default function Dropzone({ dispatch, styles, rest }) {
           </div>
         )}
       </div>
+      {error && (
+        <div className='mt-4 w-full'>
+          <span className='text-red-500 text-sm bg-red-200 p-4 rounded my-1 w-full'>
+            {error}
+          </span>
+        </div>
+      )}
     </>
   );
 }

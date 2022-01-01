@@ -19,12 +19,9 @@ export default function TextArea({
         id={id}
         placeholder={placeholder}
         onChange={(event) => dispatch(event.target.value)}
-        required
         value={value}
         {...rest}
-      >
-        
-      </textarea>
+      ></textarea>
       {error && (
         <span className='text-red-500 text-sm bg-red-200 p-4 rounded my-1'>
           {error}

@@ -242,6 +242,21 @@ const indexDeterminer = (amountLength, numOfDecimal, afterNumber) => {
   return indexesArray;
 };
 
+export const convertPricetoNumber = (price) => {
+  const amountInArray = [];
+  for (let i = 0; i < price.length; i++) {
+    if (price[i] !== ',') {
+      amountInArray.push(price[i]);
+    }
+  }
+  let convertedStringPrice = '';
+  for(let i = 0; i < amountInArray.length; i++){
+    convertedStringPrice = `${convertedStringPrice}${amountInArray[i]}`
+  }
+  
+  return Number(convertedStringPrice);
+};
+
 export const getStates = () => {
   return States.map((state, index) => {
     return { name: state.state, id: index };
