@@ -16,36 +16,36 @@ import {
 } from '@/helpers/index';
 
 export default function Kin() {
-  const { userProfile } = useGlobalStore();
+  const { userProfile, role } = useGlobalStore();
   const [form, setForm] = useState({
     gender:
-      userProfile && userProfile.supplier.next_of_kin_gender
-        ? userProfile.supplier.next_of_kin_gender
+      userProfile && userProfile?.[role.toLowerCase()]?.next_of_kin_gender
+        ? userProfile?.[role.toLowerCase()]?.next_of_kin_gender
         : '',
     genderError: '',
     relationship:
-      userProfile && userProfile.supplier.next_of_kin_relationship
-        ? userProfile.supplier.next_of_kin_relationship
+      userProfile && userProfile?.[role.toLowerCase()]?.next_of_kin_relationship
+        ? userProfile?.[role.toLowerCase()]?.next_of_kin_relationship
         : '',
     relationshipError: '',
     firstName:
-      userProfile && userProfile.supplier.next_of_kin_name
-        ? nameSplit(userProfile.supplier.next_of_kin_name, 0)
+      userProfile && userProfile?.[role.toLowerCase()]?.next_of_kin_name
+        ? nameSplit(userProfile?.[role.toLowerCase()]?.next_of_kin_name, 0)
         : '',
     firstNameError: '',
     lastName:
-      userProfile && userProfile.supplier.next_of_kin_name
-        ? nameSplit(userProfile.supplier.next_of_kin_name, 1)
+      userProfile && userProfile?.[role.toLowerCase()]?.next_of_kin_name
+        ? nameSplit(userProfile?.[role.toLowerCase()]?.next_of_kin_name, 1)
         : '',
     lastNameError: '',
     email:
-      userProfile && userProfile.supplier.next_of_kin_email
-        ? userProfile.supplier.next_of_kin_email
+      userProfile && userProfile?.[role.toLowerCase()]?.next_of_kin_email
+        ? userProfile?.[role.toLowerCase()]?.next_of_kin_email
         : '',
     emailError: '',
     phoneNumber:
-      userProfile && userProfile.supplier.next_of_kin_number
-        ? userProfile.supplier.next_of_kin_number
+      userProfile && userProfile?.[role.toLowerCase()]?.next_of_kin_number
+        ? userProfile?.[role.toLowerCase()]?.next_of_kin_number
         : '',
     phoneNumberError: '',
   });
@@ -213,7 +213,7 @@ export default function Kin() {
             iconRight={'/svg/arrow-right.svg'}
             click={onSubmitHandler}
             loading={isLoading}
-            style="bg-app-color"
+            style='bg-app-color'
           />
         </div>
       </div>
