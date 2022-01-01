@@ -41,7 +41,9 @@ export default function ProductDisplay({ product }) {
         <div className='flex justify-between'>
           <div className='flex flex-col my-2 mt-10'>
             <p>{product.product_name}</p>
-            <span className='text-3xl font-bold'>₦{product.product_price}</span>
+            <span className='text-3xl font-bold'>
+              ₦{product.product_price?.toLocaleString()}
+            </span>
           </div>
           <div
             onClick={() => navigate(product)}
@@ -60,7 +62,7 @@ export default function ProductDisplay({ product }) {
             <div className='flex flex-col my-2 '>
               <p className='text-app-text-light text-sm'>STARTING FROM</p>
               <span className='text-3xl font-bold'>
-                ₦{product.product_price}
+                ₦{product.product_price?.toLocaleString()}
               </span>
               <span className='text-app-text-light font-thin line-through text-sm'>
                 ₦50,000.00 (50% off)

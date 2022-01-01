@@ -6,7 +6,7 @@ export default function Modal({ title, toggle, dispatch, children }) {
     <div className={`modal ${toggle ? 'block' : 'hidden'}`}>
       <div className='modal-content'>
         <div className='modal-content-header'>
-          <span className='text-app-color'>{title}</span>
+          <span className='text-black'>{title}</span>
           <SVG
             className='bg-red-50 rounded-full cursor-pointer'
             src='/svg/modal-close.svg'
