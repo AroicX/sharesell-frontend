@@ -208,7 +208,7 @@ export default function ProductSlug() {
 
             <Button
               color='green'
-              styles='mt-5 bg-red-500'
+              styles='mt-5 '
               text='Generate Payment Link'
               iconRight='/svg/payment.svg'
               click={() => setGenerateLink(!generateLink)}
