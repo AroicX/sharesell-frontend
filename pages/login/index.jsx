@@ -65,7 +65,7 @@ export default function Login() {
           />
 
           <Button
-            styles={'p-5 block '}
+            styles={'p-5 block bg-app-color'}
             text='Login'
             iconRight={'/svg/arrow-right.svg'}
             loading={loading}

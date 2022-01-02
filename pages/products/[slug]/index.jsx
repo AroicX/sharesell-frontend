@@ -208,7 +208,7 @@ export default function ProductSlug() {
 
             <Button
               color='green'
-              styles='mt-5 bg-red-500'
+              styles='mt-5 '
               text='Generate Payment Link'
               iconRight='/svg/payment.svg'
               click={() => setGenerateLink(!generateLink)}
@@ -218,111 +218,121 @@ export default function ProductSlug() {
         ) : null}
       </div>
 
-      <Modal
-        title='Calculate Delivery Fee'
-        toggle={modal}
-        dispatch={() => setModal(false)}
-      >
-        <div className='w-full'>
-          <span className='text-app-color text-xs'>
-            Select the destination state and city <br /> to get the delivery fee
-          </span>
+      {role === 'Reseller' ? (
+        <>
+          <Modal
+            title='Calculate Delivery Fee'
+            toggle={modal}
+            dispatch={() => setModal(false)}
+          >
+            <div className='w-full'>
+              <span className='text-app-color text-xs'>
+                Select the destination state and city <br /> to get the delivery
+                fee
+              </span>
 
-          <div>
-            <Select
-              label={'State'}
-              placeholder={'Select State'}
-              initialValue={data.state}
-              dispatch={(data) => setStateHandler(data)}
-              options={getStates()}
-              error={data.stateError}
-            />
-          </div>
-          {data.state && (
-            <div>
-              <Select
-                label={'City'}
-                placeholder={'Select City'}
-                dispatch={(data) => cityOnChangeHandler(data)}
-                options={getCity(data.state)}
-                error={data.cityError}
-                initialValue={data.city}
+              <div>
+                <Select
+                  label={'State'}
+                  placeholder={'Select State'}
+                  initialValue={data.state}
+                  dispatch={(data) => setStateHandler(data)}
+                  options={getStates()}
+                  error={data.stateError}
+                />
+              </div>
+              {data.state && (
+                <div>
+                  <Select
+                    label={'City'}
+                    placeholder={'Select City'}
+                    dispatch={(data) => cityOnChangeHandler(data)}
+                    options={getCity(data.state)}
+                    error={data.cityError}
+                    initialValue={data.city}
+                  />
+                </div>
+              )}
+
+              <Button
+                text='Calculate'
+                styles="bg-app-color"
+                click={() => getQuote()}
+                loading={loading}
               />
             </div>
-          )}
+          </Modal>
+          {/* payment */}
+          <Modal
+            title='Generate Payment Link '
+            toggle={generateLink}
+            dispatch={() => setGenerateLink(false)}
+          >
+            <div className='w-full'>
+              <span className='text-app-color text-sm'>
+                You can use the suggested retail price <br />
+                or input a higher one at your discretion.
+              </span>
+              <br />
+              <br />
+              <Input
+                label='Selling Price'
+                price='true'
+                dispatch={(value) => console.log(value)}
+                disabled='true'
+              />
+              <b className='text-app-color float-right text-xs'>
+                Your Profit: 5000
+              </b>
+              <div className='w-full relative mt-10 flex bg-app-cream p-3 rounded border border-app-color overflow-hidden'>
+                <input
+                  className='w-full text-app-color overflow-hidden'
+                  type='text'
+                  value={data.url}
+                  disabled
+                />
 
-          <Button text='Calculate' click={() => getQuote()} loading={loading} />
-        </div>
-      </Modal>
-      {/* payment */}
-      <Modal
-        title='Generate Payment Link '
-        toggle={generateLink}
-        dispatch={() => setGenerateLink(false)}
-      >
-        <div className='w-full'>
-          <span className='text-app-color text-sm'>
-            You can use the suggested retail price <br />
-            or input a higher one at your discretion.
-          </span>
-          <br />
-          <br />
-          <Input
-            label='Selling Price'
-            price='true'
-            dispatch={(value) => console.log(value)}
-            disabled='true'
-          />
-          <b className='text-app-color float-right text-xs'>
-            Your Profit: 5000
-          </b>
-          <div className='w-full relative mt-10 flex bg-app-cream p-3 rounded border border-app-color overflow-hidden'>
-            <input
-              className='w-full text-app-color overflow-hidden'
-              type='text'
-              value={data.url}
-              disabled
-            />
-
-            <CopyToClipboard text={data.url} onCopy={() => {}}>
-              <button className='absolute top-0 right-0 p-3 flex bg-lightest-color text-app-text'>
-                <SVG className='my-auto mx-2' src='/svg/copy.svg' />
-                Copy
-              </button>
-            </CopyToClipboard>
-          </div>
-          <span className='text-app-color font-medium float-left text-xs my-2'>
-            Request for payment with this link!
-          </span>
-          <span className='w-full text-app-text font-medium float-left text-md my-2'>
-            Share on:
-          </span>
-          <div className='w-full flex mt-10'>
-            <Link
-              className='mx-2'
-              to={`https://twitter.com/intent/tweet?url${data.url}`}
-              target='_blank'
-            >
-              <SVG className='my-auto mx-2' src='/svg/whatsapp.svg' />
-            </Link>
-            <Link
-              className='mx-2'
-              to={`https://www.facebook.com/sharer/sharer.php?u${data.url}`}
-              target='_blank'
-            >
-              <SVG className='my-auto mx-2' src='/svg/facebook.svg' />
-            </Link>
-            <Link
-              className='mx-2'
-              to={`https://twitter.com/intent/tweet?url${data.url}`}
-              target='_blank'
-            >
-              <SVG className='my-auto mx-2' src='/svg/twitter.svg' />
-            </Link>
-          </div>
-        </div>
-      </Modal>
-      {/* payment */}
+                <CopyToClipboard text={data.url} onCopy={() => {}}>
+                  <button className='absolute top-0 right-0 p-3 flex bg-lightest-color text-app-text'>
+                    <SVG className='my-auto mx-2' src='/svg/copy.svg' />
+                    Copy
+                  </button>
+                </CopyToClipboard>
+              </div>
+              <span className='text-app-color font-medium float-left text-xs my-2'>
+                Request for payment with this link!
+              </span>
+              <span className='w-full text-app-text font-medium float-left text-md my-2'>
+                Share on:
+              </span>
+              <div className='w-full flex mt-10'>
+                <Link
+                  className='mx-2'
+                  to={`https://twitter.com/intent/tweet?url${data.url}`}
+                  target='_blank'
+                >
+                  <SVG className='my-auto mx-2' src='/svg/whatsapp.svg' />
+                </Link>
+                <Link
+                  className='mx-2'
+                  to={`https://www.facebook.com/sharer/sharer.php?u${data.url}`}
+                  target='_blank'
+                >
+                  <SVG className='my-auto mx-2' src='/svg/facebook.svg' />
+                </Link>
+                <Link
+                  className='mx-2'
+                  to={`https://twitter.com/intent/tweet?url${data.url}`}
+                  target='_blank'
+                >
+                  <SVG className='my-auto mx-2' src='/svg/twitter.svg' />
+                </Link>
+              </div>
+            </div>
+          </Modal>
+          {/* payment */}
+        </>
+      ) : null}
     </div>
   );
 }

@@ -124,7 +124,7 @@ export const ResponseHandler = (response) => {
         text: response.message,
         icon: 'success',
         timerProgressBar: true,
-        timer: 2000,
+        timer: 1000,
         allowOutsideClick: true,
         showConfirmButton: false,
       });

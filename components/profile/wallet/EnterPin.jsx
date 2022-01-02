@@ -36,6 +36,7 @@ export default function EnterPin({ next, back }) {
               Forgot Pin?
             </Link>
             <Button
+            style="bg-app-color"
               text={'Send'}
               iconRight={'/svg/arrow-right.svg'}
               click={next}

@@ -14,6 +14,7 @@ export default function SubscriptionSuccess({ subscriptionStep }) {
       </div>
       <p className='font-bold text-app-text text-sm w-48 text-center mb-8'>{`You just subscribed to the ShareSell ${subscriptionStep.name} Plan`}</p>
       <Button
+      style="bg-app-color"
         text={`Return Home`}
         iconRight={'/svg/arrow-right.svg'}
         click={() => Router.back()}

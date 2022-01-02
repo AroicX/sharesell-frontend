@@ -17,6 +17,7 @@ export default function WidthdrawalSuccess() {
         You sent N200,000 to your account
       </p>
       <Button
+        style='bg-app-color'
         text={`Return Home`}
         iconRight={'/svg/arrow-right.svg'}
         click={() => Router.push('/dashboard')}

@@ -40,6 +40,7 @@ export default function Account({ next, back }) {
             text={'Proceed'}
             iconRight={'/svg/arrow-right.svg'}
             click={next}
+            style="bg-app-color"
           />
         </div>
       </div>

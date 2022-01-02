@@ -16,25 +16,27 @@ import {
 } from '@/helpers/index';
 
 export default function Business() {
-  const { userProfile } = useGlobalStore();
+  const { userProfile, role } = useGlobalStore();
   const [form, setForm] = useState({
     businessReg: false,
     businessName:
-      userProfile && userProfile.supplier.business_name
-        ? userProfile.supplier.business_name
+      userProfile && userProfile?.[role.toLowerCase()]?.business_name
+        ? userProfile?.[role.toLowerCase()]?.business_name
         : '',
     businesNameError: '',
     state:
-      userProfile && userProfile.supplier.state
-        ? userProfile.supplier.state
+      userProfile && userProfile?.[role.toLowerCase()]?.state
+        ? userProfile?.[role.toLowerCase()]?.state
         : '',
     stateError: '',
     city:
-      userProfile && userProfile.supplier.city ? userProfile.supplier.city : '',
+      userProfile && userProfile?.[role.toLowerCase()]?.city
+        ? userProfile?.[role.toLowerCase()]?.city
+        : '',
     cityError: '',
     currentAddress:
-      userProfile && userProfile.supplier.current_address
-        ? userProfile.supplier.current_address
+      userProfile && userProfile?.[role.toLowerCase()]?.current_address
+        ? userProfile?.[role.toLowerCase()]?.current_address
         : '',
     currentAddressError: '',
   });
@@ -208,7 +210,7 @@ export default function Business() {
           )}
 
           <Button
-            styles={'p-5 block '}
+            styles={'p-5 block bg-app-color'}
             text='Submit'
             iconRight={'/svg/arrow-right.svg'}
             click={() => submitHandler()}

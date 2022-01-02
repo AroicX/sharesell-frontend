@@ -29,6 +29,8 @@ export default function AddAccount({ next, back }) {
             text={'Save'}
             iconRight={'/svg/arrow-right.svg'}
             click={next}
+            style="bg-app-color"
+
           />
         </div>
       </div>

@@ -3,7 +3,7 @@ import router from 'next/router';
 import React from 'react';
 import { slugify } from '../helpers';
 import SVG from 'react-inlinesvg';
-import Modal from '@/reusable/Modal';
+
 
 export default function ProductDisplay({ product }) {
   const { role, setCurrentProduct } = useGlobalStore();

@@ -65,7 +65,7 @@ export default function OneTimePassword({ next, back, user }) {
             error={form.otpError}
           />
           <Button
-            styles={'p-5 block '}
+            styles={'p-5 block bg-app-color'}
             text='Verify'
             iconRight={'/svg/arrow-right.svg'}
             click={onSubmitHandler}

@@ -14,6 +14,7 @@ export default function BVNSuccess() {
       </div>
 
       <Button
+      style="bg-app-color"
         text={`Return to Update`}
         iconRight={'/svg/arrow-right.svg'}
         click={() => Router.push('/profile/update-account')}

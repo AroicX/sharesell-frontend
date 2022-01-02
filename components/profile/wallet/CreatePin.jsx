@@ -39,7 +39,9 @@ export default function CreatePin({ next, back }) {
               icon={'/svg/info.svg'}
               style={'bg-app-cream mt-6 mb-5'}
             />
-            <Button text={'Send'} iconRight={'/svg/arrow-right.svg'} click={next}/>
+            <Button text={'Send'} iconRight={'/svg/arrow-right.svg'} click={next}
+            style="bg-app-color"
+            />
           </div>
         </div>
       </div>

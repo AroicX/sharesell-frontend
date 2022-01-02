@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import SVG from 'react-inlinesvg';
 
-export default function Modal({ title, toggle, dispatch, children }) {
+export default function Modal({ title, toggle = false, dispatch, children }) {
   return (
     <div className={`modal ${toggle ? 'block' : 'hidden'}`}>
       <div className='modal-content'>

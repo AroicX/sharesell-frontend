@@ -76,7 +76,7 @@ export default function PhoneNumber({ next, back, user, setUser }) {
             error={form.phoneNumberError}
           />
           <Button
-            styles={'p-5 block '}
+            styles={'p-5 block bg-app-color'}
             text='Submit'
             iconRight={'/svg/arrow-right.svg'}
             click={() => onSubmit()}
