@@ -3,6 +3,7 @@ import SVG from 'react-inlinesvg';
 import { useRouter } from 'next/router';
 import { useGlobalStore } from '@/hooks/useGlobalStore';
 import { getInitials } from '@/helpers/index';
+import WithdrawalDisplay from '@/components/WithdrawalDisplay';
 
 export default function Profile() {
   const { user, role } = useGlobalStore();
@@ -57,6 +58,7 @@ export default function Profile() {
   return (
     <div className='profile'>
       <h2 className='text-3xl font-light my-2'>Profile</h2>
+      {role === 'Reseller' && <WithdrawalDisplay noButton />}
       <div className='flex items-center my-4'>
         <div className='profile-image-container flex items-center justify-center h-20 w-20 rounded-full relative'>
           <p className='font-medium text-2xl text-app-cream'>
