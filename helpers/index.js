@@ -22,7 +22,6 @@ export const resolveRoles = (value) => {
 };
 
 export const getInitials = (name) => {
-
   let result = name?.split(' ')?.reduce((acc, subname) => acc + subname[0], '');
   return result;
 };
@@ -241,6 +240,21 @@ const indexDeterminer = (amountLength, numOfDecimal, afterNumber) => {
   }
   indexesArray.reverse();
   return indexesArray;
+};
+
+export const convertPricetoNumber = (price) => {
+  const amountInArray = [];
+  for (let i = 0; i < price.length; i++) {
+    if (price[i] !== ',') {
+      amountInArray.push(price[i]);
+    }
+  }
+  let convertedStringPrice = '';
+  for(let i = 0; i < amountInArray.length; i++){
+    convertedStringPrice = `${convertedStringPrice}${amountInArray[i]}`
+  }
+  
+  return Number(convertedStringPrice);
 };
 
 export const getStates = () => {

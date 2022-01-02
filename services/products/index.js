@@ -59,8 +59,10 @@ export async function GET_PRODUCTS(callback, onError) {
 }
 
 export async function CREATE_PRODUCT(data, callback, onError) {
+  console.log(data)
   try {
     let products = await requests.post(`/products/add-products`, data);
+    console.log(products)
     if (products.data) {
       callback && callback(products.data);
     } else {
