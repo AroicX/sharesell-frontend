@@ -20,7 +20,7 @@ const Button = ({
         <Link
           {...rest}
           to={to}
-          className={` bg-app-color p-4 flex text-white rounded my-1 ${styles} ${
+          className={` bg-black p-4 flex text-white rounded my-1 ${styles} ${
             loading && !loadingText
               ? 'center text-center align-middle justify-center items-center'
               : 'justify-between'
@@ -51,9 +51,7 @@ const Button = ({
         </Link>
       ) : (
         <button
-          className={`w-full ${
-            color === 'green' ? 'bg-green' : 'bg-app-color'
-          }  p-4 flex text-white rounded my-1 ${styles} ${
+          className={`w-full bg-black  p-4 flex text-white rounded my-1 ${styles} ${
             loading && !loadingText
               ? 'center text-center align-middle justify-center items-center'
               : 'justify-between'
