@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 
 import Layout from '@/components/layout';
 import Link from '@/components/Link';
@@ -12,18 +12,22 @@ import useSWR from 'swr';
 import SearchBar from '@/components/SearchBar';
 import Tag from '@/components/Tag';
 import { useRouter } from 'next/router';
+import { SEARCH_PRODUCT } from '@/services/products';
+import Loader from '@/reusable/Loader';
 
 export default function Dashboard() {
-  const {
-    products,
-    role,
-    setProductCategories,
-    setCurrentCategory,
-  } = useGlobalStore();
+  const { products, role, setProductCategories, setCurrentCategory } =
+    useGlobalStore();
+  const [search, setSearch] = useState({
+    value: '',
+    isLoading: false,
+    isActive: false,
+    searchResult: [],
+  });
+
   const { data, error } = useSWR(`/products/categories`, _protectedRequest);
   const categories = data?.payload?.data || [];
   const Router = useRouter();
-
   const navigate = (category) => {
     setCurrentCategory({
       id: category.category_id,
@@ -38,6 +42,29 @@ export default function Dashboard() {
       setProductCategories(categories);
     }
   }, [categories]);
+
+  const onSearch = (event) => {
+    event.preventDefault();
+    setSearch((prev) => ({ ...prev, isLoading: true, isActive: true }));
+    const callback = (response) => {
+      setSearch((prev) => ({
+        ...prev,
+        searchResult: response.payload,
+        isLoading: false,
+      }));
+      console.log(response);
+    };
+    const onError = (err) => {
+      console.log(err);
+      setSearch((prev) => ({ ...prev, isLoading: false }));
+    };
+
+    SEARCH_PRODUCT(search.value, callback, onError);
+  };
+
+  const closeSearchHandler = () => {
+    setSearch((prev) => ({ ...prev, isActive: false }));
+  };
 
   return (
     <AuthProvider>
@@ -54,7 +81,7 @@ export default function Dashboard() {
             Hi, Tap here to update account
           </Link>
           <Link to='/notification' className='relative my-auto'>
-            <div className=' absolute top-0 right-0 z-10 bg-terms p-1 rounded-full border border-2 border-white '></div>
+            <div className=' absolute top-0 right-0 z-10 bg-terms p-1 rounded-full border-2 border-white '></div>
             <button className='relative px-2 block my-auto bg-terms text-white rounded'>
               3
             </button>
@@ -62,7 +89,14 @@ export default function Dashboard() {
         </div>
         <div className='mt-20'>
           {role === 'Supplier' && <WithdrawalDisplay />}
-          {role === 'Reseller' && <SearchBar />}
+          {role === 'Reseller' && (
+            <SearchBar
+              dispatch={(data) =>
+                setSearch((prev) => ({ ...prev, value: data }))
+              }
+              handleSubmit={onSearch}
+            />
+          )}
           {role === 'Reseller' && (
             <div className='flex overflow-x-auto'>
               {categories.map((category) => (
@@ -74,22 +108,55 @@ export default function Dashboard() {
               ))}
             </div>
           )}
-          <div className='flex justify-between'>
-            <span className='text-app-text font-medium'>Recent Products</span>
-            <Link to='/products' className='text-app-color text-sm my-auto'>
-              See All
-            </Link>
-          </div>
+          {search.isActive === false && (
+            <div className='flex justify-between'>
+              <span className='text-app-text font-medium'>Recent Products</span>
+              <Link to='/products' className='text-app-color text-sm my-auto'>
+                See All
+              </Link>
+            </div>
+          )}
+          {search.isActive && search.isLoading === false && (
+            <div className='flex justify-between'>
+              <span className='text-app-text font-medium'>{`${search.searchResult.length} Product Found`}</span>
+              <p
+                to='/products'
+                className='text-app-color text-sm my-auto cursor-pointer'
+                onClick={() => closeSearchHandler()}
+              >
+                Close Search
+              </p>
+            </div>
+          )}
         </div>
-        {products.length > 0 ? (
-          products?.map((item, i) => (
-            <ProductDisplay key={i + 1} product={item} />
-          ))
-        ) : (
-          <div className='w-full bg-app-cream p-3 rounded mt-5 text-center shadow-sm'>
-            <span className='text-app-color'>No Product Found</span>
+        {search.isLoading && <Loader />}
+        {search.isActive === false && (
+          <div>
+            {products.length > 0 ? (
+              products?.map((item, i) => (
+                <ProductDisplay key={i + 1} product={item} />
+              ))
+            ) : (
+              <div className='w-full bg-app-cream p-3 rounded mt-5 text-center shadow-sm'>
+                <span className='text-app-color'>No Product Found</span>
+              </div>
+            )}
           </div>
         )}
+        {search.isActive && search.isLoading === false && (
+          <div>
+            {search.searchResult.length > 0 ? (
+              search.searchResult?.map((item, i) => (
+                <ProductDisplay key={i + 1} product={item} />
+              ))
+            ) : (
+              <div className='w-full bg-app-cream p-3 rounded mt-5 text-center shadow-sm'>
+                <span className='text-app-color'>No Product Found</span>
+              </div>
+            )}
+          </div>
+        )}
+
         {/* {[...Array(20)].map((item, i) => (
           <ProductDisplay key={i + 1} />
         ))} */}

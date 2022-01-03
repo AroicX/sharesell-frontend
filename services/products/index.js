@@ -87,3 +87,17 @@ export async function GET_QUOTE(data, callback, onError) {
     onError && onError(err);
   }
 }
+
+export async function SEARCH_PRODUCT(search, callback, onError) {
+  try {
+    let searchResult = await requests.get(`/products/search/${search}`);
+    if (searchResult.data) {
+      callback && callback(searchResult.data);
+    } else {
+      throw searchResult;
+    }
+    return searchResult;
+  } catch (err) {
+    onError && onError(err);
+  }
+}
