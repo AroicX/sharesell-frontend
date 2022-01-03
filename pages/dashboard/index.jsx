@@ -14,8 +14,12 @@ import Tag from '@/components/Tag';
 import { useRouter } from 'next/router';
 
 export default function Dashboard() {
-  const { products, role, setProductCategories, setCurrentCategory } =
-    useGlobalStore();
+  const {
+    products,
+    role,
+    setProductCategories,
+    setCurrentCategory,
+  } = useGlobalStore();
   const { data, error } = useSWR(`/products/categories`, _protectedRequest);
   const categories = data?.payload?.data || [];
   const Router = useRouter();
@@ -49,12 +53,12 @@ export default function Dashboard() {
           <Link to='/profile/update-account' className='text-app-color m-auto'>
             Hi, Tap here to update account
           </Link>
-          <div className='relative my-auto'>
+          <Link to='/notification' className='relative my-auto'>
             <div className=' absolute top-0 right-0 z-10 bg-terms p-1 rounded-full border border-2 border-white '></div>
             <button className='relative px-2 block my-auto bg-terms text-white rounded'>
               3
             </button>
-          </div>
+          </Link>
         </div>
         <div className='mt-20'>
           {role === 'Supplier' && <WithdrawalDisplay />}

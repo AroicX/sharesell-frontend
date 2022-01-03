@@ -8,8 +8,9 @@ import Link from '@/components/Link';
 import { setCookie } from '@/services/cookies';
 import router from 'next/router';
 import { useGlobalStore } from '@/hooks/useGlobalStore';
+import useGuest from '@/hooks/useGuest';
 
-export default function Login() {
+function Login() {
   const { setToken } = useGlobalStore();
   const [data, setData] = useState({
     email: 'reseller@sharesell.com',
@@ -82,3 +83,5 @@ export default function Login() {
     </div>
   );
 }
+
+export default useGuest(Login);

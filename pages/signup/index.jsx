@@ -4,8 +4,9 @@ import PhoneNumber from '@/components/authentication/signup/PhoneNumber';
 import OneTimePassword from '@/components/authentication/signup/OneTimePassword';
 import BusinessRegistration from '@/components/authentication/signup/BusinessRegistration';
 import CreateAccount from '@/components/authentication/signup/CreateAccount';
+import useGuest from '@/hooks/useGuest';
 
-export default function SignUpPage() {
+function SignUpPage() {
   const [selected, setSelected] = useState(null);
   const [user, setUser] = useState({
     userType: null,
@@ -74,3 +75,5 @@ export default function SignUpPage() {
     </div>
   );
 }
+
+export default useGuest(SignUpPage);
