@@ -45,21 +45,22 @@ export default function Dashboard() {
 
   const onSearch = (event) => {
     event.preventDefault();
-    setSearch((prev) => ({ ...prev, isLoading: true, isActive: true }));
-    const callback = (response) => {
-      setSearch((prev) => ({
-        ...prev,
-        searchResult: response.payload,
-        isLoading: false,
-      }));
-      console.log(response);
-    };
-    const onError = (err) => {
-      console.log(err);
-      setSearch((prev) => ({ ...prev, isLoading: false }));
-    };
+    if (search.value !== '') {
+      setSearch((prev) => ({ ...prev, isLoading: true, isActive: true }));
+      const callback = (response) => {
+        setSearch((prev) => ({
+          ...prev,
+          searchResult: response.payload,
+          isLoading: false,
+        }));
+      };
+      const onError = (err) => {
+        console.log(err);
+        setSearch((prev) => ({ ...prev, isLoading: false }));
+      };
 
-    SEARCH_PRODUCT(search.value, callback, onError);
+      SEARCH_PRODUCT(search.value, callback, onError);
+    }
   };
 
   const closeSearchHandler = () => {
@@ -129,7 +130,11 @@ export default function Dashboard() {
             </div>
           )}
         </div>
-        {search.isLoading && <Loader />}
+        {search.isLoading && (
+          <div className='mt-10'>
+            <Loader />
+          </div>
+        )}
         {search.isActive === false && (
           <div>
             {products.length > 0 ? (

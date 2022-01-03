@@ -2,6 +2,10 @@ import React, { useState, useEffect } from 'react';
 import SVG from 'react-inlinesvg';
 
 export default function Modal({ title, toggle = false, dispatch, children }) {
+  const dispatchHandler = (e) => {
+    e.stopPropagation();
+    dispatch(false)
+  }
   return (
     <div className={`modal ${toggle ? 'block' : 'hidden'}`}>
       <div className='modal-content'>
@@ -10,7 +14,7 @@ export default function Modal({ title, toggle = false, dispatch, children }) {
           <SVG
             className='bg-red-50 rounded-full cursor-pointer'
             src='/svg/modal-close.svg'
-            onClick={() => dispatch(false)}
+            onClick={(e) => dispatchHandler(e)}
           />
         </div>
         <div className='py-5'>{children}</div>
