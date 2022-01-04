@@ -1,14 +1,14 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import AppHeader from 'components/AppHeader';
 import MoreContainer from '@/components/MoreContainer';
 import Button from '@/reusable/Button';
 import { _protectedRequest } from '@/services/index';
 import useSWR from 'swr';
-import { useState } from 'react/cjs/react.development';
 
 export default function PickUpAddress({ setCurrentState }) {
   const [savedAddress, setSavedAddress] = useState([]);
   const { data, error } = useSWR(`/user/address`, _protectedRequest);
+
   useEffect(() => {
     if (data) {
       setSavedAddress(data.payload);
