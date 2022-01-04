@@ -90,8 +90,8 @@ export default function ChangePassword() {
   };
   return (
     <div className='mt-4'>
-      <AppHeader noSVG />
-      <div className=''>
+      <AppHeader noSVG styles='py-5' />
+      <div className='mt-20'>
         <h2 className='text-3xl font-light my-4'>Change Password</h2>
         <div className='mt-10'>
           <div className='mb-8'>
@@ -135,7 +135,7 @@ export default function ChangePassword() {
             iconRight={'/svg/arrow-right.svg'}
             click={onSubmitHandler}
             loading={isLoading}
-            style="bg-app-color"
+            style='bg-app-color'
           />
         </div>
       </div>

@@ -84,8 +84,12 @@ export default function PickUpAddressEdit({ currentState, setCurrentState }) {
   };
   return (
     <div className='mt-3'>
-      <AppHeader noSVG click={() => setCurrentState({ currentState: 1 })} />
-      <div>
+      <AppHeader
+        noSVG
+        styles='py-5'
+        click={() => setCurrentState({ currentState: 1 })}
+      />
+      <div className='mt-14'>
         <h2 className='text-3xl font-light my-4'>Edit Pickup Address</h2>
         <div className='mt-8'>
           <TextArea

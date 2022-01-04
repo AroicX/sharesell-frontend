@@ -4,13 +4,14 @@ import SVG from 'react-inlinesvg';
 import { ResponseHandler } from '../helpers';
 import { useRouter } from 'next/router';
 import { DELETE_ADDRESS } from '@/services/profile';
+import Swal from 'sweetalert2';
 
 export default function MoreContainer({ savedAddress, setCurrentState }) {
   const Router = useRouter();
   const onDeleteHandler = (id) => {
     const callback = (response) => {
       ResponseHandler(response);
-      Router.push('/profile');
+      setCurrentState({ currentState: 1, ...savedAddress });
     };
     const onError = (err) => {
       console.log(err);
@@ -29,7 +30,35 @@ export default function MoreContainer({ savedAddress, setCurrentState }) {
       name: 'Delete',
       method: () => {
         setIsActive(false);
-        onDeleteHandler(savedAddress.id);
+        Swal.fire({
+          title: 'Delete Address',
+          text: 'Are you sure, you want to delete address?',
+          icon: 'warning',
+          confirmButtonColor: '#ec6056e2',
+          confirmButtonText: 'Yes',
+          showConfirmButton: true,
+          showCancelButton: true,
+          cancelButtonText: 'No',
+          cancelButtonColor: '#316be9',
+          closeOnConfirm: false,
+          closeOnCancel: false,
+          allowOutsideClick: true,
+        }).then((result) => {
+          if (result.dismiss !== 'cancel') {
+            onDeleteHandler(savedAddress.id);
+          } else {
+            Swal.fire({
+              title: 'Cancelled',
+              text: 'Address Not Deleted :)',
+              icon: 'info',
+              showConfirmButton: false,
+              showCancelButton: false,
+              timerProgressBar: true,
+              timer: 1000,
+              allowOutsideClick: true,
+            });
+          }
+        });
       },
     },
   ];

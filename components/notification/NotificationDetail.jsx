@@ -14,8 +14,8 @@ export default function NotificationDetail({ notification, setCurrentStep }) {
   };
   return (
     <div className='mt-4'>
-      <AppHeader noSVG click={back} />
-      <div className='mt-4'>
+      <AppHeader noSVG styles='py-5' click={back} />
+      <div className='mt-20'>
         <p className={`font-medium text-base text-app-text `}>
           Update your account
         </p>

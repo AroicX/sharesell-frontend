@@ -54,8 +54,8 @@ export default function Subscription({ setSubscriptionStep }) {
   ];
   return (
     <div className='mt-4'>
-      <AppHeader noSVG />
-      <div className='mt-3'>
+      <AppHeader noSVG styles='py-5' />
+      <div className='mt-20'>
         <h2 className='text-3xl font-light my-2'>Subscription</h2>
         <div className='mt-2 mb-14'>
           <Infocard

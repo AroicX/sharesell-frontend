@@ -60,8 +60,8 @@ export default function BVN({ next }) {
   }, [userProfile]);
   return (
     <div className='mt-4'>
-      <AppHeader noSVG />
-      <div>
+      <AppHeader noSVG styles='py-5' />
+      <div className='mt-20'>
         <h2 className='text-3xl font-light my-4'>BVN</h2>
         <div>
           <Infocard
@@ -76,13 +76,13 @@ export default function BVN({ next }) {
           <Input
             label={'BVN'}
             placeholder={'Enter BVN'}
-            value={bvn ? bvn : ""}
+            value={bvn ? bvn : ''}
             dispatch={(data) => bvnOnChangeHandler(data)}
             error={bvnError}
           />
         </div>
         <Button
-        style="bg-app-color"
+          style='bg-app-color'
           text={'Verify BVN'}
           iconRight={'/svg/arrow-right.svg'}
           click={onSubmitHandler}

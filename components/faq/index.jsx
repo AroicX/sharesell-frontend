@@ -31,8 +31,8 @@ export default function FAQ() {
   ];
   return (
     <div className='mt-4'>
-      <AppHeader noSVG />
-      <div>
+      <AppHeader noSVG styles='py-5' />
+      <div className='mt-20'>
         <h2 className='font-medium text-2xl text-pry-black my-4'>
           How To (FAQ)
         </h2>

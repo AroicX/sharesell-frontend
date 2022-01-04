@@ -8,7 +8,7 @@ export default function PickupAddressPage() {
   const [currentState, setCurrentState] = useState({ currentState: 1 });
   return (
     <AuthProvider>
-      {/* {currentState.currentState === 1 ? (
+      {currentState.currentState === 1 ? (
         <PickUpAddress setCurrentState={setCurrentState} />
       ) : (
         ''
@@ -25,7 +25,7 @@ export default function PickupAddressPage() {
         <AddPickupAddress setCurrentState={setCurrentState} />
       ) : (
         ''
-      )} */}
+      )}
     </AuthProvider>
   );
 }

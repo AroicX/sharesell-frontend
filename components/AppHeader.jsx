@@ -3,10 +3,12 @@ import React from 'react';
 import SVG from 'react-inlinesvg';
 import Link from './Link';
 
-export default function AppHeader({ click = null, noSVG }) {
+export default function AppHeader({ click = null, noSVG, styles }) {
   const router = useRouter();
   return (
-    <div className='app-header w-full bg-white flex justify-between z-50'>
+    <div
+      className={`app-header w-full px-2 bg-white flex justify-between z-50 ${styles}`}
+    >
       <button
         className='flex my-auto'
         onClick={

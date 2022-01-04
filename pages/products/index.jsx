@@ -8,6 +8,7 @@ import useSWR from 'swr';
 import { slugify } from '@/helpers/index';
 import { useGlobalStore } from '@/hooks/useGlobalStore';
 import { useRouter } from 'next/router';
+import AppHeader from '@/components/AppHeader';
 
 export default function Product({}) {
   const router = useRouter();
@@ -32,7 +33,8 @@ export default function Product({}) {
 
   return (
     <AuthProvider className='Product'>
-      <h3 className='text-4xl mt-10'>Products</h3>
+      <AppHeader />
+      <h3 className='text-4xl mt-20'>Products</h3>
       {categories?.map((item, i) => (
         <div
           key={i + 1}

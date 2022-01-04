@@ -66,8 +66,8 @@ export default function History() {
   const [currentHistory, setCurrentHistory] = useState('transactions');
   return (
     <div className='mt-4'>
-      <AppHeader noSVG />
-      <div>
+      <AppHeader noSVG styles='py-5' />
+      <div className='mt-20'>
         <h2 className='text-3xl font-light my-4'>History</h2>
         <div>
           <div className='flex mt-8 bg-white'>

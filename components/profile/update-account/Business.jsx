@@ -126,8 +126,8 @@ export default function Business() {
 
   return (
     <div className='mt-4 mb-10'>
-      <AppHeader noSVG />
-      <div className='business-detail'>
+      <AppHeader noSVG styles='py-5' />
+      <div className='business-detail mt-20'>
         <h2 className='text-3xl font-light my-2'>Business Details</h2>
         <span className='text-app-text'>
           Kindly give us simple details of the business.

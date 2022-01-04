@@ -18,6 +18,9 @@ html {
 }
 
 body {
+  position: relative;
+  top: 0;
+  left: 0;
   @apply bg-gray-50;
   font-family: "Inter", sans-serif !important;
   overflow-x: hidden !important;
@@ -59,17 +62,17 @@ body {
   }
 }
 
-// .app-header {
-//   position: fixed;
-//   top: 0px;
-//   left: 0px;
-// }
+.app-header {
+  position: fixed;
+  top: 0px;
+  left: 0px;
+}
 
-// .navigation {
-//   position: fixed;
-//   bottom: 0px;
-//   left: 0px;
-// }
+.navigation {
+  position: fixed;
+  bottom: 0px;
+  left: 0px;
+}
 
 .pace {
   -webkit-pointer-events: none;

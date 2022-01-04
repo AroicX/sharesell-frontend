@@ -54,7 +54,8 @@ export default function AddPickupAddress({ currentState, setCurrentState }) {
       const callback = (response) => {
         setIsLoading(false);
         ResponseHandler(response);
-        Router.push('/profile')
+
+        setCurrentState({ currentState: 1 });
       };
 
       const onError = (err) => {
@@ -63,7 +64,6 @@ export default function AddPickupAddress({ currentState, setCurrentState }) {
       };
 
       CREATE_ADDRESS(data, callback, onError);
-      //   setCurrentState({ currentState: 1 });
     } else {
       inputValidatorErrorState(
         form.address,
@@ -87,9 +87,13 @@ export default function AddPickupAddress({ currentState, setCurrentState }) {
   };
   return (
     <div className='mt-3'>
-      <AppHeader noSVG click={() => setCurrentState({ currentState: 1 })} />
-      <div>
-        <h2 className='text-3xl font-light my-4'>Edit Pickup Address</h2>
+      <AppHeader
+        noSVG
+        styles='py-5'
+        click={() => setCurrentState({ currentState: 1 })}
+      />
+      <div className='mt-14'>
+        <h2 className='text-3xl font-light my-4'>Add Pickup Address</h2>
         <div className='mt-8'>
           <TextArea
             value={form.address}
@@ -122,7 +126,7 @@ export default function AddPickupAddress({ currentState, setCurrentState }) {
           </div>
 
           <Button
-          style="bg-app-color"
+            style='bg-app-color'
             text={'Submit'}
             iconRight={'/svg/arrow-right.svg'}
             click={() => onSubmitHandler()}

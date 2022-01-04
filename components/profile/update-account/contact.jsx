@@ -108,8 +108,8 @@ export default function Contact() {
   
   return (
     <div className='mt-4'>
-      <AppHeader noSVG click={() => Router.push('/profile/update-account')} />
-      <div>
+      <AppHeader noSVG styles='py-5' click={() => Router.push('/profile/update-account')} />
+      <div className='mt-20'>
         <h2 className='text-3xl font-light my-2'>Contact Person</h2>
         <span className='text-app-text'>
           Kindly provide accurate contact details.

@@ -5,10 +5,10 @@ import SVG from 'react-inlinesvg';
 export default function About() {
   return (
     <div className='mt-4'>
-      <AppHeader noSVG />
-      <div>
+      <AppHeader noSVG styles='py-5' />
+      <div className='mt-20'>
         <h2 className='font-medium text-2xl text-pry-black my-4'>About</h2>
-        <SVG src='/svg/dark-logo.svg'/>
+        <SVG src='/svg/dark-logo.svg' />
         <div className='mt-7'>
           <p className='text-sm text-app-text text-justify'>
             RemixIcon is maintained by Remix Design. We are a small group of

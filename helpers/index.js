@@ -108,9 +108,9 @@ export const ResponseHandler = (response) => {
       break;
     case 'info':
       return Swal.fire({
-        title: 'Error!',
+        // title: 'Error!',
         text: response.message,
-        icon: 'error',
+        icon: 'info',
         timerProgressBar: true,
         timer: 2000,
         showConfirmButton: false,
@@ -250,10 +250,10 @@ export const convertPricetoNumber = (price) => {
     }
   }
   let convertedStringPrice = '';
-  for(let i = 0; i < amountInArray.length; i++){
-    convertedStringPrice = `${convertedStringPrice}${amountInArray[i]}`
+  for (let i = 0; i < amountInArray.length; i++) {
+    convertedStringPrice = `${convertedStringPrice}${amountInArray[i]}`;
   }
-  
+
   return Number(convertedStringPrice);
 };
 

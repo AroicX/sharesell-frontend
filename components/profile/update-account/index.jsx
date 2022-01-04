@@ -57,8 +57,8 @@ export default function UpdateAccount() {
   }, [user_profile]);
   return (
     <div className='mt-4'>
-      <AppHeader noSVG click={() => Router.push('/profile')} />
-      <div className='mt-3'>
+      <AppHeader noSVG styles='py-5' click={() => Router.push('/profile')} />
+      <div className='mt-20'>
         <h2 className='text-2xl font-light my-2'>Update & Activate Account</h2>
         <div className='flex flex-col'>
           {details.map((detail, index) => (

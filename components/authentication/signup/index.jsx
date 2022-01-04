@@ -23,13 +23,13 @@ export default function SignUp({ next, setUser, user }) {
     if (userType === 'seller') {
       setSelected('seller');
       setUser((prev) => {
-        return {...prev, userType: 2}
+        return { ...prev, userType: 2 };
       });
     }
     if (userType === 'supplier') {
       setSelected('supplier');
       setUser((prev) => {
-        return {...prev, userType: 3}
+        return { ...prev, userType: 3 };
       });
     }
   };
@@ -133,7 +133,7 @@ export default function SignUp({ next, setUser, user }) {
           click={() => onProceedHandler()}
         />
 
-        <span className='w-full p-2 flex center justify-center text-center mt-24'>
+        <span className='w-full p-2 flex center justify-center text-center mt-20'>
           Already have an account?
           <Link className='mx-2 underline' to='/login'>
             Login

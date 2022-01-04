@@ -27,6 +27,7 @@ export default function ProductSlug() {
     delivery_fee: null,
     rate_key: null,
     url: null,
+    selling_price: null,
   });
   const [modal, setModal] = useState(false);
   const [generateLink, setGenerateLink] = useState(false);
@@ -117,7 +118,7 @@ export default function ProductSlug() {
     await GET_QUOTE(form, callback, onError);
   };
   return (
-    <div className='product-slug '>
+    <div className='product-slug mt-20'>
       <AppHeader edit='Edit Product' />
 
       <h3 className='text-3xl mt-5'>Product Details</h3>
@@ -256,7 +257,7 @@ export default function ProductSlug() {
 
               <Button
                 text='Calculate'
-                styles="bg-app-color"
+                styles='bg-app-color'
                 click={() => getQuote()}
                 loading={loading}
               />
@@ -278,6 +279,7 @@ export default function ProductSlug() {
               <Input
                 label='Selling Price'
                 price='true'
+                value={data.selling_price}
                 dispatch={(value) => console.log(value)}
                 disabled='true'
               />

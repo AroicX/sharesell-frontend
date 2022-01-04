@@ -16,8 +16,8 @@ export default function PickUpAddress({ setCurrentState }) {
   }, [data]);
   return (
     <div className='mt-3 mb-28'>
-      <AppHeader noSVG />
-      <div className='relative'>
+      <AppHeader noSVG styles='py-5' />
+      <div className='relative mt-14'>
         <h2 className='text-3xl font-light my-4'>Saved Pickup Addresses</h2>
         <div className=''>
           <p className='text-sm'>Saved Pickup Addresses</p>

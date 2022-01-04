@@ -7,7 +7,7 @@ import WithdrawalDisplay from '@/components/WithdrawalDisplay';
 
 export default function Profile() {
   const { user, role } = useGlobalStore();
-  // console.log(role.toLowerCase());
+
   const ProfileOptions = [
     {
       icon: '/svg/home-profile.svg',

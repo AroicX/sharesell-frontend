@@ -36,7 +36,7 @@ export default function ProductCategory({}) {
     <AuthProvider>
       <AppHeader />
       <div className='product-category'>
-        <h3 className='text-3xl mt-5'>{categoryName?.toLocaleUpperCase()}</h3>
+        <h3 className='text-3xl mt-20'>{categoryName?.toLocaleUpperCase()}</h3>
 
         {products.length > 0 ? (
           products?.map((item, i) => (

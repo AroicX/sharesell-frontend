@@ -133,8 +133,8 @@ export default function Kin() {
   }, [userProfile]);
   return (
     <div className='mt-4'>
-      <AppHeader noSVG />
-      <div>
+      <AppHeader noSVG styles='py-5' />
+      <div className='mt-20'>
         <h2 className='text-3xl font-light my-2'>Next of Kin</h2>
         <span className='text-app-text'>Please provide accurate details.</span>
         <div>

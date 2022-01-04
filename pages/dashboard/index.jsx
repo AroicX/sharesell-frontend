@@ -6,7 +6,7 @@ import ProductDisplay from '@/components/ProductDisplay';
 import WithdrawalDisplay from '@/components/WithdrawalDisplay';
 import AuthProvider from '@/components/AuthProvider';
 import { useGlobalStore } from '@/hooks/useGlobalStore';
-import { slugify } from '@/helpers/index';
+import { getInitials, slugify } from '@/helpers/index';
 import { _protectedRequest } from 'services';
 import useSWR from 'swr';
 import SearchBar from '@/components/SearchBar';
@@ -14,10 +14,16 @@ import Tag from '@/components/Tag';
 import { useRouter } from 'next/router';
 import { SEARCH_PRODUCT } from '@/services/products';
 import Loader from '@/reusable/Loader';
+import SVG from 'react-inlinesvg';
 
 export default function Dashboard() {
-  const { products, role, setProductCategories, setCurrentCategory } =
-    useGlobalStore();
+  const {
+    products,
+    user,
+    role,
+    setProductCategories,
+    setCurrentCategory,
+  } = useGlobalStore();
   const [search, setSearch] = useState({
     value: '',
     isLoading: false,
@@ -71,24 +77,29 @@ export default function Dashboard() {
     <AuthProvider>
       <Layout>
         <div className='w-full bg-white p-2 flex justify-between fixed top-0 left-0 z-50 shadow'>
-          <img
+          {/* <img
             className='border-50  '
             src='/images/Image.png'
             alt='image'
             width='50px'
             height='50px'
-          />
+          /> */}
+          <div className='profile-image-container flex items-center justify-center h-10 w-10 rounded-full relative cursor-pointer'>
+            <p className='font-medium text-xs text-app-cream'>
+              {getInitials(user?.[role.toLowerCase()]?.business_name)}
+            </p>
+          </div>
           <Link to='/profile/update-account' className='text-app-color m-auto'>
             Hi, Tap here to update account
           </Link>
           <Link to='/notification' className='relative my-auto'>
-            <div className=' absolute top-0 right-0 z-10 bg-terms p-1 rounded-full border-2 border-white '></div>
+            <div className=' absolute -top-1 -right-1 z-10 bg-terms p-1 rounded-full border-2 border-white '></div>
             <button className='relative px-2 block my-auto bg-terms text-white rounded'>
-              3
+              0
             </button>
           </Link>
         </div>
-        <div className='mt-20'>
+        <div className='mt-14'>
           {role === 'Supplier' && <WithdrawalDisplay />}
           {role === 'Reseller' && (
             <SearchBar
