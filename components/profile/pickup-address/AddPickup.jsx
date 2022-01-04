@@ -27,13 +27,14 @@ export default function AddPickupAddress({ currentState, setCurrentState }) {
   const Router = useRouter();
   const onChangeHandler = (data, field, fieldError) => {
     if (field === 'state') {
-      setForm((prev) => {
-        return { ...prev, [field]: data, [fieldError]: '', city: '' };
-      });
+      setForm((prev) => ({
+        ...prev,
+        [field]: data,
+        [fieldError]: '',
+        city: '',
+      }));
     } else {
-      setForm((prev) => {
-        return { ...prev, [field]: data, [fieldError]: '' };
-      });
+      setForm((prev) => ({ ...prev, [field]: data, [fieldError]: '' }));
     }
   };
 
