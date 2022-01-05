@@ -42,8 +42,15 @@ export default function Input({
       {type === 'password' && (
         <SVG
           src='/svg/show-password.svg'
-          className={`mt-6 mr-3 absolute right-1 cursor-pointer`}
+          // className={`mt-6 mr-3 absolute right-1 cursor-pointer`}
           onClick={() => passwordStateOnChangeHandler()}
+          style={{
+            marginRight: '0.75rem',
+            position: 'absolute',
+            right: '0.25rem',
+            cursor: 'pointer',
+            marginTop: '1.5rem',
+          }}
         />
       )}
 
