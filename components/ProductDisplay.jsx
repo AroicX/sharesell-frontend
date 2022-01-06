@@ -6,6 +6,8 @@ import SVG from 'react-inlinesvg';
 import Modal from '@/reusable/Modal';
 import Link from '@/components/Link';
 import { saveAs } from 'file-saver';
+import toast, { Toaster } from 'react-hot-toast';
+import { CopyToClipboard } from 'react-copy-to-clipboard';
 
 export default function ProductDisplay({ product }) {
   const { role, setCurrentProduct } = useGlobalStore();
@@ -38,6 +40,11 @@ export default function ProductDisplay({ product }) {
     setModal(false);
     setDownloadModal(true);
   };
+
+  const onCopyHandler = () => {
+    setModal(false);
+    toast.success('Copied to Clipboard');
+  };
   return (
     <div
       className='product-display relative top-0 left-0 my-2 cursor-pointer rounded shadow-sm p-3 border border-app-text-light'
@@ -60,7 +67,7 @@ export default function ProductDisplay({ product }) {
           }
         />
       </div>
-
+      <Toaster />
       {role === 'Supplier' ? (
         <div className='flex justify-between'>
           <div className='flex flex-col my-2 mt-10'>
@@ -121,12 +128,20 @@ export default function ProductDisplay({ product }) {
               Tap to Download Images
             </p>
           </div>
-          <div className='flex items-center justify-between p-2 bg-app-cream rounded-3xl max-w-max mt-3'>
+          <div
+            className='flex items-center justify-between p-2 bg-app-cream rounded-3xl max-w-max mt-3'
+            onClick={(e) => e.stopPropagation()}
+          >
             <p className='text-pry-black font-medium text-sm ml-1'>2.</p>
             <SVG src='/svg/clipboard-icon.svg' className='mx-3' />
-            <p className='text-pry-black font-medium text-sm ml-1'>
-              Tap to Copy Product Details
-            </p>
+            <CopyToClipboard
+              text={product.product_description}
+              onCopy={() => onCopyHandler()}
+            >
+              <p className='text-pry-black font-medium text-sm ml-1'>
+                Tap to Copy Product Details
+              </p>
+            </CopyToClipboard>
           </div>
           <span className='w-full text-app-text font-medium float-left text-md my-2'>
             Share on:
