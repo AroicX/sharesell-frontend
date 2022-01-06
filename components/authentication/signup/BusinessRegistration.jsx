@@ -48,7 +48,7 @@ export default function BusinessRegistration({ next, back, user, setUser }) {
       inputValidatorErrorState(
         user.businessName,
         setForm,
-        "businessNameError",
+        'businessNameError',
         'Business Name is Required'
       );
       if (
@@ -58,7 +58,7 @@ export default function BusinessRegistration({ next, back, user, setUser }) {
         inputValidatorErrorState(
           user.bvn_number,
           setForm,
-          "bvnError",
+          'bvnError',
           'Your RC/BN is required for a registered Business'
         );
       }
@@ -67,7 +67,7 @@ export default function BusinessRegistration({ next, back, user, setUser }) {
   return (
     <div className='Business-Auth'>
       <AppHeader click={back} />
-      <div className='business'>
+      <div className='business mt-20'>
         <h2 className='text-3xl font-light my-2'>Business Name</h2>
         <span className='text-app-text'>Enter your business name.</span>
         <div className='business-name mt-4'>

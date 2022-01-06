@@ -77,7 +77,10 @@ export default function ProductDisplay({ product }) {
                 ₦{product.product_price?.toLocaleString()}
               </span>
               <span className='text-app-text-light font-thin line-through text-sm'>
-                ₦50,000.00 (50% off)
+                ₦
+                {parseInt(product.product_price) +
+                  Math.floor(Math.random(500, 20000))}{' '}
+                (50% off)
               </span>
             </div>
             <button

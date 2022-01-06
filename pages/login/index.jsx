@@ -13,8 +13,8 @@ import useGuest from '@/hooks/useGuest';
 function Login() {
   const { setToken } = useGlobalStore();
   const [data, setData] = useState({
-    email: '',
-    password: '',
+    email: 'reseller@sharesell.com',
+    password: 'password',
   });
   const [loading, setLoading] = useState(false);
   const handleSubmit = async (event) => {
@@ -22,19 +22,20 @@ function Login() {
     setLoading(true);
 
     const callback = (response) => {
-      ResponseHandler(response);
-
-      if (response.status) {
+      if (response.status === 'success') {
         setCookie(response.token);
         window.localStorage.setItem('user-data', JSON.stringify(response));
         setLoading(false);
         setToken(response.token);
         let _redirect = window.localStorage.getItem('be-authorized');
         _redirect ? router.push(_redirect) : router.push('/dashboard');
+      } else {
+        ResponseHandler(response);
+        setLoading(false);
       }
     };
-    const onError = (response) => {
-      console.log(response);
+    const onError = (errors) => {
+      console.log(errors);
     };
 
     await LOGIN_ACCOUNT(data, callback, onError);
@@ -56,6 +57,7 @@ function Login() {
             value={data.email}
             placeholder={'chikainc@gmail.com'}
             dispatch={(value) => setData({ ...data, email: value })}
+            required
           />
           <Input
             label={'Password'}
@@ -63,6 +65,7 @@ function Login() {
             value={data.password}
             placeholder={'chikainc@gmail.com'}
             dispatch={(value) => setData({ ...data, password: value })}
+            required
           />
 
           <Button

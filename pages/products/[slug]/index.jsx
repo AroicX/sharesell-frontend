@@ -1,17 +1,27 @@
 import AppHeader from '@/components/AppHeader';
 import ImageModal from '@/components/ImageModal';
-import { getStates, getCity } from '@/helpers/index';
+import {
+  getStates,
+  getCity,
+  convertPricetoNumber,
+  inputFormatter,
+} from '@/helpers/index';
 import { useGlobalStore } from '@/hooks/useGlobalStore';
 import Button from '@/reusable/Button';
 import Input from '@/reusable/Input';
 import Modal from '@/reusable/Modal';
 import Select from '@/reusable/Select';
-import { GET_QUOTE, GET_SINGLE_PRODUCT } from '@/services/products';
+import {
+  GET_QUOTE,
+  GET_SINGLE_PRODUCT,
+  GENERATE_PAYMENT_LINK,
+} from '@/services/products';
 import router from 'next/router';
 import React, { useEffect, useState } from 'react';
 import SVG from 'react-inlinesvg';
 import { CopyToClipboard } from 'react-copy-to-clipboard';
 import Link from '@/components/Link';
+import Swal from 'sweetalert2';
 
 export default function ProductSlug() {
   const { currentProduct, role } = useGlobalStore();
@@ -24,10 +34,12 @@ export default function ProductSlug() {
     city: null,
     stateError: null,
     cityError: null,
-    delivery_fee: null,
+    delivery_fee: '',
     rate_key: null,
     url: null,
     selling_price: null,
+    total_cost: '',
+    profit: '',
   });
   const [modal, setModal] = useState(false);
   const [generateLink, setGenerateLink] = useState(false);
@@ -42,7 +54,7 @@ export default function ProductSlug() {
   }, [currentProduct]);
 
   const getProduct = (id) => {
-    setLoading(true);
+    // setLoading(true);
     const callback = (response) => {
       const { payload } = response;
       let images = JSON.parse(payload.product_images);
@@ -105,10 +117,11 @@ export default function ProductSlug() {
         setLoading(false);
         setData((prevState) => ({
           ...prevState,
-          delivery_fee: response.payload[0].delivery_fee,
-          rate_key: response.payload[0].rate_key,
-          url: response.payload.url,
+          delivery_fee: response.payload.amount,
+          rate_key: response.payload.rate_key,
         }));
+        setModal(!modal);
+        setGenerateLink(!generateLink);
       }
     };
     const onError = (error) => {
@@ -117,6 +130,69 @@ export default function ProductSlug() {
 
     await GET_QUOTE(form, callback, onError);
   };
+
+  const calculateProfit = (value) => {
+    let price = product.product_price;
+    if (value > price) {
+      let profit = parseInt(value) - parseInt(price);
+      setData((prevState) => ({
+        ...prevState,
+        selling_price: value,
+        profit: profit,
+        total_cost: parseInt(value) + parseInt(data.delivery_fee),
+      }));
+    }
+  };
+
+  const checkStatus = () => {
+    if (data.city === null || data.state === null) {
+      Swal.fire({
+        text: 'Calculate Delivery Fee, before Generating Link',
+        timerProgressBar: true,
+        timer: 2000,
+        allowOutsideClick: true,
+        showConfirmButton: false,
+      });
+    } else {
+      setGenerateLink(!generateLink);
+    }
+  };
+  const getLink = async () => {
+    const {
+      product_id,
+      state,
+      city,
+      delivery_fee,
+      rate_key,
+      selling_price,
+      total_cost,
+    } = data;
+    const quote = {
+      product_id: product_id,
+      state: state,
+      city: city,
+      delivery_fee: delivery_fee,
+      rate_key: rate_key,
+      reseller_price: selling_price,
+      total_cost: total_cost,
+    };
+
+    const callback = (response) => {
+      if (response.status === 'success') {
+        const { payload } = response;
+        setData((prevState) => ({
+          ...prevState,
+          url: payload.url,
+        }));
+      }
+    };
+    const onError = (error) => {
+      console.log(error);
+    };
+
+    await GENERATE_PAYMENT_LINK(quote, callback, onError);
+  };
+
   return (
     <div className='product-slug mt-20'>
       <AppHeader edit='Edit Product' />
@@ -212,7 +288,7 @@ export default function ProductSlug() {
               styles='mt-5 '
               text='Generate Payment Link'
               iconRight='/svg/payment.svg'
-              click={() => setGenerateLink(!generateLink)}
+              click={() => checkStatus()}
               loading={loading}
             />
           </div>
@@ -277,59 +353,83 @@ export default function ProductSlug() {
               <br />
               <br />
               <Input
+                type='number'
                 label='Selling Price'
                 price='true'
                 value={data.selling_price}
-                dispatch={(value) => console.log(value)}
+                dispatch={(value) => calculateProfit(value)}
                 disabled='true'
               />
-              <b className='text-app-color float-right text-xs'>
-                Your Profit: 5000
-              </b>
-              <div className='w-full relative mt-10 flex bg-app-cream p-3 rounded border border-app-color overflow-hidden'>
-                <input
-                  className='w-full text-app-color overflow-hidden'
-                  type='text'
-                  value={data.url}
-                  disabled
-                />
+              <div className='w-full flex p-2 bg-cream rounded justify-between'>
+                {data.total_cost && (
+                  <b className='text-app-color float-left text-xs mb-2'>
+                    <span className='text-md'>Total Cost:</span> ₦
+                    {inputFormatter(data.total_cost, ',', 3)}
+                  </b>
+                )}
+                <div className='my-auto text-app-color'>-----</div>
+                {data.profit && (
+                  <b className='text-app-color float-right text-xs my-auto mb-2'>
+                    Your Profit: ₦{inputFormatter(data.profit, ',', 3)}
+                  </b>
+                )}
+              </div>
 
-                <CopyToClipboard text={data.url} onCopy={() => {}}>
-                  <button className='absolute top-0 right-0 p-3 flex bg-lightest-color text-app-text'>
-                    <SVG className='my-auto mx-2' src='/svg/copy.svg' />
-                    Copy
-                  </button>
-                </CopyToClipboard>
-              </div>
-              <span className='text-app-color font-medium float-left text-xs my-2'>
-                Request for payment with this link!
-              </span>
-              <span className='w-full text-app-text font-medium float-left text-md my-2'>
-                Share on:
-              </span>
-              <div className='w-full flex mt-10'>
-                <Link
-                  className='mx-2'
-                  to={`https://twitter.com/intent/tweet?url${data.url}`}
-                  target='_blank'
-                >
-                  <SVG className='my-auto mx-2' src='/svg/whatsapp.svg' />
-                </Link>
-                <Link
-                  className='mx-2'
-                  to={`https://www.facebook.com/sharer/sharer.php?u${data.url}`}
-                  target='_blank'
-                >
-                  <SVG className='my-auto mx-2' src='/svg/facebook.svg' />
-                </Link>
-                <Link
-                  className='mx-2'
-                  to={`https://twitter.com/intent/tweet?url${data.url}`}
-                  target='_blank'
-                >
-                  <SVG className='my-auto mx-2' src='/svg/twitter.svg' />
-                </Link>
-              </div>
+              {data.url ? (
+                <>
+                  <div className='w-full relative mt-2 flex bg-app-cream p-3 rounded border border-app-color overflow-hidden'>
+                    <input
+                      className='w-full text-app-color overflow-hidden'
+                      type='text'
+                      value={data.url}
+                      disabled
+                    />
+
+                    <CopyToClipboard text={data.url} onCopy={() => {}}>
+                      <button className='absolute top-0 right-0 p-3 flex bg-lightest-color text-app-text'>
+                        <SVG className='my-auto mx-2' src='/svg/copy.svg' />
+                        Copy
+                      </button>
+                    </CopyToClipboard>
+                  </div>
+                  <span className='text-app-color font-medium float-left text-xs my-2'>
+                    Request for payment with this link!
+                  </span>
+                  <span className='w-full text-app-text font-medium float-left text-md my-2'>
+                    Share on:
+                  </span>
+                  <div className='w-full flex mt-10'>
+                    <Link
+                      className='mx-2'
+                      to={`https://twitter.com/intent/tweet?url${data.url}`}
+                      target='_blank'
+                    >
+                      <SVG className='my-auto mx-2' src='/svg/whatsapp.svg' />
+                    </Link>
+                    <Link
+                      className='mx-2'
+                      to={`https://www.facebook.com/sharer/sharer.php?u${data.url}`}
+                      target='_blank'
+                    >
+                      <SVG className='my-auto mx-2' src='/svg/facebook.svg' />
+                    </Link>
+                    <Link
+                      className='mx-2'
+                      to={`https://twitter.com/intent/tweet?url${data.url}`}
+                      target='_blank'
+                    >
+                      <SVG className='my-auto mx-2' src='/svg/twitter.svg' />
+                    </Link>
+                  </div>
+                </>
+              ) : (
+                <Button
+                  text='Generate Link'
+                  styles='bg-app-color'
+                  click={() => getLink()}
+                  loading={loading}
+                />
+              )}
             </div>
           </Modal>
           {/* payment */}
