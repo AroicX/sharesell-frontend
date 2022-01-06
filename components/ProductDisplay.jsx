@@ -5,6 +5,7 @@ import { slugify } from '../helpers';
 import SVG from 'react-inlinesvg';
 import Modal from '@/reusable/Modal';
 import Link from '@/components/Link';
+import { saveAs } from 'file-saver';
 
 export default function ProductDisplay({ product }) {
   const { role, setCurrentProduct } = useGlobalStore();
@@ -17,6 +18,7 @@ export default function ProductDisplay({ product }) {
     router.push(`/products/${slugify(product.product_name)}`);
   };
   const [modal, setModal] = useState(false);
+  const [downloadModal, setDownloadModal] = useState(false);
   const navigateHandler = () => {
     navigate(product);
   };
@@ -26,6 +28,16 @@ export default function ProductDisplay({ product }) {
     setModal(!modal);
   };
 
+  const downloadHandler = (e, image) => {
+    e.stopPropagation();
+    saveAs(image, `${product.product_name}`);
+  };
+
+  const tabToDownloadHandler = (e) => {
+    e.stopPropagation();
+    setModal(false);
+    setDownloadModal(true);
+  };
   return (
     <div
       className='product-display relative top-0 left-0 my-2 cursor-pointer rounded shadow-sm p-3 border border-app-text-light'
@@ -102,7 +114,10 @@ export default function ProductDisplay({ product }) {
           <div className='flex items-center justify-between p-2 bg-app-cream rounded-3xl max-w-max'>
             <p className='text-pry-black font-medium text-sm ml-1'>1.</p>
             <SVG src='/svg/download-icon.svg' className='mx-3' />
-            <p className='text-pry-black font-medium text-sm ml-1'>
+            <p
+              className='text-pry-black font-medium text-sm ml-1'
+              onClick={(e) => tabToDownloadHandler(e)}
+            >
               Tap to Download Images
             </p>
           </div>
@@ -139,6 +154,36 @@ export default function ProductDisplay({ product }) {
               <SVG className='my-auto mx-2' src='/svg/twitter.svg' />
             </Link>
           </div>
+        </div>
+      </Modal>
+      <Modal
+        title={'Download Product Image'}
+        toggle={downloadModal}
+        dispatch={() => setDownloadModal(false)}
+      >
+        <div>
+          {product &&
+            JSON.parse(product.product_images).map((image, index) => (
+              <div
+                key={index}
+                className='flex justify-between items-center mt-2'
+              >
+                <div className='flex items-center text-sm'>
+                  <p className='mr-2 text-sm'>{index + 1}.</p>
+                  <p>
+                    {product.product_name} {index + 1}
+                  </p>
+                </div>
+                <div>
+                  <button
+                    className='bg-app-cream p-2 fle rounded text-xs'
+                    onClick={(e) => downloadHandler(e, image.image)}
+                  >
+                    Download
+                  </button>
+                </div>
+              </div>
+            ))}
         </div>
       </Modal>
     </div>

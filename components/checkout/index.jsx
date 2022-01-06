@@ -124,13 +124,13 @@ export default function Checkout() {
       </div>
       <div className='w-full flex justify-center items-center mt-4 flex-col'>
         <div className='w-full flex justify-center items-center'>
-          <img src='/images/model-1.png' className='max-w-full' />
+          <img src='/images/model-1.png' className='max-w-full' alt='Product' />
         </div>
         <div className='flex items-center justify-between w-full mt-4'>
-          <img src='/images/model-2.png' />
-          <img src='/images/model-3.png' />
-          <img src='/images/model-4.png' />
-          <img src='/images/model-5.png' />
+          <img src='/images/model-2.png' alt='Product' />
+          <img src='/images/model-3.png' alt='Product' />
+          <img src='/images/model-4.png' alt='Product' />
+          <img src='/images/model-5.png' alt='Product' />
         </div>
       </div>
       <div className='mt-8'>
@@ -358,7 +358,6 @@ export default function Checkout() {
               text={'Proceed to Secure Payment'}
               iconLeft={'/svg/payment.svg'}
               color={'green'}
-              
             />
           </div>
         </div>

@@ -1,11 +1,6 @@
 import AppHeader from '@/components/AppHeader';
 import ImageModal from '@/components/ImageModal';
-import {
-  getStates,
-  getCity,
-  convertPricetoNumber,
-  inputFormatter,
-} from '@/helpers/index';
+import { getStates, getCity, inputFormatter } from '@/helpers/index';
 import { useGlobalStore } from '@/hooks/useGlobalStore';
 import Button from '@/reusable/Button';
 import Input from '@/reusable/Input';
@@ -43,7 +38,6 @@ export default function ProductSlug() {
   });
   const [modal, setModal] = useState(false);
   const [generateLink, setGenerateLink] = useState(false);
-  const [price, setPrice] = useState(null);
 
   useEffect(() => {
     if (currentProduct.length < 1) {
