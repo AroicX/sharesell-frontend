@@ -12,7 +12,7 @@ function SignUpPage() {
     userType: null,
     userId: null,
     otp: null,
-    phoneNumber: '',
+    phoneNumber: '09087488501',
     businessName: '',
     bvn_number: '23566372983',
     email: '',

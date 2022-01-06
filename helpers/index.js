@@ -130,14 +130,14 @@ export const ResponseHandler = (response) => {
       });
       break;
     case '200':
-      return Swal.fire({
-        text: response.message,
-        icon: 'success',
-        timerProgressBar: true,
-        timer: 2000,
-        allowOutsideClick: true,
-        showConfirmButton: false,
-      });
+      // return Swal.fire({
+      //   text: response.message,
+      //   icon: 'success',
+      //   timerProgressBar: true,
+      //   timer: 2000,
+      //   allowOutsideClick: true,
+      //   showConfirmButton: false,
+      // });
       break;
     case 'info':
       return response.message;
@@ -188,7 +188,7 @@ export const inputFormatter = (amount, seperator, afterNumber) => {
     8: true,
     9: true,
   };
-  let incomingAmount = amount.toString();
+  let incomingAmount = amount?.toString();
   const amountInArray = [];
   for (let i = 0; i < incomingAmount.length; i++) {
     if (incomingAmount[i] !== seperator && allNumbers[incomingAmount[i]]) {

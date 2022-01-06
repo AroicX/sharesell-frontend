@@ -88,6 +88,21 @@ export async function GET_QUOTE(data, callback, onError) {
   }
 }
 
+export async function GENERATE_PAYMENT_LINK(data, callback, onError) {
+  try {
+    let link = await requests.post(`/transaction/generate-payment-link`, data);
+    if (link.data) {
+      callback && callback(link.data);
+    } else {
+      throw link;
+    }
+
+    return link;
+  } catch (err) {
+    onError && onError(err);
+  }
+}
+
 export async function SEARCH_PRODUCT(search, callback, onError) {
   try {
     let searchResult = await requests.get(`/products/search/${search}`);

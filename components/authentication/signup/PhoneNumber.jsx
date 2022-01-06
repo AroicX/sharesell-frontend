@@ -63,7 +63,7 @@ export default function PhoneNumber({ next, back, user, setUser }) {
   return (
     <div className='phone'>
       <AppHeader click={back} />
-      <div className='phone-number'>
+      <div className='phone-number mt-20'>
         <h2 className='text-3xl font-light my-2'>Phone Number</h2>
         <span className='text-app-text'>Let us run a quick verification.</span>
         <div className='flex flex-col mt-2'>

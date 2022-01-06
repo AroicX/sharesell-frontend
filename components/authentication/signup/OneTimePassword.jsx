@@ -50,7 +50,7 @@ export default function OneTimePassword({ next, back, user }) {
   return (
     <div className='phoneVerification'>
       <AppHeader click={back} />
-      <div className='verification'>
+      <div className='verification mt-20'>
         <h2 className='text-3xl font-light my-2'>Verification</h2>
         <span className='text-app-text'>
           Enter the OTP sent to your phone number

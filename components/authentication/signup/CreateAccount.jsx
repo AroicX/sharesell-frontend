@@ -89,7 +89,7 @@ export default function CreateAccount({ back, user, setUser }) {
   return (
     <div className='loginDetails'>
       <AppHeader click={back} />
-      <div className='login-details-content'>
+      <div className='login-details-content mt-20'>
         <h2 className='text-3xl font-light my-2'>Create Login Details</h2>
         <span className='text-app-text'>
           Final touch on setting up your <br />

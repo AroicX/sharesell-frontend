@@ -43,7 +43,7 @@ export default function ProductCategory({}) {
             <ProductDisplay key={i + 1} product={item} />
           ))
         ) : (
-          <div className='w-full bg-app-cream p-3 rounded mt-5 text-center shadow-sm'>
+          <div className='w-80 bg-app-cream p-3 rounded mx-auto mt-5 text-center shadow-sm'>
             <span className='text-app-color'>No Product Found</span>
           </div>
         )}
