@@ -1,6 +1,11 @@
 import AppHeader from '@/components/AppHeader';
 import ImageModal from '@/components/ImageModal';
-import { getStates, getCity, inputFormatter } from '@/helpers/index';
+import {
+  getStates,
+  getCity,
+  inputFormatter,
+  ResponseHandler,
+} from '@/helpers/index';
 import { useGlobalStore } from '@/hooks/useGlobalStore';
 import Button from '@/reusable/Button';
 import Input from '@/reusable/Input';
@@ -10,8 +15,10 @@ import {
   GET_QUOTE,
   GET_SINGLE_PRODUCT,
   GENERATE_PAYMENT_LINK,
+  DELETE_PRODUCT,
+  GET_PRODUCTS,
 } from '@/services/products';
-import router from 'next/router';
+import router, { useRouter } from 'next/router';
 import React, { useEffect, useState } from 'react';
 import SVG from 'react-inlinesvg';
 import { CopyToClipboard } from 'react-copy-to-clipboard';
@@ -19,7 +26,7 @@ import Link from '@/components/Link';
 import Swal from 'sweetalert2';
 
 export default function ProductSlug() {
-  const { currentProduct, role } = useGlobalStore();
+  const { currentProduct, role, user, setProducts } = useGlobalStore();
   const [loading, setLoading] = useState(false);
   const [product, setProduct] = useState([]);
   const [imageOptions, setImageOptions] = useState([]);
@@ -38,7 +45,7 @@ export default function ProductSlug() {
   });
   const [modal, setModal] = useState(false);
   const [generateLink, setGenerateLink] = useState(false);
-
+  const Router = useRouter();
   useEffect(() => {
     if (currentProduct.length < 1) {
       router.back();
@@ -187,6 +194,67 @@ export default function ProductSlug() {
     await GENERATE_PAYMENT_LINK(quote, callback, onError);
   };
 
+  const onDeleteHandler = (id) => {
+    const callback = (response) => {
+      ResponseHandler(response);
+    };
+
+    const onError = (err) => {
+      console.log(err);
+    };
+
+    DELETE_PRODUCT(id, callback, onError);
+  };
+  const getProducts = () => {
+    const callback = (response) => {
+      const { data } = response.payload;
+      console.log(data);
+      setProducts(data);
+      Router.push('/dashboard');
+    };
+    const onError = (error) => {
+      console.log(error);
+    };
+
+    GET_PRODUCTS(callback, onError);
+  };
+
+  const deleteProductHandler = (id) => {
+    console.log(id);
+    Swal.fire({
+      title: 'Delete Product',
+      text: 'Are you sure, you want to delete product',
+      icon: 'warning',
+      confirmButtonColor: '#ec6056e2',
+      confirmButtonText: 'Yes',
+      showConfirmButton: true,
+      showCancelButton: true,
+      cancelButtonText: 'No',
+      cancelButtonColor: '#316be9',
+      closeOnConfirm: false,
+      closeOnCancel: false,
+      allowOutsideClick: true,
+    }).then((result) => {
+      if (result.dismiss !== 'cancel') {
+        onDeleteHandler(id);
+        setTimeout(() => {
+          getProducts();
+        }, 1000);
+      } else {
+        Swal.fire({
+          title: 'Cancelled',
+          text: 'Product Not Deleted :)',
+          icon: 'info',
+          showConfirmButton: false,
+          showCancelButton: false,
+          timerProgressBar: true,
+          timer: 1000,
+          allowOutsideClick: true,
+        });
+      }
+    });
+  };
+
   return (
     <div className='product-slug mt-20'>
       <AppHeader edit='Edit Product' />
@@ -238,9 +306,12 @@ export default function ProductSlug() {
           </div>
         </div>
 
-        {role === 'Supplier' ? (
+        {role === 'Supplier' && user.user_id === product.user_id ? (
           <div className='w-full flex center items-center justify-center mt-10 pb-52'>
-            <button className='flex bg-red-50 p-3 px-7 rounded transition-all hover:bg-red-200'>
+            <button
+              className='flex bg-red-50 p-3 px-7 rounded transition-all hover:bg-red-200'
+              onClick={() => deleteProductHandler(product.id)}
+            >
               <span className='text-red-500 m-auto'>Delete</span>
               <SVG
                 className='text-red-500 m-auto mx-1'

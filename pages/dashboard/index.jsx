@@ -14,16 +14,10 @@ import Tag from '@/components/Tag';
 import { useRouter } from 'next/router';
 import { SEARCH_PRODUCT } from '@/services/products';
 import Loader from '@/reusable/Loader';
-import SVG from 'react-inlinesvg';
 
 export default function Dashboard() {
-  const {
-    products,
-    user,
-    role,
-    setProductCategories,
-    setCurrentCategory,
-  } = useGlobalStore();
+  const { products, user, role, setProductCategories, setCurrentCategory } =
+    useGlobalStore();
   const [search, setSearch] = useState({
     value: '',
     isLoading: false,
