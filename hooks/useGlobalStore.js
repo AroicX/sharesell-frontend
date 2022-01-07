@@ -55,6 +55,7 @@ const GlobalStore = () => {
     token,
     setToken,
     products,
+    setProducts,
     productCategories,
     setProductCategories,
     currentCategory,

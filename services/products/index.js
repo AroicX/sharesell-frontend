@@ -116,3 +116,17 @@ export async function SEARCH_PRODUCT(search, callback, onError) {
     onError && onError(err);
   }
 }
+
+export async function DELETE_PRODUCT(id, callback, onError) {
+  try {
+    let product = await requests.delete(`/products/delete-product/${id}`);
+    if (product.data) {
+      callback && callback(product.data);
+    } else {
+      throw product;
+    }
+    return product;
+  } catch (err) {
+    onError && onError(err);
+  }
+}

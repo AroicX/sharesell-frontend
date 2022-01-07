@@ -36,6 +36,7 @@ function Login() {
     };
     const onError = (errors) => {
       console.log(errors);
+      setLoading(false);
     };
 
     await LOGIN_ACCOUNT(data, callback, onError);
