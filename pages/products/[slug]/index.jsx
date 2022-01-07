@@ -5,6 +5,7 @@ import {
   getCity,
   convertPricetoNumber,
   inputFormatter,
+  ImageFilter,
 } from '@/helpers/index';
 import { useGlobalStore } from '@/hooks/useGlobalStore';
 import Button from '@/reusable/Button';
@@ -57,26 +58,10 @@ export default function ProductSlug() {
     // setLoading(true);
     const callback = (response) => {
       const { payload } = response;
-      let images = JSON.parse(payload.product_images);
-      setData((prevState) => ({ ...prevState, product_id: payload.id }));
-      var image_filtered = [];
-      images.forEach((img, i) => {
-        if (i === 0) {
-          image_filtered.push({
-            src: img.image,
-            width: 4,
-            height: 3,
-          });
-        } else {
-          image_filtered.push({
-            src: img.image,
-            width: 3,
-            height: 3,
-          });
-        }
-      });
 
-      setImageOptions(image_filtered);
+      setData((prevState) => ({ ...prevState, product_id: payload.id }));
+
+      setImageOptions(ImageFilter(JSON.parse(payload.product_images)));
       setProduct(payload);
       setLoading(false);
     };
