@@ -20,6 +20,7 @@ export default function ProductDisplay({ product }) {
 
     router.push(`/products/${slugify(product.product_name)}`);
   };
+  console.log(product);
   const [modal, setModal] = useState(false);
   const [downloadModal, setDownloadModal] = useState(false);
   const navigateHandler = () => {

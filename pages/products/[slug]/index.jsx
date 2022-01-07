@@ -208,7 +208,6 @@ export default function ProductSlug() {
   const getProducts = () => {
     const callback = (response) => {
       const { data } = response.payload;
-      console.log(data);
       setProducts(data);
       Router.push('/dashboard');
     };
@@ -257,8 +256,14 @@ export default function ProductSlug() {
 
   return (
     <div className='product-slug mt-20'>
-      <AppHeader edit='Edit Product' />
-
+      <AppHeader
+        noSVG
+        edit={
+          role === 'Supplier' && user.user_id === product.user_id ? true : false
+        }
+        styles={'py-4'}
+        product={product}
+      />
       <h3 className='text-3xl mt-5'>Product Details</h3>
       <div className='w-full flex flex-col mt-5'>
         <p className='text-app-text'>{product.product_name}</p>
