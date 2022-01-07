@@ -34,6 +34,16 @@ requests.interceptors.response.use(
       //     return window.location.replace('/login');
       //   }
       // });
+    } else if (400 === error.response.status) {
+      Swal.fire({
+        title: 'Bad Request',
+        text: error.response.data.message,
+        type: 'error',
+        timerProgressBar: true,
+        timer: 2000,
+        allowOutsideClick: true,
+        showConfirmButton: false,
+      });
     } else {
       return Promise.reject(error);
     }

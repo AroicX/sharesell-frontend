@@ -85,7 +85,8 @@ export default function AddProduct({}) {
           allowOutsideClick: false,
         }).then((result) => {
           if (result.dismiss !== 'cancel') {
-            return router.push(`/products/${slugify(product_name)}`);
+            return router.push(`/dashboard`);
+            // return router.push(`/products/${slugify(product_name)}`);
           }
         });
       }
