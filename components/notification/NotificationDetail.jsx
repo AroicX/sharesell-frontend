@@ -13,7 +13,7 @@ export default function NotificationDetail({ notification, setCurrentStep }) {
     Router.push('/profile/update-account');
   };
   return (
-    <div className='mt-4'>
+    <div className='mt-4 px-3'>
       <AppHeader noSVG styles='py-5' click={back} />
       <div className='mt-20'>
         <p className={`font-medium text-base text-app-text `}>
