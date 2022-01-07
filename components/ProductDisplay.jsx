@@ -8,6 +8,7 @@ import Link from '@/components/Link';
 import { saveAs } from 'file-saver';
 import toast, { Toaster } from 'react-hot-toast';
 import { CopyToClipboard } from 'react-copy-to-clipboard';
+import { WhatsappShareButton } from 'react-share';
 
 export default function ProductDisplay({ product }) {
   const { role, setCurrentProduct } = useGlobalStore();
@@ -65,6 +66,7 @@ export default function ProductDisplay({ product }) {
               Math.floor(Math.random() * 5) + 1
             ]?.image
           }
+          alt='Product'
         />
       </div>
       <Toaster />
@@ -146,14 +148,17 @@ export default function ProductDisplay({ product }) {
           <span className='w-full text-app-text font-medium float-left text-md my-2'>
             Share on:
           </span>
-          <div className='w-full flex mt-10'>
-            <Link
-              className='mx-2'
-              to={`https://twitter.com/intent/tweet?url`}
-              target='_blank'
+          <div
+            className='w-full flex mt-10'
+            onClick={(e) => e.stopPropagation()}
+          >
+            <WhatsappShareButton
+              url={`http://localhost:9001/products/${slugify(
+                product.product_name
+              )}`}
             >
               <SVG className='my-auto mx-2' src='/svg/whatsapp.svg' />
-            </Link>
+            </WhatsappShareButton>
             <Link
               className='mx-2'
               to={`https://www.facebook.com/sharer/sharer.php?u`}
