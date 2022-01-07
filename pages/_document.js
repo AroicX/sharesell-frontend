@@ -8,7 +8,7 @@ class MyDocument extends Document {
 
   render() {
     return (
-      <Html>
+      <Html lang='en'>
         <Head>
           <link
             rel='preload'
@@ -87,6 +87,7 @@ class MyDocument extends Document {
             href='/favicon/favicon-16x16.png'
           />
           <link rel='manifest' href='/favicon/manifest.json' />
+          <link rel='shortcut icon' href='/svg/logo.svg' />
           <meta name='msapplication-TileColor' content='#ffffff' />
           <meta
             name='msapplication-TileImage'

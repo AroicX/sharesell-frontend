@@ -2,12 +2,10 @@ import React, { useState } from 'react';
 import MoreDropdown from './MoreDropdown';
 import SVG from 'react-inlinesvg';
 import { ResponseHandler } from '../helpers';
-import { useRouter } from 'next/router';
 import { DELETE_ADDRESS } from '@/services/profile';
 import Swal from 'sweetalert2';
 
 export default function MoreContainer({ savedAddress, setCurrentState }) {
-  const Router = useRouter();
   const onDeleteHandler = (id) => {
     const callback = (response) => {
       ResponseHandler(response);

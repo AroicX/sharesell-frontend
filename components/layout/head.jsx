@@ -17,7 +17,8 @@ const Head = ({ title }) => {
       {/* <meta property="og:url" content={process.env.BASE_URL} /> */}
       <meta property='og:description' content={siteDescription} />
       {/* <meta property="og:image" content="https://printivo.s3.amazonaws.com/img/image-seo-share-large.png" /> */}
-      <link rel='shortcut icon' href='/favicon.ico' type='image/x-icon' />
+      /favicon/logo.ico
+      <link rel='shortcut icon' href='/svg/logo.svg' type='image/x-icon' />
       <meta property='twitter:card' content='summary_large_image' />
       <script
         src='https://widget.cloudinary.com/v2.0/global/all.js'
