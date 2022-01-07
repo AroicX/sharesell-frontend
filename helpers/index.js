@@ -21,6 +21,27 @@ export const resolveRoles = (value) => {
   }
 };
 
+export const ImageFilter = (images) => {
+  var images_filtered = [];
+  images.forEach((img, i) => {
+    if (i === 0) {
+      images_filtered.push({
+        src: img.image,
+        width: 4,
+        height: 3,
+      });
+    } else {
+      images_filtered.push({
+        src: img.image,
+        width: 3,
+        height: 3,
+      });
+    }
+  });
+
+  return images_filtered;
+};
+
 export const getInitials = (name) => {
   let result = name?.split(' ')?.reduce((acc, subname) => acc + subname[0], '');
   return result;
