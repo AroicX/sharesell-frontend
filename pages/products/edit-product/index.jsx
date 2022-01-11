@@ -368,7 +368,7 @@ export default function AddProduct({}) {
               price={true}
               value={data.product_price}
               dispatch={(value) => {
-                onChangeHandler(value, 'product_price', 'product_price_error');
+                onChangeHandler(value, 'product_price', 'product_price_eror');
               }}
               error={data.product_price_error}
             />
