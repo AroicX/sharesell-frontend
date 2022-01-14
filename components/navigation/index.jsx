@@ -86,7 +86,7 @@ export default function Navigation({ dispatch }) {
               onClick={() => {
                 item.click ? setMenu(!menu) : null;
               }}
-              className={`flex p-2 flex-col center justify-center items-center text-center cursor-pointer mx-1 ${
+              className={`flex p-2 flex-col center font-semibold text-xs justify-center items-center text-center cursor-pointer mx-1 ${
                 Router.pathname === item.link
                   ? 'text-pry-black'
                   : 'text-app-text-light'
