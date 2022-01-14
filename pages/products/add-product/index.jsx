@@ -270,6 +270,15 @@ export default function AddProduct({}) {
           [stateError]: '',
         };
       });
+    } else if (state === 'state') {
+      setData((prev) => {
+        return {
+          ...prev,
+          [state]: data,
+          [stateError]: '',
+          city: '',
+        };
+      });
     } else {
       setData((prev) => {
         return { ...prev, [state]: data, [stateError]: '' };
@@ -467,6 +476,7 @@ export default function AddProduct({}) {
             placeholder='Select State'
             options={getStates()}
             placeholder={'Select State'}
+            initialValue={data.state}
             dispatch={(value) => onChangeHandler(value, 'state', 'state_error')}
             error={data.state_error}
           />
@@ -479,6 +489,7 @@ export default function AddProduct({}) {
             placeholder={'Select City'}
             dispatch={(value) => onChangeHandler(value, 'city', 'city_error')}
             error={data.city_error}
+            initialValue={data.city}
           />
         </div>
 

@@ -142,7 +142,7 @@ export default function Dashboard() {
           </div>
         )}
         {search.isActive === false && (
-          <div className='mb-16'>
+          <div className={`${role === 'Supplier' ? 'mb-16' : ''}`}>
             {products.length > 0 ? (
               products?.map((item, i) => (
                 <ProductDisplay key={i + 1} product={item} />
