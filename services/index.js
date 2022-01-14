@@ -5,9 +5,9 @@ import { getToken } from './cookies';
 const environment = process.env.NODE_ENV;
 
 const requests = axios.create({
-  // baseURL: process.env.NEXT_PUBLIC_BASE_URL,
+  baseURL: process.env.NEXT_PUBLIC_BASE_URL,
   // baseURL: 'https://shareshell.test/api/',
-  baseURL: 'http://64.227.9.209/api/',
+  // baseURL: 'http://64.227.9.209/api/',
 });
 
 requests.interceptors.response.use(
@@ -34,6 +34,16 @@ requests.interceptors.response.use(
       //     return window.location.replace('/login');
       //   }
       // });
+    } else if (400 === error.response.status) {
+      Swal.fire({
+        title: 'Bad Request',
+        text: error.response.data.message,
+        type: 'error',
+        timerProgressBar: true,
+        timer: 2000,
+        allowOutsideClick: true,
+        showConfirmButton: false,
+      });
     } else {
       return Promise.reject(error);
     }

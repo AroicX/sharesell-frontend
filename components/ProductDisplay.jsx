@@ -154,7 +154,7 @@ export default function ProductDisplay({ product }) {
             onClick={(e) => e.stopPropagation()}
           >
             <WhatsappShareButton
-              url={`http://localhost:9001/products/${slugify(
+              url={`${process.env.NEXT_PUBLIC_APP_URL}/products/${slugify(
                 product.product_name
               )}`}
             >

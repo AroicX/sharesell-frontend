@@ -13,8 +13,8 @@ import useGuest from '@/hooks/useGuest';
 function Login() {
   const { setToken } = useGlobalStore();
   const [data, setData] = useState({
-    email: 'reseller@sharesell.com',
-    password: 'password',
+    email: '',
+    password: '',
   });
   const [loading, setLoading] = useState(false);
   const handleSubmit = async (event) => {
@@ -56,7 +56,7 @@ function Login() {
             label={'Email'}
             type='email'
             value={data.email}
-            placeholder={'chikainc@gmail.com'}
+            placeholder={'Enter Email Address'}
             dispatch={(value) => setData({ ...data, email: value })}
             required
           />
@@ -64,7 +64,7 @@ function Login() {
             label={'Password'}
             type='password'
             value={data.password}
-            placeholder={'chikainc@gmail.com'}
+            placeholder={'Enter Password'}
             dispatch={(value) => setData({ ...data, password: value })}
             required
           />
