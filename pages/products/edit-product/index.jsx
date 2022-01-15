@@ -509,7 +509,7 @@ export default function EditProduct({}) {
             />
           </div>
 
-          <div className='m-1 my-5'>
+          <div className='m-1 my-5 mt-6'>
             <Input
               label='Suggested Retail Price'
               placeholder='3,000'
@@ -565,7 +565,7 @@ export default function EditProduct({}) {
 
           <Button
             type='submit'
-            text='Save Product'
+            text='Save Modification'
             iconRight={'/svg/arrow-right.svg'}
             loading={loading}
           />

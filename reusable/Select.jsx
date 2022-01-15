@@ -33,7 +33,7 @@ const Select = ({
         <span className='select-display-default -mt-1'>
           {selected ? selected : placeholder}
         </span>
-        <SVG className='mr-1 -mt-1' src='/svg/caret-down.svg' />
+        <SVG className='mr-1 -mt-1' src='/svg/caret-down-dark.svg' />
       </div>
       {error && (
         <span className='text-red-500 text-sm bg-red-200 p-4 rounded my-1'>
