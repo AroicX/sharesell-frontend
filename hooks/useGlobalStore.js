@@ -22,6 +22,7 @@ const GlobalStore = () => {
   const [supplier, setSupplier] = useState(null);
   const [userProfile, setUserProfile] = useState(null);
   const [role, setRole] = useState(false);
+  const [favourite, setFavourite] = useState({});
 
   const getProducts = () => {
     const callback = (response) => {
@@ -66,6 +67,8 @@ const GlobalStore = () => {
     setSupplier,
     userProfile,
     setUserProfile,
+    favourite,
+    setFavourite,
   };
 };
 

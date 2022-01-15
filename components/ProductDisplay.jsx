@@ -10,8 +10,8 @@ import toast, { Toaster } from 'react-hot-toast';
 import { CopyToClipboard } from 'react-copy-to-clipboard';
 import { WhatsappShareButton } from 'react-share';
 
-export default function ProductDisplay({ product }) {
-  const { role, setCurrentProduct } = useGlobalStore();
+export default function ProductDisplay({ product, favourite }) {
+  const { role, setCurrentProduct, setFavourite } = useGlobalStore();
   const navigate = (product) => {
     setCurrentProduct({
       id: product.id,
@@ -23,6 +23,7 @@ export default function ProductDisplay({ product }) {
   console.log(product);
   const [modal, setModal] = useState(false);
   const [downloadModal, setDownloadModal] = useState(false);
+  const [liked, setLiked] = useState(favourite ? favourite : false);
   const navigateHandler = () => {
     navigate(product);
   };
@@ -47,9 +48,23 @@ export default function ProductDisplay({ product }) {
     setModal(false);
     toast.success('Copied to Clipboard');
   };
+
+  const likeHandler = (e, id) => {
+    e.stopPropagation();
+    setLiked(!liked);
+    setFavourite((prev) => {
+      let newFavourite = { ...prev };
+      if (newFavourite[id]) {
+        delete newFavourite[id];
+      } else {
+        newFavourite[id] = id;
+      }
+      return newFavourite;
+    });
+  };
   return (
     <div
-      className='product-display relative top-0 left-0 my-2 cursor-pointer rounded shadow-sm p-3 border border-app-text-light'
+      className='product-display relative top-0 left-0 my-2 cursor-pointer rounded py-3'
       onClick={() => navigateHandler()}
     >
       <div className='bg-black p-1 absolute top-5 right-5 rounded'>
@@ -59,46 +74,52 @@ export default function ProductDisplay({ product }) {
           </span>
         ) : null}
       </div>
-      <div className='product-display-image'>
+      <div className='product-display-image relative w-full'>
         <img
-          className='w-full flex center text-center items-center justify-center '
-          src={
-            JSON.parse(product?.product_images)[
-              Math.floor(Math.random() * 5) + 1
-            ]?.image
-          }
+          className='max-w-full flex center text-center items-center justify-center'
+          src={JSON.parse(product?.product_images)[0]?.image}
           alt='Product'
         />
+        {role === 'Reseller' && (
+          <div
+            className='absolute h-8 w-8 rounded-full right-2 bottom-2 product-like-container flex justify-center items-center'
+            onClick={(e) => likeHandler(e, product.id)}
+          >
+            <img src={`svg/${liked ? 'liked' : 'like'}.svg`} />
+          </div>
+        )}
       </div>
       <Toaster />
       {role === 'Supplier' ? (
-        <div className='flex justify-between'>
-          <div className='flex flex-col my-2 mt-10'>
-            <p>{product.product_name}</p>
-            <span className='text-3xl font-bold'>
+        <div className='flex justify-between '>
+          <div className='flex flex-col mt-4'>
+            <p className='font-semibold text-sm'>{product.product_name}</p>
+            <span className='text-lg font-semibold'>
               ₦{product.product_price?.toLocaleString()}
             </span>
           </div>
           <div
             onClick={() => navigate(product)}
-            className='text-app-text-light my-auto'
+            className='text-app-text font-medium text-sm mt-auto'
           >
             View Product
           </div>
         </div>
       ) : null}
       {role === 'Reseller' ? (
-        <div>
+        <div className='mt-4'>
           <p className='text-black font-medium text-lg'>
             {product.product_name}
           </p>
-          <div className='flex justify-between'>
+          <div className='flex justify-between items-center'>
             <div className='flex flex-col my-2 '>
-              <p className='text-app-text-light text-sm'>STARTING FROM</p>
-              <span className='text-3xl font-bold'>
+              <p className='text-nice-brown text-xs font-semibold'>
+                STARTING FROM
+              </p>
+              <span className='text-lg font-bold'>
                 ₦{product.product_price?.toLocaleString()}
               </span>
-              <span className='text-app-text-light font-thin line-through text-sm'>
+              <span className='text-app-color font-thin line-through text-xs'>
                 ₦
                 {parseInt(product.product_price) +
                   Math.floor(Math.random(500, 20000))}{' '}

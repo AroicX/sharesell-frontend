@@ -17,8 +17,16 @@ import Loader from '@/reusable/Loader';
 import Button from '@/reusable/Button';
 
 export default function Dashboard() {
-  const { products, user, role, setProductCategories, setCurrentCategory } =
-    useGlobalStore();
+  const {
+    products,
+    user,
+    role,
+    setProductCategories,
+    setCurrentCategory,
+    favourite,
+  } = useGlobalStore();
+
+  console.log(favourite);
   const [search, setSearch] = useState({
     value: '',
     isLoading: false,
@@ -145,7 +153,11 @@ export default function Dashboard() {
           <div className={`${role === 'Supplier' ? 'mb-16' : ''}`}>
             {products.length > 0 ? (
               products?.map((item, i) => (
-                <ProductDisplay key={i + 1} product={item} />
+                <ProductDisplay
+                  key={i + 1}
+                  product={item}
+                  favourite={favourite[item.id] ? true : false}
+                />
               ))
             ) : (
               <div className='w-full bg-app-cream p-3 rounded mt-5 text-center shadow-sm'>
