@@ -20,12 +20,12 @@ import {
 } from '@/helpers/index';
 import axios from 'axios';
 import Swal from 'sweetalert2';
-import { GET_SINGLE_PRODUCT } from '@/services/products';
+import { GET_SINGLE_PRODUCT, UPDATE_PRODUCT } from '@/services/products';
 import Loader from '@/reusable/Loader';
 
 let counter = 0;
 let links = [];
-export default function AddProduct({}) {
+export default function EditProduct({}) {
   const { productCategories, user, currentProduct } = useGlobalStore();
 
   useEffect(() => {
@@ -46,9 +46,11 @@ export default function AddProduct({}) {
   const [loader, setLoader] = useState(true);
   const [data, setData] = useState({
     user_id: user ? user.user_id : '',
+    product_id: '',
     product_name: '',
     product_name_error: '',
     product_category: '',
+    product_category_display: '',
     product_category_error: '',
     product_description: '',
     product_description_error: '',
@@ -70,7 +72,8 @@ export default function AddProduct({}) {
     state_error: '',
     city: '',
     city_error: '',
-    product_images: [],
+    product_images: '',
+    product_images_display: '',
     product_images_error: '',
   });
 
@@ -83,10 +86,6 @@ export default function AddProduct({}) {
   };
 
   const getProduct = (id) => {
-    // event.preventDefault();
-    // data.product_images = links;
-    // data.product_price = convertPricetoNumber(data.product_price);
-    // data.product_retail_price = convertPricetoNumber(data.product_retail_price);
     const callback = (response) => {
       if (response) {
         setLoading(false);
@@ -94,7 +93,17 @@ export default function AddProduct({}) {
         setData((prev) => ({
           ...prev,
           ...productDetail,
-          product_category: categoryFormatter(productDetail.product_category),
+          product_category_display: categoryFormatter(
+            productDetail.product_category
+          ),
+          product_images_display: productDetail.product_images,
+          product_id: productDetail.id,
+          product_price: inputFormatter(productDetail.product_price, ',', 3),
+          product_retail_price: inputFormatter(
+            productDetail.product_retail_price,
+            ',',
+            3
+          ),
         }));
         setLoader(false);
       }
@@ -104,6 +113,57 @@ export default function AddProduct({}) {
     };
 
     GET_SINGLE_PRODUCT(id, callback, onError);
+  };
+  const handleSubmit = () => {
+    // data.product_images = links;
+    if (!data.product_images_display) {
+      data.product_images = JSON.stringify(links);
+    }
+    data.product_price = convertPricetoNumber(data.product_price);
+    data.product_retail_price = convertPricetoNumber(data.product_retail_price);
+    const callback = (response) => {
+      if (response) {
+        setLoading(false);
+        const { product_name } = response.payload;
+        Swal.fire({
+          title: 'Completed',
+          text: response.message,
+          icon: 'success',
+          allowOutsideClick: false,
+        }).then((result) => {
+          if (result.dismiss !== 'cancel') {
+            // return router.back();
+            // return router.push(`/products/${slugify(product_name)}`);
+          }
+        });
+
+        router.back();
+      }
+      setLoading(false);
+    };
+
+    const onError = (error) => {
+      setLoading(false);
+      console.log(error);
+    };
+    let newData = {
+      product_id: data.product_id,
+      product_category: data.product_category,
+      product_name: data.product_name,
+      product_description: data.product_description,
+      product_price: data.product_price,
+      product_weight: data.product_weight,
+      product_size: data.product_size,
+      product_quantity: data.product_quantity,
+      product_number: data.product_number,
+      product_retail_price: data.product_retail_price,
+      pickup_addreess: data.pickup_address,
+      product_images: data.product_images,
+      state: data.state,
+      city: data.city,
+    };
+    console.log(newData);
+    UPDATE_PRODUCT(newData, callback, onError);
   };
   const cloudinaryUpload = (file) => {
     const formData = new FormData();
@@ -124,7 +184,7 @@ export default function AddProduct({}) {
             }));
             setTimeout(() => {
               handleSubmit();
-            }, 2000);
+            }, 3000);
           }
         })
         .catch((error) => {
@@ -137,18 +197,9 @@ export default function AddProduct({}) {
 
   const uploadFiles = (event) => {
     event.preventDefault();
-    // if (images === null) {
-    //   return Swal.fire({
-    //     text: 'Please add images to be uploaded',
-    //     icon: 'warning',
-    //     timerProgressBar: true,
-    //     timer: 2000,
-    //     showConfirmButton: false,
-    //   });
-    // }
     if (
-      images !== null &&
-      images.length !== 0 &&
+      (data.product_images_display !== '' ||
+        (images !== null && images.length !== 0)) &&
       inputValidatorChecker(data.product_category) &&
       inputValidatorChecker(data.product_name) &&
       inputValidatorChecker(data.product_price) &&
@@ -163,19 +214,26 @@ export default function AddProduct({}) {
       inputValidatorChecker(data.city)
     ) {
       setLoading(true);
-      Swal.fire({
-        text: 'Please Wait while image is uploading...',
-        icon: 'warning',
-        timerProgressBar: true,
-        timer: 5000,
-        allowOutsideClick: true,
-        showConfirmButton: false,
-      });
-      images.forEach((file) => {
-        cloudinaryUpload(file);
-      });
+      if (data.product_images_display) {
+        handleSubmit();
+      } else {
+        images.forEach((file) => {
+          Swal.fire({
+            text: 'Please Wait while image is uploading...',
+            icon: 'warning',
+            timerProgressBar: true,
+            timer: 5000,
+            allowOutsideClick: true,
+            showConfirmButton: false,
+          });
+          cloudinaryUpload(file);
+        });
+      }
     } else {
-      if (images === null || images.length === 0) {
+      if (
+        (images === null || images.length === 0) &&
+        data.product_images_display === ''
+      ) {
         setData((prev) => {
           return {
             ...prev,
@@ -269,6 +327,7 @@ export default function AddProduct({}) {
           data
         ),
         product_category_error: '',
+        product_cateogory_display: data,
       }));
     } else if (state === 'product_price' || state === 'product_retail_price') {
       setData((prev) => {
@@ -329,7 +388,7 @@ export default function AddProduct({}) {
                   'product_category_error'
                 )
               }
-              initialValue={data.product_category}
+              initialValue={data.product_category_display}
               error={data.product_category_error}
             />
           </div>
@@ -342,6 +401,12 @@ export default function AddProduct({}) {
             <DropZone
               dispatch={(files) => setImagesHandler(files)}
               error={data.product_images_error}
+              initialImages={
+                data.product_images_display
+                  ? JSON.parse(data.product_images_display)
+                  : ''
+              }
+              setData={setData}
             />
           </div>
 

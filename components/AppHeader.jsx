@@ -10,16 +10,10 @@ export default function AppHeader({
   styles,
   edit,
   product = null,
+  editPageHandler,
 }) {
   const router = useRouter();
   const { setCurrentProduct } = useGlobalStore();
-  const editPageHandler = () => {
-    setCurrentProduct({
-      id: product.id,
-      name: product.product_name,
-    });
-    router.push('/products/edit-product');
-  };
   return (
     <div
       className={`app-header w-full px-2 bg-white flex justify-between z-50 ${styles}`}

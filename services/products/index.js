@@ -130,3 +130,18 @@ export async function DELETE_PRODUCT(id, callback, onError) {
     onError && onError(err);
   }
 }
+
+export async function UPDATE_PRODUCT(data, callback, onError) {
+  try {
+    let products = await requests.put(`products/update-product`, data);
+    if (products.data) {
+      callback && callback(products.data);
+    } else {
+      throw products;
+    }
+
+    return products;
+  } catch (err) {
+    onError && onError(err);
+  }
+}
