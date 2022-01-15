@@ -26,7 +26,6 @@ export default function Dashboard() {
     favourite,
   } = useGlobalStore();
 
-  console.log(favourite);
   const [search, setSearch] = useState({
     value: '',
     isLoading: false,

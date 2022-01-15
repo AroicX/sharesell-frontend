@@ -1,7 +1,7 @@
 import { useGlobalStore } from '@/hooks/useGlobalStore';
 import router from 'next/router';
 import React, { useState } from 'react';
-import { slugify } from '../helpers';
+import { slugify, favouriteFormatterToJSON } from '../helpers';
 import SVG from 'react-inlinesvg';
 import Modal from '@/reusable/Modal';
 import Link from '@/components/Link';
@@ -9,6 +9,7 @@ import { saveAs } from 'file-saver';
 import toast, { Toaster } from 'react-hot-toast';
 import { CopyToClipboard } from 'react-copy-to-clipboard';
 import { WhatsappShareButton } from 'react-share';
+import { LIKE_PRODUCT } from '@/services/products';
 
 export default function ProductDisplay({ product, favourite }) {
   const { role, setCurrentProduct, setFavourite } = useGlobalStore();
@@ -52,15 +53,23 @@ export default function ProductDisplay({ product, favourite }) {
   const likeHandler = (e, id) => {
     e.stopPropagation();
     setLiked(!liked);
-    setFavourite((prev) => {
-      let newFavourite = { ...prev };
-      if (newFavourite[id]) {
-        delete newFavourite[id];
-      } else {
-        newFavourite[id] = id;
-      }
-      return newFavourite;
-    });
+    // setFavourite((prev) => {
+    //   let newFavourite = { ...prev };
+    //   if (newFavourite[id]) {
+    //     delete newFavourite[id];
+    //   } else {
+    //     newFavourite[id] = id;
+    //   }
+    //   return newFavourite;
+    // });
+    const callback = (response) => {
+      setFavourite(favouriteFormatterToJSON(response.payload));
+    };
+    const onError = (err) => {
+      console.log(err);
+    };
+
+    LIKE_PRODUCT(id, callback, onError);
   };
   return (
     <div

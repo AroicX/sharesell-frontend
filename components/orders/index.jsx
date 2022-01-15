@@ -6,7 +6,7 @@ export default function Orders() {
   const [order, setOrder] = useState('Shared');
   const { favourite, products } = useGlobalStore();
   const favouritedHandler = () => {
-    let filter = products.filter((item) => item.id === favourite[item.id]);
+    let filter = products.filter((item) => item.id == favourite[item.id]);
     return filter;
   };
   let favouritedProduct = favouritedHandler();

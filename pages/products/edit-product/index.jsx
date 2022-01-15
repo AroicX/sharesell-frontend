@@ -162,7 +162,6 @@ export default function EditProduct({}) {
       state: data.state,
       city: data.city,
     };
-    console.log(newData);
     UPDATE_PRODUCT(newData, callback, onError);
   };
   const cloudinaryUpload = (file) => {

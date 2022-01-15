@@ -1,6 +1,6 @@
-import { GET_PRODUCTS } from '@/services/products';
+import { GET_PRODUCTS, GET_LIKED_PRODUCT } from '@/services/products';
 import React, { useEffect, useContext, createContext, useState } from 'react';
-import { resolveRoles } from '../helpers';
+import { resolveRoles, favouriteFormatterToJSON } from '../helpers';
 
 const GlobalStoreContext = createContext();
 
@@ -36,12 +36,25 @@ const GlobalStore = () => {
     GET_PRODUCTS(callback, onError);
   };
 
+  const getLikedProduct = () => {
+    const callback = (response) => {
+      setFavourite(favouriteFormatterToJSON(response.payload));
+      console.log(response.payload);
+    };
+    const onError = (error) => {
+      console.log(error);
+    };
+
+    GET_LIKED_PRODUCT(callback, onError);
+  };
+
   useEffect(() => {
     const data = JSON.parse(localStorage.getItem('user-data'));
     if (data) {
       setToken(data.token);
       setUser(data.user);
       setRole(resolveRoles(parseInt(data?.user?.primary_role)));
+      getLikedProduct();
       getProducts();
     }
   }, [token]);
