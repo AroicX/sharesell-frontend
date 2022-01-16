@@ -13,6 +13,7 @@ const Button = ({
   loadingText = null,
   rest,
   color,
+  style,
 }) => {
   return (
     <>
@@ -27,6 +28,7 @@ const Button = ({
           }`}
           onClick={click}
           disabled={loading}
+          style={style}
         >
           {loading ? (
             <div className={`w-100 flex flex-row justify-between text-white `}>

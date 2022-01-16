@@ -27,7 +27,8 @@ import Link from '@/components/Link';
 import Swal from 'sweetalert2';
 
 export default function ProductSlug() {
-  const { currentProduct, role, user, setProducts } = useGlobalStore();
+  const { currentProduct, role, user, setProducts, setCurrentProduct } =
+    useGlobalStore();
   const [loading, setLoading] = useState(false);
   const [product, setProduct] = useState([]);
   const [imageOptions, setImageOptions] = useState([]);
@@ -238,7 +239,13 @@ export default function ProductSlug() {
       }
     });
   };
-
+  const editPageHandler = () => {
+    setCurrentProduct({
+      id: product.id,
+      name: product.product_name,
+    });
+    router.push('/products/edit-product');
+  };
   return (
     <div className='product-slug mt-20'>
       <AppHeader
@@ -248,6 +255,7 @@ export default function ProductSlug() {
         }
         styles={'py-4'}
         product={product}
+        editPageHandler={editPageHandler}
       />
       <h3 className='text-3xl mt-5'>Product Details</h3>
       <div className='w-full flex flex-col mt-5'>

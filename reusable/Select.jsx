@@ -1,9 +1,9 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import SVG from 'react-inlinesvg';
 
 const Select = ({
   label,
-  placeholder,
+  placeholder = '',
   options = null,
   dispatch = null,
   rest,
@@ -18,6 +18,10 @@ const Select = ({
     setToggle(false);
   };
 
+  useEffect(() => {
+    setSelected(initialValue);
+  }, [initialValue]);
+
   return (
     <div className='select'>
       <label htmlFor=''>{label}</label>
@@ -26,8 +30,10 @@ const Select = ({
         onClick={() => setToggle(!toggle)}
         {...rest}
       >
-        <span className='select-display-default -mt-1'>{selected}</span>
-        <SVG className='mr-1 -mt-1' src='/svg/caret-down.svg' />
+        <span className='select-display-default -mt-1'>
+          {selected ? selected : placeholder}
+        </span>
+        <SVG className='mr-1 -mt-1' src='/svg/caret-down-dark.svg' />
       </div>
       {error && (
         <span className='text-red-500 text-sm bg-red-200 p-4 rounded my-1'>

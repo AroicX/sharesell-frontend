@@ -14,10 +14,18 @@ import Tag from '@/components/Tag';
 import { useRouter } from 'next/router';
 import { SEARCH_PRODUCT } from '@/services/products';
 import Loader from '@/reusable/Loader';
+import Button from '@/reusable/Button';
 
 export default function Dashboard() {
-  const { products, user, role, setProductCategories, setCurrentCategory } =
-    useGlobalStore();
+  const {
+    products,
+    user,
+    role,
+    setProductCategories,
+    setCurrentCategory,
+    favourite,
+  } = useGlobalStore();
+
   const [search, setSearch] = useState({
     value: '',
     isLoading: false,
@@ -141,10 +149,14 @@ export default function Dashboard() {
           </div>
         )}
         {search.isActive === false && (
-          <div>
+          <div className={`${role === 'Supplier' ? 'mb-16' : ''}`}>
             {products.length > 0 ? (
               products?.map((item, i) => (
-                <ProductDisplay key={i + 1} product={item} />
+                <ProductDisplay
+                  key={i + 1}
+                  product={item}
+                  favourite={favourite[item.id] ? true : false}
+                />
               ))
             ) : (
               <div className='w-full bg-app-cream p-3 rounded mt-5 text-center shadow-sm'>
@@ -166,7 +178,17 @@ export default function Dashboard() {
             )}
           </div>
         )}
-
+        {role === 'Supplier' && (
+          <div>
+            <Button
+              iconLeft='/svg/plus-icon.svg'
+              text='Add Product'
+              styles='fixed bottom-20 right-2 block w-12 bg-black rounded-full w-44 z-50'
+              to='/products/add-product'
+              style={{ background: '#000' }}
+            />
+          </div>
+        )}
         {/* {[...Array(20)].map((item, i) => (
           <ProductDisplay key={i + 1} />
         ))} */}
