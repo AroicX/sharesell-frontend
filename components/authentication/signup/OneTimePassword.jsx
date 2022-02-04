@@ -11,7 +11,7 @@ import {
 import { ONE_TIME_PASSWORD } from '@/services/authentication/index';
 
 export default function OneTimePassword({ next, back, user }) {
-  const [form, setForm] = useState({ otp: user ? user.otp : '', otpError: '' });
+  const [form, setForm] = useState({ otp: '', otpError: '' });
   const [isLoading, setIsLoading] = useState(false);
 
   const otpOnChangeHandler = (data) => {
@@ -42,7 +42,7 @@ export default function OneTimePassword({ next, back, user }) {
       inputValidatorErrorState(
         form.otp,
         setForm,
-        "otpError",
+        'otpError',
         'One Time Password is Required'
       );
     }
@@ -74,7 +74,7 @@ export default function OneTimePassword({ next, back, user }) {
         </div>
         <div className='mt-32 flex flex-col justify-center items-center'>
           <h4 className='font-bold text-app-text text-base'>0:32</h4>
-          <span className='w-full p-2 flex center justify-center text-center'>
+          <span className='w-full p-2 text-center text-sm'>
             {`${user.phoneNumber}`} |
             <a className='mx-2 underline font-medium' href='#'>
               Change Phone Number

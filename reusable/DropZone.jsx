@@ -2,10 +2,28 @@ import React, { useCallback, useState } from 'react';
 import { useDropzone } from 'react-dropzone';
 import SVG from 'react-inlinesvg';
 
-export default function Dropzone({ dispatch, styles, rest, error }) {
-  const [files, setFiles] = useState(null);
-  const [imagePreview, setImagePreview] = useState(null);
+export default function Dropzone({
+  dispatch,
+  styles,
+  rest,
+  error,
+  initialImages,
+  setData,
+}) {
+  const initialImageConverter = (images) => {
+    let convertedImages = [];
+    images.forEach((image, index) =>
+      convertedImages.push({ name: index, value: image.image })
+    );
 
+    return convertedImages;
+  };
+  const [files, setFiles] = useState(
+    initialImages ? initialImageConverter(initialImages) : null
+  );
+  const [imagePreview, setImagePreview] = useState(
+    initialImages ? initialImageConverter(initialImages) : null
+  );
   const onDrop = useCallback((acceptedFiles) => {
     console.log(acceptedFiles);
     let parent = document.getElementById('image-grid');
@@ -24,6 +42,9 @@ export default function Dropzone({ dispatch, styles, rest, error }) {
         parent.click();
       }, 100);
     });
+    if (setData) {
+      setData((prev) => ({ ...prev, product_images_display: '' }));
+    }
     dispatch(acceptedFiles);
   }, []);
 
@@ -45,7 +66,10 @@ export default function Dropzone({ dispatch, styles, rest, error }) {
         arrPreview.push(file);
       }
     });
-
+    if (setData) {
+      console.log('BAD');
+      setData((prev) => ({ ...prev, product_images_display: '' }));
+    }
     setFiles(arr);
     setImagePreview(arrPreview);
     dispatch(arr);

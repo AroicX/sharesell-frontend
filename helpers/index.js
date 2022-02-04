@@ -390,3 +390,12 @@ export const cardDetailsFormatter = (value) => {
     }
   }
 };
+
+export const favouriteFormatterToJSON = (favourite) => {
+  let formattedFavourite = {};
+  favourite.forEach((item) => {
+    formattedFavourite[item.product_id] = item.product_id;
+  });
+
+  return formattedFavourite;
+};

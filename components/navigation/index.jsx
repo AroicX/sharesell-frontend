@@ -2,10 +2,11 @@ import Link from '@/components/Link';
 import React, { useEffect, useState } from 'react';
 import SVG from 'react-inlinesvg';
 import { useGlobalStore } from '@/hooks/useGlobalStore';
+import { useRouter } from 'next/router';
 
 export default function Navigation({ dispatch }) {
   const [menu, setMenu] = useState(false);
-
+  const Router = useRouter();
   useEffect(() => {
     dispatch(menu);
   }, [menu]);
@@ -15,16 +16,19 @@ export default function Navigation({ dispatch }) {
       title: 'Home',
       icon: 'home',
       link: '/dashboard',
+      darkIcon: 'home-dark',
     },
     {
       title: 'Products',
       icon: 'products',
       link: '/products',
+      darkIcon: 'product-dark',
     },
     {
       title: 'Profile',
       icon: 'profile-icon',
       link: '/profile',
+      darkIcon: 'profile-dark',
     },
     {
       title: 'More',
@@ -39,21 +43,25 @@ export default function Navigation({ dispatch }) {
       title: 'Home',
       icon: 'home',
       link: '/dashboard',
+      darkIcon: 'home-dark',
     },
     {
       title: 'Products',
       icon: 'products',
       link: '/products',
+      darkIcon: 'product-dark',
     },
     {
       title: 'Orders',
       icon: 'orders-icon',
       link: '/orders',
+      darkIcon: 'order-dark',
     },
     {
       title: 'Profile',
       icon: 'profile-icon',
       link: '/profile',
+      darkIcon: 'profile-dark',
     },
     {
       title: 'More',
@@ -78,10 +86,18 @@ export default function Navigation({ dispatch }) {
               onClick={() => {
                 item.click ? setMenu(!menu) : null;
               }}
-              className='flex p-2 flex-col center justify-center items-center text-center cursor-pointer mx-1 text-app-text-light'
+              className={`flex p-2 flex-col center font-semibold text-xs justify-center items-center text-center cursor-pointer mx-1 ${
+                Router.pathname === item.link
+                  ? 'text-pry-black'
+                  : 'text-app-text-light'
+              }`}
               key={i + 1}
             >
-              <SVG src={`/svg/${item.icon}.svg`} />
+              <SVG
+                src={`/svg/${
+                  Router.pathname === item.link ? item.darkIcon : item.icon
+                }.svg`}
+              />
 
               {item.title}
             </Link>
@@ -93,10 +109,18 @@ export default function Navigation({ dispatch }) {
               onClick={() => {
                 item.click ? setMenu(!menu) : null;
               }}
-              className='flex p-2 flex-col center font-semibold text-xs justify-center items-center text-center cursor-pointer mx-1 text-app-text-light'
+              className={`flex p-2 flex-col center font-semibold text-xs justify-center items-center text-center cursor-pointer mx-1 ${
+                Router.pathname === item.link
+                  ? 'text-pry-black'
+                  : 'text-app-text-light'
+              }`}
               key={i + 1}
             >
-              <SVG src={`/svg/${item.icon}.svg`} />
+              <SVG
+                src={`/svg/${
+                  Router.pathname === item.link ? item.darkIcon : item.icon
+                }.svg`}
+              />
 
               {item.title}
             </Link>

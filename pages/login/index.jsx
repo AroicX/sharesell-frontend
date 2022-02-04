@@ -78,13 +78,14 @@ function Login() {
             loading={loading}
           />
         </form>
-
-        <span className='w-full p-2 flex center justify-center text-center mt-32'>
-          Don’t Have an account?
-          <Link className='mx-2 underline' to='/signup'>
-            Create Account
-          </Link>
-        </span>
+        <div className='flex justify-center items-center'>
+          <span className='w-full p-2 text-sm center justify-center text-center mt-32 font-medium'>
+            Don’t Have an account?
+            <Link className='mx-2 underline text-app-color' to='/signup'>
+              Create Account
+            </Link>
+          </span>
+        </div>
       </div>
     </div>
   );

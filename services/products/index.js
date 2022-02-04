@@ -132,3 +132,48 @@ export async function DELETE_PRODUCT(id, callback, onError) {
     onError && onError(err);
   }
 }
+
+export async function UPDATE_PRODUCT(data, callback, onError) {
+  try {
+    let products = await requests.put(`/products/update-product`, data);
+    if (products.data) {
+      callback && callback(products.data);
+    } else {
+      throw products;
+    }
+
+    return products;
+  } catch (err) {
+    onError && onError(err);
+  }
+}
+
+export async function GET_LIKED_PRODUCT(callback, onError) {
+  try {
+    let like = await requests.get(`/products/get-like`);
+    if (like.data) {
+      callback && callback(like.data);
+    } else {
+      throw like;
+    }
+
+    return like;
+  } catch (err) {
+    onError && onError(err);
+  }
+}
+
+export async function LIKE_PRODUCT(id, callback, onError) {
+  try {
+    let like = await requests.post(`products/like/${id}`);
+    if (like.data) {
+      callback && callback(like.data);
+    } else {
+      throw like;
+    }
+
+    return like;
+  } catch (err) {
+    onError && onError(err);
+  }
+}
