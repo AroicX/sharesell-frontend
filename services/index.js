@@ -6,12 +6,9 @@ const environment = process.env.NODE_ENV;
 
 const requests = axios.create({
   baseURL: process.env.NEXT_PUBLIC_BASE_URL,
-<<<<<<< HEAD
-=======
   // baseURL: 'https://shareshell.test/api/',
   // baseURL: 'http://64.227.9.209/api/',
   // baseURL: 'http://127.0.0.1:8000/api/',
->>>>>>> 4aad981c1e9c45ecfb579e37fe262426bcfbe3fc
 });
 
 requests.interceptors.response.use(
