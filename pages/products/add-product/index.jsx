@@ -68,7 +68,6 @@ export default function AddProduct({}) {
   });
 
   const handleSubmit = () => {
-    // event.preventDefault();
     data.product_images = links;
     data.product_price = convertPricetoNumber(data.product_price);
     data.product_retail_price = convertPricetoNumber(data.product_retail_price);
@@ -86,7 +85,7 @@ export default function AddProduct({}) {
         }).then((result) => {
           if (result.dismiss !== 'cancel') {
             return router.push(`/dashboard`);
-            // return router.push(`/products/${slugify(product_name)}`);
+
           }
         });
       }
@@ -129,15 +128,6 @@ export default function AddProduct({}) {
 
   const uploadFiles = (event) => {
     event.preventDefault();
-    // if (images === null) {
-    //   return Swal.fire({
-    //     text: 'Please add images to be uploaded',
-    //     icon: 'warning',
-    //     timerProgressBar: true,
-    //     timer: 2000,
-    //     showConfirmButton: false,
-    //   });
-    // }
     if (
       images !== null &&
       images.length !== 0 &&

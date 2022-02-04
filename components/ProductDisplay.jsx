@@ -47,6 +47,7 @@ export default function ProductDisplay({ product }) {
     setModal(false);
     toast.success('Copied to Clipboard');
   };
+  
   return (
     <div
       className='product-display relative top-0 left-0 my-2 cursor-pointer rounded shadow-sm p-3 border border-app-text-light'

@@ -12,10 +12,12 @@ import useGuest from '@/hooks/useGuest';
 
 function Login() {
   const { setToken } = useGlobalStore();
+  
   const [data, setData] = useState({
     email: '',
     password: '',
   });
+
   const [loading, setLoading] = useState(false);
   const handleSubmit = async (event) => {
     event.preventDefault();
