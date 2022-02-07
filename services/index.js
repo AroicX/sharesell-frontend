@@ -5,10 +5,10 @@ import { getToken } from './cookies';
 const environment = process.env.NODE_ENV;
 
 const requests = axios.create({
-  baseURL: process.env.NEXT_PUBLIC_BASE_URL,
+  // baseURL: process.env.NEXT_PUBLIC_BASE_URL,
   // baseURL: 'https://shareshell.test/api/',
   // baseURL: 'http://64.227.9.209/api/',
-  // baseURL: 'http://127.0.0.1:8000/api/',
+  baseURL: 'http://127.0.0.1:8000/api/',
 });
 
 requests.interceptors.response.use(

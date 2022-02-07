@@ -72,7 +72,7 @@ const PaymentWithPaystack = ({
     const onError = (error) => {
       console.log(error.response.data.message);
     };
-
+    console.log(data);
     CREATE_TRANSACTION(data, callback, onError);
   };
 

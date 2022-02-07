@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Input from '@/reusable/Input';
 import Button from '@/reusable/Button';
 import AppHeader from '@/components/AppHeader';
@@ -13,6 +13,19 @@ import { ONE_TIME_PASSWORD } from '@/services/authentication/index';
 export default function OneTimePassword({ next, back, user }) {
   const [form, setForm] = useState({ otp: '', otpError: '' });
   const [isLoading, setIsLoading] = useState(false);
+  const fixedTime = new Date().getTime() + 300000;
+  const [totalTime, setTotalTime] = useState(300);
+  let timer = 0;
+
+  useEffect(() => {
+    timer = setInterval(function () {
+      setTotalTime((fixedTime - new Date().getTime()) / 1000);
+    }, 1000);
+
+    return () => {
+      clearInterval(timer);
+    };
+  }, []);
 
   const otpOnChangeHandler = (data) => {
     setForm((prev) => {
@@ -73,7 +86,14 @@ export default function OneTimePassword({ next, back, user }) {
           />
         </div>
         <div className='mt-32 flex flex-col justify-center items-center'>
-          <h4 className='font-bold text-app-text text-base'>0:32</h4>
+          {totalTime < 0 ? (
+            <p>Click to Resend OTP</p>
+          ) : (
+            <h4 className='font-bold text-app-text text-base'>
+              <span>{Math.floor(totalTime / 60)}</span>:
+              <span>{Math.floor(totalTime % 60)}</span>
+            </h4>
+          )}
           <span className='w-full p-2 text-center text-sm'>
             {`${user.phoneNumber}`} |
             <a className='mx-2 underline font-medium' href='#'>

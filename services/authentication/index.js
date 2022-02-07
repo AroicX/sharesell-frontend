@@ -47,6 +47,7 @@ export async function ONE_TIME_PASSWORD(data, callback, onError) {
 export async function QUICK_REGISTER(data, callback, onError) {
   try {
     let register = await requests.post(`/auth/quick-register`, data);
+    console.log(register);
     if (register.data) {
       callback && callback(register.data);
     } else {

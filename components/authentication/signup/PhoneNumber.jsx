@@ -33,6 +33,7 @@ export default function PhoneNumber({ next, back, user, setUser }) {
 
       const callback = (response) => {
         setIsLoading(false);
+        console.log(response);
         ResponseHandler(response);
         if (response.payload) {
           setUser((prev) => {

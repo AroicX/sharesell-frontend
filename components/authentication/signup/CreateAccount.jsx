@@ -52,7 +52,7 @@ export default function CreateAccount({ back, user, setUser }) {
         setIsLoading(false);
         ResponseHandler(response);
         console.log(response);
-        Router.push('/dashboard');
+        // Router.push('/dashboard');
       };
 
       const onError = (err) => {
