@@ -8,7 +8,10 @@ import {
   inputValidatorChecker,
   inputValidatorErrorState,
 } from '@/helpers/index';
-import { ONE_TIME_PASSWORD } from '@/services/authentication/index';
+import {
+  ONE_TIME_PASSWORD,
+  RESEND_ONE_TIME_PASSWORD,
+} from '@/services/authentication/index';
 
 export default function OneTimePassword({ next, back, user }) {
   const [form, setForm] = useState({ otp: '', otpError: '' });
@@ -61,6 +64,26 @@ export default function OneTimePassword({ next, back, user }) {
       );
     }
   };
+
+  const resendOptHandler = () => {
+    setIsLoading(true);
+    const data = {
+      phone: user.phoneNumber,
+    };
+    const callback = (response) => {
+      setIsLoading(false);
+      setTotalTime(300);
+      ResponseHandler(response);
+    };
+
+    const onError = (err) => {
+      setIsLoading(false);
+      console.log(err);
+      ResponseHandler(err.data);
+    };
+
+    RESEND_ONE_TIME_PASSWORD(data, callback, onError);
+  };
   return (
     <div className='phoneVerification'>
       <AppHeader click={back} />
@@ -88,7 +111,10 @@ export default function OneTimePassword({ next, back, user }) {
         </div>
         <div className='mt-32 flex flex-col justify-center items-center'>
           {totalTime === 0 ? (
-            <p className='underline font-medium text-app-text cursor-pointer'>
+            <p
+              className='underline font-medium text-app-text cursor-pointer'
+              onClick={resendOptHandler}
+            >
               Click to Resend OTP
             </p>
           ) : (
