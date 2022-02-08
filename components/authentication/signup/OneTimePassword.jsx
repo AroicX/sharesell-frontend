@@ -13,19 +13,16 @@ import { ONE_TIME_PASSWORD } from '@/services/authentication/index';
 export default function OneTimePassword({ next, back, user }) {
   const [form, setForm] = useState({ otp: '', otpError: '' });
   const [isLoading, setIsLoading] = useState(false);
-  const fixedTime = new Date().getTime() + 300000;
   const [totalTime, setTotalTime] = useState(300);
-  let timer = 0;
-
   useEffect(() => {
-    timer = setInterval(function () {
-      setTotalTime((fixedTime - new Date().getTime()) / 1000);
+    let timer = setInterval(function () {
+      totalTime > 0 && setTotalTime(totalTime - 1, 1000);
     }, 1000);
 
     return () => {
       clearInterval(timer);
     };
-  }, []);
+  }, [totalTime]);
 
   const otpOnChangeHandler = (data) => {
     setForm((prev) => {
@@ -47,7 +44,11 @@ export default function OneTimePassword({ next, back, user }) {
 
       const onError = (err) => {
         console.log(err);
+        ResponseHandler(err.data);
         setIsLoading(false);
+        if (err.status === 403) {
+          setTotalTime(0);
+        }
       };
 
       ONE_TIME_PASSWORD(data, callback, onError);
@@ -86,12 +87,18 @@ export default function OneTimePassword({ next, back, user }) {
           />
         </div>
         <div className='mt-32 flex flex-col justify-center items-center'>
-          {totalTime < 0 ? (
-            <p>Click to Resend OTP</p>
+          {totalTime === 0 ? (
+            <p className='underline font-medium text-app-text cursor-pointer'>
+              Click to Resend OTP
+            </p>
           ) : (
             <h4 className='font-bold text-app-text text-base'>
               <span>{Math.floor(totalTime / 60)}</span>:
-              <span>{Math.floor(totalTime % 60)}</span>
+              <span>
+                {Math.floor(totalTime % 60) < 10
+                  ? `0${Math.floor(totalTime % 60)}`
+                  : Math.floor(totalTime % 60)}
+              </span>
             </h4>
           )}
           <span className='w-full p-2 text-center text-sm'>
