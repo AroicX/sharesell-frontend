@@ -74,6 +74,7 @@ export default function OneTimePassword({ next, back, user }) {
       setIsLoading(false);
       setTotalTime(300);
       ResponseHandler(response);
+      setForm((prev) => ({ ...prev, otp: '' }));
     };
 
     const onError = (err) => {

@@ -10,6 +10,8 @@ import {
 export default function BusinessRegistration({ next, back, user, setUser }) {
   const [form, setForm] = useState({ businessNameError: '', bvnError: '' });
   const [isLoading, setIsLoading] = useState(false);
+
+  let isSupplier = user.userType === 3 ? true : false;
   const isRegisteredOnChangeHandler = (value) => {
     setUser((prev) => {
       return { ...prev, isRegistered: value };
@@ -68,46 +70,54 @@ export default function BusinessRegistration({ next, back, user, setUser }) {
     <div className='Business-Auth'>
       <AppHeader click={back} />
       <div className='business mt-20'>
-        <h2 className='text-3xl font-light my-2'>Business Name</h2>
-        <span className='text-app-text'>Enter your business name.</span>
+        <h2 className='text-3xl font-light my-2'>{`${
+          isSupplier ? 'Business Name' : 'Fullname'
+        }`}</h2>
+        <span className='text-app-text'>{`${
+          isSupplier ? 'Enter your business name.' : 'Enter Fullname'
+        }`}</span>
         <div className='business-name mt-4'>
           <Input
-            label={'Business Name'}
+            label={`${isSupplier ? 'Business Name' : 'Fullname'}`}
             type='text'
             placeholder={'Chika Inc'}
             value={user.businessName ? user.businessName : ''}
             dispatch={(data) => businessNameOnChangeHandler(data)}
             error={form.businessNameError}
           />
-          <div className='flex flex-col mb-2'>
-            <p className='text-app-text text-base mb-2'>
-              Is your busines registered?
-            </p>
-            <div className='flex items-center'>
+          {isSupplier ? (
+            <div className='flex flex-col mb-2'>
+              <p className='text-app-text text-base mb-2'>
+                Is your busines registered?
+              </p>
               <div className='flex items-center'>
-                <label className='text-app-text text-base'>Yes</label>
-                <input
-                  type='radio'
-                  name='business-reg'
-                  onClick={() => isRegisteredOnChangeHandler(true)}
-                  checked={user.isRegistered}
-                  className='mx-4'
-                  readOnly
-                />
-              </div>
-              <div className='flex items-center'>
-                <label className='text-app-text text-base'>No</label>
-                <input
-                  type='radio'
-                  name='business-reg'
-                  onClick={() => isRegisteredOnChangeHandler(false)}
-                  checked={!user.isRegistered}
-                  className='mx-4'
-                  readOnly
-                />
+                <div className='flex items-center'>
+                  <label className='text-app-text text-base'>Yes</label>
+                  <input
+                    type='radio'
+                    name='business-reg'
+                    onClick={() => isRegisteredOnChangeHandler(true)}
+                    checked={user.isRegistered}
+                    className='mx-4'
+                    readOnly
+                  />
+                </div>
+                <div className='flex items-center'>
+                  <label className='text-app-text text-base'>No</label>
+                  <input
+                    type='radio'
+                    name='business-reg'
+                    onClick={() => isRegisteredOnChangeHandler(false)}
+                    checked={!user.isRegistered}
+                    className='mx-4'
+                    readOnly
+                  />
+                </div>
               </div>
             </div>
-          </div>
+          ) : (
+            ''
+          )}
           {user.isRegistered && (
             <Input
               label={'RC / BN Number'}
