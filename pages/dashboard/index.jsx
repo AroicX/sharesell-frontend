@@ -94,12 +94,12 @@ export default function Dashboard() {
           <Link to='/profile/update-account' className='text-app-color m-auto'>
             Hi, Tap here to update account
           </Link>
-          <Link to='/notification' className='relative my-auto'>
+          {/* <Link to='/notification' className='relative my-auto'>
             <div className=' absolute -top-1 -right-1 z-10 bg-terms p-1 rounded-full border-2 border-white '></div>
             <button className='relative px-2 block my-auto bg-terms text-white rounded'>
               0
             </button>
-          </Link>
+          </Link> */}
         </div>
         <div className='mt-14'>
           {role === 'Supplier' && <WithdrawalDisplay />}
