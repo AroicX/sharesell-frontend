@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Input from '@/reusable/Input';
 import Button from '@/reusable/Button';
 import AppHeader from '@/components/AppHeader';
@@ -8,11 +8,24 @@ import {
   inputValidatorChecker,
   inputValidatorErrorState,
 } from '@/helpers/index';
-import { ONE_TIME_PASSWORD } from '@/services/authentication/index';
+import {
+  ONE_TIME_PASSWORD,
+  RESEND_ONE_TIME_PASSWORD,
+} from '@/services/authentication/index';
 
 export default function OneTimePassword({ next, back, user }) {
   const [form, setForm] = useState({ otp: '', otpError: '' });
   const [isLoading, setIsLoading] = useState(false);
+  const [totalTime, setTotalTime] = useState(300);
+  useEffect(() => {
+    let timer = setInterval(function () {
+      totalTime > 0 && setTotalTime(totalTime - 1, 1000);
+    }, 1000);
+
+    return () => {
+      clearInterval(timer);
+    };
+  }, [totalTime]);
 
   const otpOnChangeHandler = (data) => {
     setForm((prev) => {
@@ -34,7 +47,11 @@ export default function OneTimePassword({ next, back, user }) {
 
       const onError = (err) => {
         console.log(err);
+        ResponseHandler(err.data);
         setIsLoading(false);
+        if (err.status === 403) {
+          setTotalTime(0);
+        }
       };
 
       ONE_TIME_PASSWORD(data, callback, onError);
@@ -46,6 +63,27 @@ export default function OneTimePassword({ next, back, user }) {
         'One Time Password is Required'
       );
     }
+  };
+
+  const resendOptHandler = () => {
+    setIsLoading(true);
+    const data = {
+      phone: user.phoneNumber,
+    };
+    const callback = (response) => {
+      setIsLoading(false);
+      setTotalTime(300);
+      ResponseHandler(response);
+      setForm((prev) => ({ ...prev, otp: '' }));
+    };
+
+    const onError = (err) => {
+      setIsLoading(false);
+      console.log(err);
+      ResponseHandler(err.data);
+    };
+
+    RESEND_ONE_TIME_PASSWORD(data, callback, onError);
   };
   return (
     <div className='phoneVerification'>
@@ -73,7 +111,23 @@ export default function OneTimePassword({ next, back, user }) {
           />
         </div>
         <div className='mt-32 flex flex-col justify-center items-center'>
-          <h4 className='font-bold text-app-text text-base'>0:32</h4>
+          {totalTime === 0 ? (
+            <p
+              className='underline font-medium text-app-text cursor-pointer'
+              onClick={resendOptHandler}
+            >
+              Click to Resend OTP
+            </p>
+          ) : (
+            <h4 className='font-bold text-app-text text-base'>
+              <span>{Math.floor(totalTime / 60)}</span>:
+              <span>
+                {Math.floor(totalTime % 60) < 10
+                  ? `0${Math.floor(totalTime % 60)}`
+                  : Math.floor(totalTime % 60)}
+              </span>
+            </h4>
+          )}
           <span className='w-full p-2 text-center text-sm'>
             {`${user.phoneNumber}`} |
             <a className='mx-2 underline font-medium' href='#'>

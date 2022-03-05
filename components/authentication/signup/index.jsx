@@ -59,7 +59,8 @@ export default function SignUp({ next, setUser, user }) {
           <div
             className={`signup-selection ${
               selected == 'seller' ? 'signup-selection-active' : ''
-            }`}
+            } cursor-pointer`}
+            onClick={() => selectedHandler('seller')}
           >
             <div className='flex flex-row'>
               {selected == 'seller' ? (
@@ -92,7 +93,8 @@ export default function SignUp({ next, setUser, user }) {
           <div
             className={`signup-selection ${
               selected == 'supplier' ? 'signup-selection-active' : ''
-            }`}
+            } cursor-pointer`}
+            onClick={() => selectedHandler('supplier')}
           >
             <div className='flex flex-row'>
               {selected == 'supplier' ? (

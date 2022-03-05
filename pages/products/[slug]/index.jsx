@@ -102,6 +102,7 @@ export default function ProductSlug() {
       if (response.status === 'success') {
         setModal(false);
         setLoading(false);
+        console.log(response);
         setData((prevState) => ({
           ...prevState,
           delivery_fee: response.payload.amount,
@@ -119,6 +120,7 @@ export default function ProductSlug() {
   };
 
   const calculateProfit = (value) => {
+    console.log(data.delivery_fee);
     let price = product.product_price;
     if (value > price) {
       let profit = parseInt(value) - parseInt(price);

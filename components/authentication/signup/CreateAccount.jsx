@@ -11,6 +11,8 @@ import {
 } from '@/helpers/index';
 import { useRouter } from 'next/router';
 import { QUICK_REGISTER } from '@/services/authentication';
+import { useGlobalStore } from '@/hooks/useGlobalStore';
+import { setCookie } from '@/services/cookies';
 
 export default function CreateAccount({ back, user, setUser }) {
   const [form, setForm] = useState({
@@ -19,6 +21,7 @@ export default function CreateAccount({ back, user, setUser }) {
     reEnterPasswordError: '',
   });
 
+  const { setToken } = useGlobalStore();
   const [isLoading, setIsLoading] = useState(false);
   const Router = useRouter();
   const onChangeHandler = (data, field, fieldError) => {
@@ -47,12 +50,14 @@ export default function CreateAccount({ back, user, setUser }) {
         re_password: user.reEnterPassword,
         isRegistered: user.isRegistered,
       };
-
       const callback = (response) => {
+        setCookie(response.token);
+        window.localStorage.setItem('user-data', JSON.stringify(response));
         setIsLoading(false);
         ResponseHandler(response);
-        console.log(response);
-        Router.push('/dashboard');
+        setToken(response.token);
+        let _redirect = window.localStorage.getItem('be-authorized');
+        _redirect ? Router.push(_redirect) : Router.push('/dashboard');
       };
 
       const onError = (err) => {

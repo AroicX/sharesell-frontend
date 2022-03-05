@@ -21,7 +21,6 @@ export default function ProductDisplay({ product, favourite }) {
 
     router.push(`/products/${slugify(product.product_name)}`);
   };
-  console.log(product);
   const [modal, setModal] = useState(false);
   const [downloadModal, setDownloadModal] = useState(false);
   const [liked, setLiked] = useState(favourite ? favourite : false);

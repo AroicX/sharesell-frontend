@@ -45,9 +45,21 @@ export async function ONE_TIME_PASSWORD(data, callback, onError) {
   }
 }
 
+export async function RESEND_ONE_TIME_PASSWORD(data, callback, onError) {
+  try {
+    let otp = await requests.post(`/auth/resend_one_time_password`, data);
+    if (otp.data) {
+      callback && callback(otp.data);
+    }
+  } catch (err) {
+    onError && onError(err);
+  }
+}
+
 export async function QUICK_REGISTER(data, callback, onError) {
   try {
     let register = await requests.post(`/auth/quick-register`, data);
+    console.log(register);
     if (register.data) {
       callback && callback(register.data);
     } else {

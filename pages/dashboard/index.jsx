@@ -34,6 +34,10 @@ export default function Dashboard() {
   });
 
   const { data, error } = useSWR(`/products/categories`, _protectedRequest);
+  const { data: myProducts, error: myProductError } = useSWR(
+    `/user/myProduct`,
+    _protectedRequest
+  );
   const categories = data?.payload?.data || [];
   const Router = useRouter();
   const navigate = (category) => {
@@ -94,12 +98,12 @@ export default function Dashboard() {
           <Link to='/profile/update-account' className='text-app-color m-auto'>
             Hi, Tap here to update account
           </Link>
-          <Link to='/notification' className='relative my-auto'>
+          {/* <Link to='/notification' className='relative my-auto'>
             <div className=' absolute -top-1 -right-1 z-10 bg-terms p-1 rounded-full border-2 border-white '></div>
             <button className='relative px-2 block my-auto bg-terms text-white rounded'>
               0
             </button>
-          </Link>
+          </Link> */}
         </div>
         <div className='mt-14'>
           {role === 'Supplier' && <WithdrawalDisplay />}
@@ -150,7 +154,21 @@ export default function Dashboard() {
         )}
         {search.isActive === false && (
           <div className={`${role === 'Supplier' ? 'mb-16' : ''}`}>
-            {products.length > 0 ? (
+            {role === 'Supplier' ? (
+              myProducts?.payload.length > 0 ? (
+                myProducts?.payload.map((item, i) => (
+                  <ProductDisplay
+                    key={i + 1}
+                    product={item}
+                    favourite={favourite[item.id] ? true : false}
+                  />
+                ))
+              ) : (
+                <div className='w-full bg-app-cream p-3 rounded mt-5 text-center shadow-sm'>
+                  <span className='text-app-color'>No Product Found</span>
+                </div>
+              )
+            ) : products.length > 0 ? (
               products?.map((item, i) => (
                 <ProductDisplay
                   key={i + 1}

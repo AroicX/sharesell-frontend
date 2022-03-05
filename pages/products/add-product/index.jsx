@@ -384,13 +384,9 @@ export default function AddProduct({}) {
             label='Product Size'
             placeholder='Select Size'
             options={[
-              { id: 'all_sizes', name: 'All Sizes' },
               { id: 's', name: 'S' },
               { id: 'm', name: 'M' },
               { id: 'l', name: 'L' },
-              { id: 'xl', name: 'XL' },
-              { id: 'xxl', name: 'XXL' },
-              { id: 'xxl', name: 'XXXL' },
             ]}
             dispatch={(value) => {
               onChangeHandler(value, 'product_size', 'product_size_error');
