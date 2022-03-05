@@ -50,6 +50,7 @@ export default function PhoneNumber({ next, back, user, setUser }) {
       const onError = (err) => {
         console.log(err);
         setIsLoading(false);
+        ResponseHandler(err.data);
       };
       PHONE_NUMBER(data, callback, onError);
     } else {
