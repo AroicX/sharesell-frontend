@@ -9,7 +9,7 @@ import {
   ResponseHandler,
   numberFormatter,
 } from '@/helpers/index';
-import { PHONE_NUMBER } from '@/services/authentication/index';
+import { FORGET_PASSWORD } from '@/services/authentication/index';
 
 export default function PhoneNumber({ next, user, setUser }) {
   const [form, setForm] = useState({ phoneNumberError: '' });
@@ -33,7 +33,6 @@ export default function PhoneNumber({ next, user, setUser }) {
 
       const callback = (response) => {
         setIsLoading(false);
-        console.log(response);
         ResponseHandler(response);
         if (response.payload) {
           setUser((prev) => {
@@ -44,7 +43,7 @@ export default function PhoneNumber({ next, user, setUser }) {
             };
           });
         }
-        // next();
+        next();
       };
 
       const onError = (err) => {
@@ -52,8 +51,7 @@ export default function PhoneNumber({ next, user, setUser }) {
         setIsLoading(false);
         ResponseHandler(err.data);
       };
-      //   PHONE_NUMBER(data, callback, onError);
-      next();
+      FORGET_PASSWORD(data, callback, onError);
     } else {
       inputValidatorErrorState(
         user.phoneNumber,

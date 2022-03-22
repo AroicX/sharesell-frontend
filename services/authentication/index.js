@@ -58,7 +58,6 @@ export async function RESEND_ONE_TIME_PASSWORD(data, callback, onError) {
 export async function QUICK_REGISTER(data, callback, onError) {
   try {
     let register = await requests.post(`/auth/quick-register`, data);
-    console.log(register);
     if (register.data) {
       callback && callback(register.data);
     } else {
@@ -67,5 +66,19 @@ export async function QUICK_REGISTER(data, callback, onError) {
     return register;
   } catch (err) {
     onError && onError(err);
+  }
+}
+
+export async function FORGET_PASSWORD(data, callback, onError) {
+  try {
+    let forgetPassword = await requests.post(`/auth/forget-password`, data);
+    if (forgetPassword.data) {
+      callback && callback(forgetPassword.data);
+    } else {
+      throw forgetPassword;
+    }
+    return forgetPassword;
+  } catch (error) {
+    onError && onError(error);
   }
 }
