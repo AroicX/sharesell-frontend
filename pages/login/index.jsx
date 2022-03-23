@@ -77,6 +77,11 @@ function Login() {
             iconRight={'/svg/arrow-right.svg'}
             loading={loading}
           />
+          <span className='w-full p-2 text-sm justify-center text-right'>
+            <Link className='mx-2 text-sm underline' to='/forget-password'>
+              Forget Password?
+            </Link>
+          </span>
         </form>
         <div className='flex justify-center items-center'>
           <span className='w-full p-2 text-sm center justify-center text-center mt-32 font-medium'>
