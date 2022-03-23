@@ -1,4 +1,3 @@
-import Kin from '@/components/profile/update-account/Kin';
 import requests from '@/services/index';
 
 export async function BUSINESS_DETAILS(data, callback, onError) {

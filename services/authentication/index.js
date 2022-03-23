@@ -14,6 +14,7 @@ export async function LOGIN_ACCOUNT(data, callback, onError) {
     onError && onError(err);
   }
 }
+
 export async function PHONE_NUMBER(data, callback, onError) {
   try {
     let phoneNumber = await requests.post(`/auth/check-phone-number`, data);

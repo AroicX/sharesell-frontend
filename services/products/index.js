@@ -14,6 +14,7 @@ export async function GET_PRODUCTS_CATEGORIES(callback, onError) {
     onError && onError(err);
   }
 }
+
 export async function GET_PRODUCTS_IN_CATEGORIES(id, callback, onError) {
   try {
     let products = await requests.get(`/products/category/${id}`);
@@ -28,6 +29,7 @@ export async function GET_PRODUCTS_IN_CATEGORIES(id, callback, onError) {
     onError && onError(err);
   }
 }
+
 export async function GET_SINGLE_PRODUCT(id, callback, onError) {
   try {
     let products = await requests.get(`/products/${id}`);
