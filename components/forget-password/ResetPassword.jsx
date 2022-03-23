@@ -9,7 +9,7 @@ import {
   ResponseHandler,
 } from '@/helpers/index';
 import { useRouter } from 'next/router';
-import { QUICK_REGISTER } from '@/services/authentication';
+import { RESET_PASSWORD } from '@/services/authentication';
 
 export default function CreateAccount({ back }) {
   const [form, setForm] = useState({
@@ -50,10 +50,11 @@ export default function CreateAccount({ back }) {
 
       const onError = (err) => {
         setIsLoading(false);
+        ResponseHandler(err.data);
         console.log(err);
       };
 
-      //   QUICK_REGISTER(data, callback, onError);
+      RESET_PASSWORD(data, callback, onError);
     } else {
       inputValidatorErrorState(
         form.password,
